@@ -28,7 +28,7 @@ rs83    1e-2
 
 What we want is first, a [Q-Q-plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) representation of the P-values. Something like this. 
 
-<img src="img/qqplot-example.jpeg" alt="Q-Q-Plot example" height="300"> 
+![rplot01](https://user-images.githubusercontent.com/4454726/47022176-323fb600-d15d-11e8-892b-152816ce9574.png)
 
 The ggplot2 code should look ~ like this:
 
