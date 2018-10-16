@@ -1,11 +1,16 @@
 Package: ggGWAS
 Type: Package
-Title: What the Package Does (Title Case)
+Title: ggplot2 Extensions for Plotting GWAS Results
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
+Author: Sina R<U+00FC>eger
+Maintainer: Sina R<U+00FC>eger <sina.rueeger@gmail.com>
+Description: Provides Manhattan plot and QQplot as a ggplot2 extension. 
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Imports:
+    ggplot2
+Suggests: 
+    testthat
+RoxygenNote: 6.1.0
