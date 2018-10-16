@@ -6,9 +6,13 @@
 \usage{
 stat_qqplot(mapping = NULL, data = NULL, geom = "point",
   position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+  inherit.aes = TRUE, method = "point", observed.thresh = NULL, ...)
 }
 \arguments{
+\item{method}{point or raster}
+
+\item{observed.thresh}{same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected}
+
 \item{...}{}
 }
 \description{
