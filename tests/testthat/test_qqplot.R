@@ -14,7 +14,7 @@ qp <- ggplot(dat, aes(observed = P)) +
 print(qp)
 
 
-## y.thresh working?
+## observed.thresh working?
 qp <- ggplot(dat, aes(observed = P)) +
   stat_qqplot(observed.thresh = 0.05) +
   geom_abline(intercept = 0, slope = 1)
