@@ -43,16 +43,31 @@ The ggplot2 code should look ~ like this:
 `ggplot(data = gwas.summarystats) + geom_manhattan(aes(x = Pos, y = -log10(P), group = Chr))`
 
 
-## Development
+## Development 
+
+There are workarounds how to turn a dataset with GWAS results into something that can be used with `geom_point()`, but this is cumbursome. By writing a ggplot2 extension, we can inherit lots of the default ggplot2 functionalities and shorten the input. 
+
+### ggplot2 extension
 
 How to implement your own geom from 
 - [here (vignette)](https://ggplot2.tidyverse.org/articles/extending-ggplot2.html#creating-a-new-geom)
 - [R help](https://www.rdocumentation.org/packages/ggplot2/versions/3.0.0/topics/ggplot2-ggproto)
 - [here (wiki)](https://github.com/tidyverse/ggplot2/wiki/Creating-a-new-geom) (from 2010, probably obsolete)
 
-For manhatten plot, if needed, annotate dataset with chr and position
-
 There is a [`geom_qq`](https://ggplot2.tidyverse.org/reference/geom_qq.html) in ggplot2 that implements quantile-quantile plots. However, this is not exactly the same as what we want. 
+
+### Testing
+
+How to test plots? 
+
+One option is, to compare ggplot2 object data. In the example below, we are comparing two ggplot2 outputs, one created with `qplot` and one with `ggplot`. 
+
+```
+gg1 <- qplot(Sepal.Length, Petal.Length, data = iris)
+gg2 <- ggplot(data = iris) + geom_point(aes(Sepal.Length, Petal.Length))
+identical(gg1$data, gg2$data)
+```
+We can apply this to our package by creating the qqplot and manhattanplots manually by hand, and then comparing the to the function outputs.
 
 ## Inspiration
 
