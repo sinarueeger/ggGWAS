@@ -1,15 +1,12 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # ggGWAS R package
 
-!!! *work-in-progress*
+!!! 
 
-An R-Package (soon ;-) that implements functions and plots QQplot and Manhattanplot as a geom in `ggplot2`.
+An R-Package (soon ;-), currently *work-in-progress*) that implements data visualisations used in GWAS into ggplot2. 
 
-This is similar to the package [`qqman`](http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html), except that it should have the look and functionality of `ggplot2`.
+Mainly, these are Q-Q-plots and Manhattanplots that use P-values from GWASs as input. 
+
+{ggGWAS} is similar to the package [{qqman}](http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html), except that it should have the look and functionality of `ggplot2`.
 
 1. [Functionality](#functionality)
 2. [Development](#development)
