@@ -1,4 +1,4 @@
-# ggGWAS R package *(work-in-progress)*
+# ggGWAS R package 🚧
 
 An R-Package (*work-in-progress*) that contains ggplot2-extensions of data visualisations used in GWASs. 
 
