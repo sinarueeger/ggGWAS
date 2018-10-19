@@ -38,7 +38,7 @@ The ggplot2 code should look ~ like this:
 - make sure color, group, facetting all works
 - allow for the `raster` version (for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
 - if time: implement genomic inflation factor representation
-
+- while we are at it: plotting box should be squared and x and y axis range identical
  
 #### geom_manhattanplot
 Secondly, we want a [Manhattan plot](https://en.wikipedia.org/wiki/Manhattan_plot).
