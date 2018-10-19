@@ -13,7 +13,7 @@ Mainly, these are Q-Q-plots and Manhattanplots that use P-values from GWASs as i
 
 ## Functionality
 
-#### Data
+#### Data (= the function input)
 Let's say we have GWAS summary statistics for a number of SNPs. Let's call this data `gwas.summarystats`: for a number of SNPs (rowwise) we know the SNP identifier (`SNP`) and the P-value (`P`). That would look like this:
 
 ```
@@ -24,6 +24,7 @@ rs83    1e-2
 ```
 
 #### geom_qqplot
+
 What we want is first, a [Q-Q-plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) representation of the P-values. Something like this. 
 
 ![rplot01](https://user-images.githubusercontent.com/4454726/47022176-323fb600-d15d-11e8-892b-152816ce9574.png)
@@ -31,6 +32,13 @@ What we want is first, a [Q-Q-plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_pl
 The ggplot2 code should look ~ like this:
 
 `ggplot(data = gwas.summarystats) + geom_qqplot(aes(y = -log10(P)))`
+
+- implement a GWAS QQplot (representing how the P value distribution deviates from the uniform distribution under the null)
+- include correct labels (expected and observed)
+- make sure color, group, facetting all works
+- allow for the `raster` version (for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
+- if time: implement genomic inflation factor representation
+
  
 #### geom_manhattanplot
 Secondly, we want a [Manhattan plot](https://en.wikipedia.org/wiki/Manhattan_plot).
@@ -45,6 +53,14 @@ A manhattan plot simliar to [this one](https://www.nature.com/articles/s41588-01
 https://www.nature.com/articles/s41588-018-0225-6/figures/2
 ![rplot01](https://media.springernature.com/lw900/springer-static/image/art%3A10.1038%2Fs41588-018-0225-6/MediaObjects/41588_2018_225_Fig2_HTML.png)
 
+- x axis spacing with space between chromosome and spaced as with position)
+- include correct y axis labels 
+- make sure color, group, facetting all works
+- allow for the `raster` version (for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
+- geom line too
+- if time: smart coloring (two alternating colors)
+
+ 
 
 
 #### theme_gwas
