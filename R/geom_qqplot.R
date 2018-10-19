@@ -1,5 +1,7 @@
 
 
+
+
 #' QQ-plot
 #'
 #' @param mapping
@@ -51,65 +53,99 @@
 #'   stat_qqplot() +
 #'   geom_abline(intercept = 0, slope = 1)
 
-stat_qqplot <- function(mapping = NULL, data = NULL, geom = "point",
-                        position = "identity", na.rm = FALSE, show.legend = NA,
-                        inherit.aes = TRUE, method = "point", observed.thresh = NULL, ...) {
+stat_qqplot_rastr <- function(mapping = NULL,
+                            data = NULL,
+                            geom = ggrastr:::GeomPointRast,
+                            position = "identity",
+                            na.rm = FALSE,
+                            show.legend = NA,
+                            inherit.aes = TRUE,
+                            observed.thresh = NULL,
+                            ...) {
+  layer(
+    stat = StatQQplot,
+    data = data,
+    mapping = mapping,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm, observed.thresh = observed.thresh, ...)
+  )
+}
 
-  if (method == "raster")
-  {
-    stop("method = 'raster' is currently not implemented", call. = FALSE)
-    #warning("Can't preserve total widths when varwidth = TRUE.", call. = FALSE)
-  }
-
-  if (method == "point")
-  {
+  stat_qqplot <- function(mapping = NULL,
+                          data = NULL,
+                          geom = "point",
+                          position = "identity",
+                          na.rm = FALSE,
+                          show.legend = NA,
+                          inherit.aes = TRUE,
+                          observed.thresh = NULL,
+                          ...) {
     layer(
-      stat = StatQQplot, data = data, mapping = mapping, geom = geom,
-      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-      params = list(na.rm = na.rm, method = method, observed.thresh = observed.thresh, ...)
+      stat = StatQQplot,
+      data = data,
+      mapping = mapping,
+      geom = geom,
+      position = position,
+      show.legend = show.legend,
+      inherit.aes = inherit.aes,
+      params = list(na.rm = na.rm, observed.thresh = observed.thresh, ...)
     )
   }
-}
 
 
 
 ## define the ggproto file
 ## ------------------
-StatQQplot <- ggplot2::ggproto("StatQQplot", Stat,
-                               default_aes = aes(y = stat(observed), x = stat(expected)),
+StatQQplot <- ggplot2::ggproto(
+  "StatQQplot",
+  Stat,
+  default_aes = aes(y = stat(observed), x = stat(expected)),
 
-                               required_aes = c("observed"),
+  required_aes = c("observed"),
 
-                               compute_group = function(data, scales, dparams,
-                                                        na.rm, method, observed.thresh) {
+  compute_group = function(data,
+                           scales,
+                           dparams,
+                           na.rm,
+                           observed.thresh) {
+    if (nrow(data) > 1e5) {
+      warning(
+        glue::glue(
+          "You are plotting {nrow(data)} points. Consider using stat_qqplot_raster()"
+        ),
+        call. = FALSE
+      )
+    }
+
+    observed <-
+      data$observed#[!is.na(data$x)]
+    N <- length(observed)
+
+    ## expected
+    expected <-
+      sort(-log10((1:N) / N - 1 / (2 * N)))
+    observed <-
+      sort(-log10(observed))
+
+    ## remove points if observed thresh is set.
+    if (!is.null(observed.thresh))
+    {
+      observed.thresh <- -log10(observed.thresh)
+
+      ind <-
+        which(observed >= observed.thresh)
+      expected <- expected[ind]
+      observed <- observed[ind]
+
+    }
 
 
-                                 if (method == "point")
-                                 {
-                                   observed <- data$observed#[!is.na(data$x)]
-                                   N <- length(observed)
+    data.frame(observed, expected)
+  }
 
-                                   ## expected
-                                   expected <- sort(-log10((1:N)/N-1/(2*N)))
-                                   observed <- sort(-log10(observed))
-
-                                   ## remove points if observed thresh is set.
-                                   if (!is.null(observed.thresh))
-                                   {
-                                     observed.thresh <- -log10(observed.thresh)
-
-                                     ind <- which(observed >= observed.thresh)
-                                     expected <- expected[ind]
-                                     observed <- observed[ind]
-
-                                   }
-
-
-                                   data.frame(observed, expected)
-                                 }
-
-
-                               }
 )
 
 
