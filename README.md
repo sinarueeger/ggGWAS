@@ -1,6 +1,6 @@
 # ggGWAS R package *(work-in-progress)*
 
-An R-Package (soon ;-), currently *work-in-progress*) that implements data visualisations used in GWAS into ggplot2. 
+An R-Package (*work-in-progress*) that implements data visualisations used in GWAS into ggplot2. 
 
 Mainly, these are Q-Q-plots and Manhattanplots that use P-values from GWASs as input. 
 
