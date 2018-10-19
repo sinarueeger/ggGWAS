@@ -1,6 +1,4 @@
-# ggGWAS R package
-
-!!! 
+# ggGWAS R package *(work-in-progress)*
 
 An R-Package (soon ;-), currently *work-in-progress*) that implements data visualisations used in GWAS into ggplot2. 
 
@@ -68,6 +66,8 @@ gg2 <- ggplot(data = iris) + geom_point(aes(Sepal.Length, Petal.Length))
 identical(gg1$data, gg2$data)
 ```
 We can apply this to our package by creating the qqplot and manhattanplots manually by hand, and then comparing the to the function outputs.
+
+Another option is to use https://github.com/lionel-/vdiffr
 
 ## Inspiration
 
