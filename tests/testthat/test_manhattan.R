@@ -1,4 +1,4 @@
-dat <- qqman::gwasResults# %>% filter(P < 0.05)#, chr="CHR", bp="BP", snp="SNP", p="P" )
+dat <- qqman::gwasResults # %>% filter(P < 0.05)#, chr="CHR", bp="BP", snp="SNP", p="P" )
 
 ## default: for -log10(P)
 qp <- ggplot(dat %>% dplyr::mutate(CHR2 = as.character(CHR))) +
@@ -18,10 +18,12 @@ print(qp)
 ## for faceting: doing this per facet or doing this overall and then facetting?
 
 ## how it should look like
-calc.cumsum <- function(data) data %>% dplyr::arrange(CHR, BP) %>%
-  mutate(p.log = -log10(P)) %>% filter(p.log >= 2) %>%
-  dplyr::mutate(temporary = 1) %>%
-  dplyr::mutate(cumsum.tmp = cumsum(temporary))
+calc.cumsum <- function(data) data %>%
+    dplyr::arrange(CHR, BP) %>%
+    mutate(p.log = -log10(P)) %>%
+    filter(p.log >= 2) %>%
+    dplyr::mutate(temporary = 1) %>%
+    dplyr::mutate(cumsum.tmp = cumsum(temporary))
 
 ggplot(calc.cumsum(dat)) +
   geom_point(aes(x = cumsum.tmp, y = p.log)) +

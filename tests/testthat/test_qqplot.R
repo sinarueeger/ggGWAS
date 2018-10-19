@@ -4,15 +4,26 @@
 
 
 dat <- qqman::gwasResults
-#n.sample <- 10000
-#df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
+# n.sample <- 10000
+# df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
 
 ## check if stop/error/warnings work
 qp <- ggplot(dat, aes(observed = P)) +
   stat_qqplot() +
   geom_abline(intercept = 0, slope = 1)
-print(qp)
+print(qp) + theme_gwas()
 
+## raster
+qp <- ggplot(dat, aes(observed = P)) +
+  stat_qqplot_rast() +
+  geom_abline(intercept = 0, slope = 1)
+print(qp) + theme_gwas()
+
+
+qp <- ggplot(dat, aes(observed = P)) +
+  stat_qqplot() +
+  geom_abline(intercept = 0, slope = 1)
+print(qp)
 
 ## observed.thresh working?
 qp <- ggplot(dat, aes(observed = P)) +
@@ -22,7 +33,7 @@ print(qp)
 
 ## adding nice stuff
 qp +
-  theme(aspect.ratio=1) + ## square shaped
+  theme(aspect.ratio = 1) + ## square shaped
   expand_limits(x = -log10(max(dat$P)), y = -log10(max(dat$P))) + ## identical limits (meaning truely square)
   ggtitle("QQplot") + ## title
   xlab("Expected -log10(P)") + ## axis labels
@@ -46,21 +57,20 @@ ggplot(dat, aes(observed = P, group = CHR, color = as.character(CHR))) +
 
 
 ## raster
-gg_vec <- ggplot(dat, aes(x= P, y = P))
-gg_ras <- gg_vec + ggrastr::geom_point_rast(size=0.5)
+gg_vec <- ggplot(dat, aes(x = P, y = P))
+gg_ras <- gg_vec + ggrastr::geom_point_rast(size = 0.5)
 
 PrintFileSize <- function(gg, name) {
-  invisible(ggsave('tmp.pdf', gg, width = 4, height = 4))
-  cat(name, ': ', file.info('tmp.pdf')$size / 1024, ' Kb.\n', sep = '')
-  unlink('tmp.pdf')
+  invisible(ggsave("tmp.pdf", gg, width = 4, height = 4))
+  cat(name, ": ", file.info("tmp.pdf")$size / 1024, " Kb.\n", sep = "")
+  unlink("tmp.pdf")
 }
 
-PrintFileSize(gg_ras, 'Raster')
-PrintFileSize(gg_vec, 'Vector')
+PrintFileSize(gg_ras, "Raster")
+PrintFileSize(gg_vec, "Vector")
 
 ## check if stop/error/warnings work
 qp <- ggplot(dat, aes(observed = P)) +
   stat_qqplot(method = "raster") +
   geom_abline(intercept = 0, slope = 1)
 print(qp)
-
