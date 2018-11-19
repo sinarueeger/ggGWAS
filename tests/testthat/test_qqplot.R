@@ -74,3 +74,7 @@ qp <- ggplot(dat, aes(observed = P)) +
   stat_qqplot(method = "raster") +
   geom_abline(intercept = 0, slope = 1)
 print(qp)
+
+
+## beat this:
+## http://www.gettinggeneticsdone.com/2010/07/qq-plots-of-p-values-in-r-using-base.html

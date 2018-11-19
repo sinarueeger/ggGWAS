@@ -101,6 +101,28 @@ stat_qqplot <- function(mapping = NULL,
     )
   }
 
+stat_qqplot_line <- function(mapping = NULL,
+                        data = NULL,
+                        geom = "line",
+                        position = "identity",
+                        na.rm = FALSE,
+                        show.legend = NA,
+                        inherit.aes = TRUE,
+                        observed.thresh = NULL,
+                        ...) {
+  layer(
+    stat = StatQQplot,
+    data = data,
+    mapping = mapping,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm, observed.thresh = observed.thresh, ...)
+  )
+}
+
+
 
 
 ## define the ggproto file
