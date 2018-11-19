@@ -11,6 +11,8 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     ggplot2
+    ggrastr
 Suggests: 
     testthat
+    ggrastr
 RoxygenNote: 6.1.0

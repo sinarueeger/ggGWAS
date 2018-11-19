@@ -28,6 +28,11 @@
 #'   geom_abline(intercept = 0, slope = 1)
 #' print(qp)
 #'
+#' ## show only p-values above a cerain threshold
+#' ggplot(dat, aes(observed = P)) +
+#' stat_qqplot(threshold = 0.05) +
+#' geom_abline(intercept = 0, slope = 1)
+#'
 #' ## adding nice stuff
 #' qp +
 #'   theme(aspect.ratio=1) + ## square shaped
@@ -74,7 +79,8 @@ stat_qqplot_rastr <- function(mapping = NULL,
   )
 }
 
-  stat_qqplot <- function(mapping = NULL,
+
+stat_qqplot <- function(mapping = NULL,
                           data = NULL,
                           geom = "point",
                           position = "identity",

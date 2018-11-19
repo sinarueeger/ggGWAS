@@ -19,9 +19,9 @@ qp <- ggplot(dat, aes(observed = P)) +
   geom_abline(intercept = 0, slope = 1)
 print(qp) + theme_gwas()
 
-
+## show only p-values above a cerain threshold
 qp <- ggplot(dat, aes(observed = P)) +
-  stat_qqplot() +
+  stat_qqplot(threshold = 0.05) +
   geom_abline(intercept = 0, slope = 1)
 print(qp)
 
