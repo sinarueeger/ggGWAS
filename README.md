@@ -65,7 +65,7 @@ https://www.nature.com/articles/s41588-018-0225-6/figures/2
 
 #### theme_gwas
 
-implement
+TBD
 
 ## Development 
 
@@ -74,9 +74,11 @@ There are workarounds how to turn a dataset with GWAS results into something tha
 ### ggplot2 extension
 
 How to implement your own geom from 
-- [here (vignette)](https://ggplot2.tidyverse.org/articles/extending-ggplot2.html#creating-a-new-geom)
+- [Extending ggplot2 (vignette)](https://ggplot2.tidyverse.org/articles/extending-ggplot2.html#creating-a-new-geom)
 - [R help](https://www.rdocumentation.org/packages/ggplot2/versions/3.0.0/topics/ggplot2-ggproto)
-- [here (wiki)](https://github.com/tidyverse/ggplot2/wiki/Creating-a-new-geom) (from 2010, probably obsolete)
+- [here (wiki)](https://github.com/tidyverse/ggplot2/wiki/Creating-a-new-geom) (from 2010)
+- [Programming with ggplot2](https://rpubs.com/hadley/97970)
+- [ggproto help](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html)
 
 There is a [`geom_qq`](https://ggplot2.tidyverse.org/reference/geom_qq.html) in ggplot2 that implements quantile-quantile plots. However, this is not exactly the same as what we want. 
 
