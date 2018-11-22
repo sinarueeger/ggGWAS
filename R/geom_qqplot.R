@@ -70,20 +70,6 @@
 #'   stat_qqplot() +
 #'   geom_abline(intercept = 0, slope = 1)
 #'
-#' ## How fast is it?
-#' n.sample <- 1e7
-#' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
-#' qp.points <- ggplot(df, aes(observed = P)) +
-#'   stat_qqplot() +
-#'   geom_abline(intercept = 0, slope = 1)
-#'
-#' qp.raster <- ggplot(df, aes(observed = P)) +
-#'   stat_qqplot(geom = ggrastr:::GeomPointRast) +
-#'   geom_abline(intercept = 0, slope = 1)
-#'
-#' system.time(print(qp.points))
-#' system.time(print(qp.raster))
-#' system.time(qqman::qq(df$P))
 
 
 
@@ -107,8 +93,6 @@ stat_qqplot <- function(mapping = NULL,
       params = list(na.rm = na.rm, observed.thresh = observed.thresh, ...)
     )
   }
-
-
 
 
 ## define the ggproto file
@@ -159,7 +143,7 @@ StatQQplot <- ggplot2::ggproto(
     }
 
 
-    data.frame(`observed_log10` = observed, `expected_log10` = expected, title = "sdfsdf")
+    data.frame(`observed_log10` = observed, `expected_log10` = expected)
   }
     #,
   # draw_panels = function(data, panel_scales, coord) {
@@ -188,5 +172,3 @@ StatQQplot <- ggplot2::ggproto(
 
 
 geom_qqplot <- stat_qqplot
-
-

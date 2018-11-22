@@ -7,12 +7,16 @@ qp <- ggplot(dat %>% dplyr::mutate(CHR2 = as.character(CHR))) +
   ggtitle("sfsdfsdf")
 print(qp)
 
+## adding a nice color palette
+qp + scale_color_manual(values = wesanderson::wes_palette("Zissou1", 22, type = "continuous"))
+
 ## for P values
-qp <- ggplot(dat %>% mutate(CHR2 = as.character(CHR))) +
+qp <- ggplot(dat %>% dplyr::mutate(CHR2 = as.character(CHR))) +
   stat_manhattan(aes(chr = CHR, pos = BP, y = P), y.thresh = c(1e-8, 0.05)) +
   geom_hline(yintercept = 0.05) +
   ggtitle("sfsdfsdf")
 print(qp)
+
 
 
 ## for faceting: doing this per facet or doing this overall and then facetting?
