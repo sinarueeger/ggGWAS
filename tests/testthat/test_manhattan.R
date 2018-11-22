@@ -1,12 +1,28 @@
 dat <- qqman::gwasResults # %>% filter(P < 0.05)#, chr="CHR", bp="BP", snp="SNP", p="P" )
 
 ## default: for -log10(P)
-qp <- ggplot(dat %>% dplyr::mutate(CHR2 = as.character(CHR))) +
+qp <- ggplot(dat) +
   stat_manhattan(aes(pos = BP, y = -log10(P), chr = CHR)) +
   geom_hline(yintercept = 8) +
   ggtitle("sfsdfsdf")
 print(qp)
 
+## chr numeric
+qp <- ggplot(dat) +
+  stat_manhattan(aes(pos = BP, y = -log10(P), chr = CHR), chr.class = "numeric") +
+  geom_hline(yintercept = 8) +
+  ggtitle("sfsdfsdf")
+print(qp)
+
+pal <- wes_palette("Zissou1", 22, type = "continuous")
+qp + scale_color_gradientn(colours = pal)
+
+## chr factor
+qp <- ggplot(dat) +
+  stat_manhattan(aes(pos = BP, y = -log10(P), chr = CHR), chr.class = "character") +
+  geom_hline(yintercept = 8) +
+  ggtitle("sfsdfsdf")
+print(qp)
 ## adding a nice color palette
 qp + scale_color_manual(values = wesanderson::wes_palette("Zissou1", 22, type = "continuous"))
 
@@ -15,6 +31,13 @@ qp <- ggplot(dat %>% dplyr::mutate(CHR2 = as.character(CHR))) +
   stat_manhattan(aes(chr = CHR, pos = BP, y = P), y.thresh = c(1e-8, 0.05)) +
   geom_hline(yintercept = 0.05) +
   ggtitle("sfsdfsdf")
+print(qp)
+
+## threshold
+qp <- ggplot(dat) +
+  stat_manhattan(aes(pos = BP, y = -log10(P), chr = CHR), y.thresh= c(2, NA)) +
+  geom_hline(yintercept = 8) +
+  ggtitle("sfsdfsdf") + theme_bw()
 print(qp)
 
 

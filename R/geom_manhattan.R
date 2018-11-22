@@ -18,8 +18,9 @@
 
 
 StatManhattan <- ggplot2::ggproto("StatManhattan", Stat,
-  compute_group = function(data, scales, params, y.thresh) {
+  compute_group = function(data, scales, params, y.thresh, chr.class) {
 
+    ## chr.class can be "numeric" or "factor"
     ## y.thesh: vector
     ## if c(NA, something), then y <= something
     ## if c(something, NA), then y <= something
@@ -45,11 +46,18 @@ StatManhattan <- ggplot2::ggproto("StatManhattan", Stat,
     # scale_x_continuous(breaks = med.dat$median.x, labels = med.dat$CHR)
 
 
-    data.frame(x = data2$cumsum.tmp, y = data2$y, colour = as.character(data2$chr))
+    class(data2$chr) <- chr.class
+
+    ## stupid hack
+    if (chr.class == "character") {
+      data2$chr <- as.factor(as.numeric(data2$chr))
+    }
+
+    data.frame(`Pos` = data2$cumsum.tmp, y = data2$y, colour = data2$chr)
   },
 
   required_aes = c("y", "pos", "chr"),
-  default_aes = aes(y = stat(y), x = stat(x), colour = stat(colour))
+  default_aes = aes(y = stat(y), x = stat(`Pos`), colour = stat(colour))
 )
 
 #' Manhattan plot with ggplot2 features
@@ -80,13 +88,14 @@ StatManhattan <- ggplot2::ggproto("StatManhattan", Stat,
 #'
 stat_manhattan <- function(mapping = NULL, data = NULL, geom = "point",
                            position = "identity", na.rm = FALSE, show.legend = NA,
-                           inherit.aes = TRUE, y.thresh = NULL, ...) { # , dparams = list()
+                           inherit.aes = TRUE, y.thresh = NULL, chr.class = "numeric", ...) { # , dparams = list()
   layer(
     stat = StatManhattan, data = data, mapping = mapping, geom = geom,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
       y.thresh = y.thresh,
+      chr.class = chr.class,
       ...
     )
   )
