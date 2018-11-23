@@ -10,6 +10,11 @@ Mainly, these are Q-Q-plots and Manhattanplots that use P-values from GWASs as i
 2. [Development](#development)
 3. [Inspiration](#inspiration)
 
+## Installation
+```
+# install.packages("devtools")
+devtools::install_github("sinarueeger/ggGWAS")
+```
 
 ## Functionality
 
