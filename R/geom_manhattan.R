@@ -56,35 +56,7 @@ stat_manhattan <-
     )
   }
 
-stat_manhattan_rastr <-
-  function(mapping = NULL,
-           data = NULL,
-           geom = ggrastr:::GeomPointRast,
-           position = "identity",
-           na.rm = FALSE,
-           show.legend = NA,
-           inherit.aes = TRUE,
-           y.thresh = NULL,
-           ...) {
-    # , dparams = list()
-    layer(
-      stat = StatManhattan,
-      data = data,
-      mapping = mapping,
-      geom = geom,
-      position = position,
-      show.legend = show.legend,
-      inherit.aes = inherit.aes,
-      params = list(na.rm = na.rm,
-                    y.thresh = y.thresh,
-                    ...)
-    )
-  }
-
 geom_manhattan <- stat_manhattan
-
-
-
 
 
 
@@ -104,12 +76,14 @@ StatManhattan <- ggplot2::ggproto(
     ## if c(NA, something), then y <= something
     ## if c(something, NA), then y <= something
     ## only include points that are above this threshold
+
     if (!is.null(y.thresh)) {
-      if (!is.na(y.thresh[1])) {
-        data <- data %>% filter(y >= y.thresh[1])
+
+        if (!is.na(y.thresh[1])) {
+        data <- data %>% dplyr::filter(y >= y.thresh[1])
       }
       if (!is.na(y.thresh[2])) {
-        data <- data %>% filter(y <= y.thresh[2])
+        data <- data %>% dplyr::filter(y <= y.thresh[2])
       }
     }
 

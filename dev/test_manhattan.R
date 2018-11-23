@@ -49,6 +49,14 @@ qp <- ggplot(data = dat) +
   ggtitle("sfsdfsdf") + theme_bw()
 print(qp)
 
+## rastr
+qp <- ggplot(data = dat) +
+  stat_manhattan(aes(pos = BP, y = -log10(P), chr = CHR), geom = ggrastr:::GeomPointRast) +
+  geom_hline(yintercept = 8) +
+  ggtitle("sfsdfsdf") + theme_bw()
+print(qp)
+
+
 
 
 ## for faceting: doing this per facet or doing this overall and then facetting?
