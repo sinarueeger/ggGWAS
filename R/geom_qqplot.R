@@ -99,7 +99,7 @@ stat_qqplot <- function(mapping = NULL,
 ## ------------------
 StatQQplot <- ggplot2::ggproto(
   "StatQQplot",
-  Stat,
+  ggplot2::Stat,
   required_aes = c("observed"),
   default_aes = ggplot2::aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),
 

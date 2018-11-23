@@ -6,7 +6,7 @@
 \usage{
 stat_manhattan(mapping = NULL, data = NULL, geom = "point",
   position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, y.thresh = NULL, ...)
+  inherit.aes = TRUE, y.thresh = NULL, chr.class = "numeric", ...)
 }
 \arguments{
 \item{y.thresh}{a vector}
@@ -15,6 +15,9 @@ stat_manhattan(mapping = NULL, data = NULL, geom = "point",
 }
 \description{
 Manhattan plot with ggplot2 features
+}
+\details{
+See also \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-qq.r}
 }
 \examples{
 dat <- qqman::gwasResults# \%>\% filter(P < 0.05)#, chr="CHR", bp="BP", snp="SNP", p="P" )
@@ -25,6 +28,7 @@ qp <- ggplot(dat \%>\% mutate(CHR2 = as.character(CHR))) +
  geom_hline(yintercept = 8) +
  ggtitle("sfsdfsdf")
 print(qp)
+
 
 
 }

@@ -12,5 +12,6 @@ LazyData: true
 Imports:
     ggplot2
 Suggests:
-    ggrastr
+    ggrastr,
+    mag
 RoxygenNote: 6.1.0
