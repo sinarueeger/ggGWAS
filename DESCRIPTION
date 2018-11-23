@@ -6,11 +6,16 @@ Author: Sina R<U+00FC>eger
 Maintainer: Sina R<U+00FC>eger <sina.rueeger@gmail.com>
 Description: Provides Manhattan plot and QQplot as a ggplot2 extension. 
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-    ggplot2
-Suggests: 
-    testthat
+    ggplot2,
+    magrittr,
+    dplyr
+Suggests:
+    ggrastr,
+    GWAS.utils,
+    testthat,
+    wesanderson
 RoxygenNote: 6.1.0

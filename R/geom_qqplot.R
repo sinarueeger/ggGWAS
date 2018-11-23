@@ -23,10 +23,27 @@
 #' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
 #'
 #' ## default
-#' qp <- ggplot(df, aes(observed = P)) +
+#' (qp <- ggplot(df, aes(observed = P)) +
 #'   stat_qqplot() +
-#'   geom_abline(intercept = 0, slope = 1)
-#' print(qp)
+#'   geom_abline(intercept = 0, slope = 1))
+#'
+#' ## Group points
+#' (qp <- ggplot(df, aes(observed = P)) + stat_qqplot(aes(group = GWAS, color = GWAS)))
+#'
+#' ## show only p-values above a cerain threshold
+#' ggplot(df, aes(observed = P)) +
+#' stat_qqplot(observed.thresh = 0.05) +
+#' geom_abline(intercept = 0, slope = 1)
+#'
+#' ## plot a line instead
+#' ggplot(dat, aes(observed = P)) +
+#' stat_qqplot(geom = "line") +
+#' geom_abline(intercept = 0, slope = 1)
+#'
+#' ## plot efficiently
+#' ggplot(dat, aes(observed = P)) +
+#' stat_qqplot(geom = ggrastr:::GeomPointRast) +
+#' geom_abline(intercept = 0, slope = 1)
 #'
 #' ## adding nice stuff
 #' qp +
@@ -52,29 +69,21 @@
 #' ggplot(df, aes(observed = P, group = GWAS)) +
 #'   stat_qqplot() +
 #'   geom_abline(intercept = 0, slope = 1)
+#'
+#' ## group
+#' library(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
+#' data("giant")
+#' ?giant
+#'
+#' giant <- giant %>% dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))## generate two groups
+#' ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
+#'   stat_qqplot() +
+#'   geom_abline(intercept = 0, slope = 1)
+#'
 
-stat_qqplot_rastr <- function(mapping = NULL,
-                            data = NULL,
-                            geom = ggrastr:::GeomPointRast,
-                            position = "identity",
-                            na.rm = FALSE,
-                            show.legend = NA,
-                            inherit.aes = TRUE,
-                            observed.thresh = NULL,
-                            ...) {
-  layer(
-    stat = StatQQplot,
-    data = data,
-    mapping = mapping,
-    geom = geom,
-    position = position,
-    show.legend = show.legend,
-    inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, observed.thresh = observed.thresh, ...)
-  )
-}
 
-  stat_qqplot <- function(mapping = NULL,
+
+stat_qqplot <- function(mapping = NULL,
                           data = NULL,
                           geom = "point",
                           position = "identity",
@@ -96,35 +105,26 @@ stat_qqplot_rastr <- function(mapping = NULL,
   }
 
 
-
 ## define the ggproto file
 ## ------------------
 StatQQplot <- ggplot2::ggproto(
   "StatQQplot",
-  Stat,
-  default_aes = aes(y = stat(observed), x = stat(expected)),
-
+  ggplot2::Stat,
   required_aes = c("observed"),
+  default_aes = ggplot2::aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),
 
   compute_group = function(data,
                            scales,
                            dparams,
                            na.rm,
                            observed.thresh) {
-    if (nrow(data) > 1e5) {
-      warning(
-        glue::glue(
-          "You are plotting {nrow(data)} points. Consider using stat_qqplot_raster()"
-        ),
-        call. = FALSE
-      )
-    }
 
     observed <-
       data$observed#[!is.na(data$x)]
     N <- length(observed)
 
-    ## expected
+
+    ## calculate the expected axis
     expected <-
       sort(-log10((1:N) / N - 1 / (2 * N)))
     observed <-
@@ -143,10 +143,42 @@ StatQQplot <- ggplot2::ggproto(
     }
 
 
-    data.frame(observed, expected)
+    if (length(expected) > 1e5) {
+      message(
+        glue::glue(
+          "You are plotting {length(expected)} points. Consider using stat_qqplot_raster (if you are not using it already)."
+        ),
+        call. = FALSE
+      )
+    }
+
+
+    data.frame(`observed_log10` = observed, `expected_log10` = expected)
   }
+    #,
+  # draw_panels = function(data, panel_scales, coord) {
+  #   ## Transform the data first
+  #   coords <- coord$transform(data, panel_scales)
+  #
+  #   ## Let's print out the structure of the 'coords' object
+  #   str(coords)
+  #
+  #   ## Construct a grid grob
+  #   pointsGrob(
+  #     x = coords$x,
+  #     y = coords$y,
+  #     pch = coords$shape
+  #   )
+  # },
+  # draw_labels <- function(data, panel_scales, coord) {
+  #  has something to do with gtable: https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html
+  ## labels from qqman::qq()
+  #  xlab(expression(Expected ~ ~-log[10](italic(p)))) +
+  #  ylab(expression(Observed ~ ~-log[10](italic(p))))
+  #     }
 
 )
+
 
 
 geom_qqplot <- stat_qqplot

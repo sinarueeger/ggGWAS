@@ -1,18 +1,68 @@
-dat <- qqman::gwasResults # %>% filter(P < 0.05)#, chr="CHR", bp="BP", snp="SNP", p="P" )
 
-## default: for -log10(P)
-qp <- ggplot(dat %>% dplyr::mutate(CHR2 = as.character(CHR))) +
-  stat_manhattan(aes(pos = BP, y = -log10(P), chr = CHR)) +
+library(GWAS.utils)
+data("giant")
+?giant
+theme_set(theme_gwas())
+
+## default: for -log10(P), by default chr is numeric
+qp <- ggplot(giant) +
+  stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)) +
   geom_hline(yintercept = 8) +
-  ggtitle("sfsdfsdf")
+  ggtitle("GIANT summary statistics (by default CHR is numeric)")
 print(qp)
 
-## for P values
-qp <- ggplot(dat %>% mutate(CHR2 = as.character(CHR))) +
-  stat_manhattan(aes(chr = CHR, pos = BP, y = P), y.thresh = c(1e-8, 0.05)) +
-  geom_hline(yintercept = 0.05) +
-  ggtitle("sfsdfsdf")
+## add nice color palette
+pal <- wesanderson::wes_palette("Zissou1", 22, type = "continuous")
+qp + scale_color_gradientn(colours = pal)
+
+## chr factor
+qp <- ggplot(giant) +
+  stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), chr.class = "character") +
+  geom_hline(yintercept = 8) +
+  ggtitle("GIANT summary statistics (CHR is now a character/factor)")
 print(qp)
+## adding a nice color palette
+qp + scale_color_manual(values = wesanderson::wes_palette("Zissou1", 22, type = "continuous"))
+
+## turn all points black
+qp <- ggplot(giant) +
+  stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), color = "black", alpha = I(0.4)) +
+  geom_hline(yintercept = 8) +
+  ggtitle("GIANT summary statistics")
+print(qp)
+
+## set lower threshold
+qp <- ggplot(data = giant) +
+  stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), y.thresh= c(2, NA)) +
+  geom_hline(yintercept = 8) +
+  ggtitle("GIANT summary statistics")
+print(qp)
+
+
+## for effect sizes
+qp <- ggplot(data = giant) +
+  stat_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
+  ggtitle("GIANT effect sizes")
+print(qp)
+
+## use rastr
+qp <- ggplot(data = giant) +
+  stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), geom = ggrastr:::GeomPointRast) +
+  geom_hline(yintercept = 8) +
+  ggtitle("GIANT summary statistics (rastr)")
+print(qp)
+
+## facetting
+
+giant <- giant %>% dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))## generate two groups
+
+qp <- ggplot(data = giant) +
+  stat_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
+  ggtitle("GIANT summary statistics") +
+  facet_wrap(~gr)
+print(qp)
+
+
 
 
 ## for faceting: doing this per facet or doing this overall and then facetting?
