@@ -24,25 +24,25 @@
 #'
 #' ## default
 #' (qp <- ggplot(df, aes(observed = P)) +
-#'   stat_qq() +
+#'   stat_qqunif() +
 #'   geom_abline(intercept = 0, slope = 1))
 #'
 #' ## Group points
-#' (qp <- ggplot(df, aes(observed = P)) + stat_qq(aes(group = GWAS, color = GWAS)))
+#' (qp <- ggplot(df, aes(observed = P)) + stat_qqunif(aes(group = GWAS, color = GWAS)))
 #'
 #' ## show only p-values above a cerain threshold
 #' ggplot(df, aes(observed = P)) +
-#' stat_qq(observed.thresh = 0.05) +
+#' stat_qqunif(observed.thresh = 0.05) +
 #' geom_abline(intercept = 0, slope = 1)
 #'
 #' ## plot a line instead
 #' ggplot(dat, aes(observed = P)) +
-#' stat_qq(geom = "line") +
+#' stat_qqunif(geom = "line") +
 #' geom_abline(intercept = 0, slope = 1)
 #'
 #' ## plot efficiently
 #' ggplot(dat, aes(observed = P)) +
-#' stat_qq(geom = ggrastr:::GeomPointRast) +
+#' stat_qqunif(geom = ggrastr:::GeomPointRast) +
 #' geom_abline(intercept = 0, slope = 1)
 #'
 #' ## adding nice stuff
@@ -55,19 +55,19 @@
 #'
 #' ## color
 #' ggplot(df, aes(observed = P, color = GWAS)) +
-#'   stat_qq() +
+#'   stat_qqunif() +
 #'   geom_abline(intercept = 0, slope = 1)
 #'
 #' ## facet
 #' ggplot(df, aes(observed = P)) +
 #'   facet_wrap(~GWAS) +
-#'   stat_qq() +
+#'   stat_qqunif() +
 #'   geom_abline(intercept = 0, slope = 1)
 #'
 #'
 #' ## group
 #' ggplot(df, aes(observed = P, group = GWAS)) +
-#'   stat_qq() +
+#'   stat_qqunif() +
 #'   geom_abline(intercept = 0, slope = 1)
 #'
 #' ## group
@@ -77,13 +77,13 @@
 #'
 #' giant <- giant %>% dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))## generate two groups
 #' ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
-#'   stat_qq() +
+#'   stat_qqunif() +
 #'   geom_abline(intercept = 0, slope = 1)
 #'
 
 
 
-stat_qq <- function(mapping = NULL,
+stat_qqunif <- function(mapping = NULL,
                           data = NULL,
                           geom = "point",
                           position = "identity",
@@ -146,7 +146,7 @@ StatQQplot <- ggplot2::ggproto(
     if (length(expected) > 1e5) {
       message(
         glue::glue(
-          "You are plotting {length(expected)} points. Consider using stat_qq_raster (if you are not using it already)."
+          "You are plotting {length(expected)} points. Consider using stat_qqunif_raster (if you are not using it already)."
         ),
         call. = FALSE
       )
@@ -181,4 +181,4 @@ StatQQplot <- ggplot2::ggproto(
 
 
 
-geom_qq <- stat_qq
+geom_qqunif <- stat_qqunif
