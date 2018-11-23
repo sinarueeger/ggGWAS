@@ -14,5 +14,6 @@ Imports:
     magrittr,
     dplyr
 Suggests:
-    ggrastr
+    ggrastr,
+    GWAS.utils
 RoxygenNote: 6.1.0

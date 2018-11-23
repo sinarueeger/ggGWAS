@@ -70,6 +70,16 @@
 #'   stat_qqplot() +
 #'   geom_abline(intercept = 0, slope = 1)
 #'
+#' ## group
+#' library(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
+#' data("giant")
+#' ?giant
+#'
+#' giant <- giant %>% dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))## generate two groups
+#' ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
+#'   stat_qqplot() +
+#'   geom_abline(intercept = 0, slope = 1)
+#'
 
 
 
