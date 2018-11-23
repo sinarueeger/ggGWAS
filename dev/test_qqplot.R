@@ -9,25 +9,25 @@ dat <- qqman::gwasResults
 
 ## check if stop/error/warnings work
 qp <- ggplot(dat, aes(observed = P)) +
-  stat_qqplot() +
+  stat_qq() +
   geom_abline(intercept = 0, slope = 1)
 print(qp) + theme_gwas()
 
 ## raster
 qp <- ggplot(dat, aes(observed = P)) +
-  stat_qqplot_rast() +
+  stat_qq_rast() +
   geom_abline(intercept = 0, slope = 1)
 print(qp) + theme_gwas()
 
 ## show only p-values above a cerain threshold
 qp <- ggplot(dat, aes(observed = P)) +
-  stat_qqplot(threshold = 0.05) +
+  stat_qq(threshold = 0.05) +
   geom_abline(intercept = 0, slope = 1)
 print(qp)
 
 ## observed.thresh working?
 qp <- ggplot(dat, aes(observed = P)) +
-  stat_qqplot(observed.thresh = 0.05) +
+  stat_qq(observed.thresh = 0.05) +
   geom_abline(intercept = 0, slope = 1)
 print(qp)
 
@@ -41,18 +41,18 @@ qp +
 
 ## color
 ggplot(dat, aes(observed = P, color = as.character(CHR))) +
-  stat_qqplot() +
+  stat_qq() +
   geom_abline(intercept = 0, slope = 1)
 
 ## facet
 ggplot(dat, aes(observed = P)) +
   facet_wrap(~CHR) +
-  stat_qqplot() +
+  stat_qq() +
   geom_abline(intercept = 0, slope = 1)
 
 ## group
 ggplot(dat, aes(observed = P, group = CHR, color = as.character(CHR))) +
-  stat_qqplot() +
+  stat_qq() +
   geom_abline(intercept = 0, slope = 1)
 
 
@@ -71,7 +71,7 @@ PrintFileSize(gg_vec, "Vector")
 
 ## check if stop/error/warnings work
 qp <- ggplot(dat, aes(observed = P)) +
-  stat_qqplot(method = "raster") +
+  stat_qq(method = "raster") +
   geom_abline(intercept = 0, slope = 1)
 print(qp)
 
