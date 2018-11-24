@@ -84,6 +84,7 @@ How to implement your own geom from
 - [here (wiki)](https://github.com/tidyverse/ggplot2/wiki/Creating-a-new-geom) (from 2010)
 - [Programming with ggplot2](https://rpubs.com/hadley/97970)
 - [ggproto help](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html)
+- [Howto by R Peng](https://bookdown.org/rdpeng/RProgDA/building-new-graphical-elements.html)
 
 There is a [`geom_qq`](https://ggplot2.tidyverse.org/reference/geom_qq.html) in ggplot2 that implements quantile-quantile plots. However, this is not exactly the same as what we want. 
 
