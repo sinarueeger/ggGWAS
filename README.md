@@ -1,20 +1,41 @@
 # ggGWAS 🚧
 
-An R-Package (*work-in-progress*) that contains ggplot2-extensions of data visualisations used in GWASs. 
+An R-Package (*work-in-progress*) that contains ggplot2-extensions of data visualisations used with GWAS data. 
 
-Mainly, these are Q-Q-plots and Manhattanplots that use P-values from GWASs as input. 
+Mainly, these are Q-Q plot and Manhattan plot that both use P-values from GWASs as input. 
 
-{ggGWAS} is similar to the package [{qqman}](http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html), except that it should have the look and functionality of `ggplot2`.
-
-1. [Functionality](#functionality)
-2. [Development](#development)
-3. [Inspiration](#inspiration)
+An inspiration for ggGWAS has been the R-package [qqman](http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html), except that ggGWAS aims to have the look and functionality of `ggplot2`.
 
 ## Installation
 ```
 # install.packages("devtools")
 devtools::install_github("sinarueeger/ggGWAS")
 ```
+
+## Basic usage
+
+```
+## Random data --------------------
+
+df <- data.frame(POS = rep(1:250, 4), CHR = 1:4, P = runif(1000), GWAS = sample(c("a","b"), 1000, replace = TRUE))
+
+
+## Q-Q plot --------------------
+
+ggplot(df, aes(observed = P)) + ggGWAS::stat_qqunif(aes(group = GWAS, color = GWAS))
+
+
+## Manhattan plot --------------------
+ggplot(data = df) +
+  ggGWAS::stat_manhattan(aes(pos = POS, y = -log10(P), chr =CHR),  chr.class = "character") +
+  facet_wrap(~GWAS)
+
+```
+
+1. [Functionality](#functionality)
+2. [Development](#development)
+3. [Inspiration](#inspiration)
+
 
 ## Functionality
 
