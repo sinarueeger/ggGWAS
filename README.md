@@ -17,7 +17,13 @@ devtools::install_github("sinarueeger/ggGWAS")
 ```
 ## Random data --------------------
 
-df <- data.frame(POS = rep(1:250, 4), CHR = 1:4, P = runif(1000), GWAS = sample(c("a","b"), 1000, replace = TRUE))
+df <-
+  data.frame(
+    POS = rep(1:250, 4),
+    CHR = 1:4,
+    P = runif(1000),
+    GWAS = sample(c("a", "b"), 1000, replace = TRUE)
+  )
 
 
 ## Q-Q plot --------------------
@@ -26,9 +32,14 @@ ggplot(df, aes(observed = P)) + ggGWAS::stat_qqunif(aes(group = GWAS, color = GW
 
 
 ## Manhattan plot --------------------
+
 ggplot(data = df) +
-  ggGWAS::stat_manhattan(aes(pos = POS, y = -log10(P), chr =CHR),  chr.class = "character") +
-  facet_wrap(~GWAS)
+  ggGWAS::stat_manhattan(aes(
+    pos = POS,
+    y = -log10(P),
+    chr = CHR
+  ),  chr.class = "character") +
+  facet_wrap( ~ GWAS)
 
 ```
 
