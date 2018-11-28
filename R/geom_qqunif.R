@@ -1,7 +1,6 @@
 
 
 
-
 #' QQ-plot
 #'
 #' @param mapping
