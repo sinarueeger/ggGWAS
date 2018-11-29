@@ -36,12 +36,12 @@
 #' geom_abline(intercept = 0, slope = 1)
 #'
 #' ## plot a line instead
-#' ggplot(dat, aes(observed = P)) +
+#' ggplot(df, aes(observed = P)) +
 #' stat_qqunif(geom = "line") +
 #' geom_abline(intercept = 0, slope = 1)
 #'
 #' ## plot efficiently
-#' ggplot(dat, aes(observed = P)) +
+#' ggplot(df, aes(observed = P)) +
 #' stat_qqunif(geom = ggrastr:::GeomPointRast) +
 #' geom_abline(intercept = 0, slope = 1)
 #'
