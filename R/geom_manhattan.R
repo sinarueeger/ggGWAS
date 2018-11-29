@@ -16,7 +16,8 @@
 #' @details See also \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-qq.r}
 #'
 #' @examples
-#' library(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
+#' require(ggplot2)
+#' require(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
 #' data("giant")
 #' ?giant
 #' theme_set(theme_gwas())

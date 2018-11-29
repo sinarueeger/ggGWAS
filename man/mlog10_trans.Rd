@@ -10,6 +10,7 @@ mlog10_trans()
 -log10 transformation
 }
 \examples{
+require(ggplot2)
 df <- data.frame(y = runif(1000))
 
 ggplot(df, aes(sample = y)) +

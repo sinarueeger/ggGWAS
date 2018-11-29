@@ -8,6 +8,7 @@
 #' @export
 #'
 #' @examples
+#' require(ggplot2)
 #' qplot(Sepal.Length, Sepal.Width, data = iris) + theme_gwas()
 #'
 theme_gwas <- function(...) {

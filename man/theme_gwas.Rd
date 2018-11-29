@@ -19,6 +19,7 @@ Theme GWAS (just a random theme, nothing really gwas specific)
 Makes a few modifications to \code{\link{theme_gray}}. Similar to \code{\link{theme_bw}}.
 }
 \examples{
+require(ggplot2)
 qplot(Sepal.Length, Sepal.Width, data = iris) + theme_gwas()
 
 }
