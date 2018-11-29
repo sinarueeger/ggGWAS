@@ -18,6 +18,7 @@
 #' @export
 #'
 #' @examples
+#' require(ggplot2)
 #' n.sample <- 10000
 #' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
 #'

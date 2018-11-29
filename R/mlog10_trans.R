@@ -23,6 +23,7 @@ mlog10_breaks <- function(n = 10) {
 #' @references https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html and https://gist.github.com/wch/3250485
 #'
 #' @examples
+#' require(ggplot2)
 #' df <- data.frame(y = runif(1000))
 #'
 #' ggplot(df, aes(sample = y)) +
