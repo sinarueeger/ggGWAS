@@ -8,8 +8,7 @@ An inspiration for ggGWAS has been the R-package [qqman](http://www.gettinggenet
 
 ## Installation
 ```
-# install.packages("devtools")
-devtools::install_github("sinarueeger/ggGWAS")
+remotes::install_github("sinarueeger/ggGWAS")
 ```
 
 ## Basic usage
