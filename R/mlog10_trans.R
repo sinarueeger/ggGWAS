@@ -13,7 +13,7 @@
 #'
 #' @examples
 mlog10_breaks <- function(n = 10) {
-  function(x) as.numeric(pretty_breaks(n)(x))
+  function(x) as.numeric(scales::pretty_breaks(n)(x))
 }
 
 #' -log10 transformation

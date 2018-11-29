@@ -12,7 +12,8 @@ LazyData: true
 Imports:
     ggplot2,
     magrittr,
-    dplyr
+    dplyr,
+    scales
 Suggests:
     ggrastr,
     GWAS.utils,
