@@ -2,7 +2,7 @@
 
 hex_binwidth <- function(bins = 30, scales) {
   c(
-    diff(scales$x$dimension()) / bins,
+    diff(scales$y$dimension()) / bins, ## tweaked
     diff(scales$y$dimension()) / bins
   )
 }
@@ -36,7 +36,7 @@ hexBinSummarise <- function(x, y, z, binwidth, fun = mean, fun.args = list(), dr
   value <- do.call(tapply, c(list(quote(z), quote(hb@cID), quote(fun)), fun.args))
 
   # Convert to data frame
-  out <- new_data_frame(hexbin::hcell2xy(hb))
+  out <- vctrs::new_data_frame(hexbin::hcell2xy(hb))
   out$value <- as.vector(value)
 
   if (drop) out <- stats::na.omit(out)
