@@ -34,3 +34,19 @@ ggplot(df2, aes(expected, observed)) + stat_density_2d(geom = "point", aes(size 
 
 
 #########################################################################
+require(ggplot2)
+n.sample <- 1000
+df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
+
+## default
+(qp <- ggplot(df, aes(observed = P)) +
+   stat_qqunif() +
+   geom_abline(intercept = 0, slope = 1))
+
+## hex
+## default
+(qp <- ggplot(df, aes(observed = P)) +
+    stat_qqunif_hex() +
+    geom_abline(intercept = 0, slope = 1))
+
+
