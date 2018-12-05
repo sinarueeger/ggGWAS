@@ -1,3 +1,4 @@
+## https://stackoverflow.com/questions/32535773/using-un-exported-function-from-another-r-package
 ## from: https://rdrr.io/github/hadley/ggplot2/src/R/hexbin.R
 
 
