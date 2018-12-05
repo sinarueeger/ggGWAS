@@ -1,5 +1,6 @@
 ## from: https://rdrr.io/github/hadley/ggplot2/src/R/hexbin.R
 
+
 hex_binwidth <- function(bins = 30, scales) {
   c(
     diff(scales$y$dimension()) / bins, ## tweaked
@@ -43,6 +44,8 @@ hexBinSummarise <- function(x, y, z, binwidth, fun = mean, fun.args = list(), dr
   out
 }
 
+
+
 ##copied from: https://github.com/tidyverse/ggplot2/blob/master/R/utilities.r
 try_require <- function(package, fun) {
   if (requireNamespace(package, quietly = TRUE)) {
@@ -56,3 +59,4 @@ try_require <- function(package, fun) {
 "%||%" <- function(a, b) {
   if (!is.null(a)) a else b
 }
+
