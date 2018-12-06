@@ -1,21 +1,15 @@
 
-
-
 #' QQ-plot
 #'
-#' @param mapping
-#' @param data
-#' @param geom
-#' @param position
-#' @param na.rm
-#' @param show.legend
-#' @param inherit.aes
-#' @param method point or raster
+#' @inheritParams ggplot2::geom_point
 #' @param observed.thresh same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected
 #' @param ...
 #'
 #' @return
 #' @export
+#' @details \link{\code{stat_qq}} works for all kinds of distributions. But using \code{stat_qq} with \eqn{-log10()} transformation does not work neatly.
+#' @seealso \link{\code{stat_qq}}
+#' @aliases geom_qq_unif
 #'
 #' @examples
 #' require(ggplot2)
@@ -181,4 +175,4 @@ StatQQplot <- ggplot2::ggproto(
 
 
 
-geom_qqunif <- stat_qqunif
+geom_qq_unif <- stat_qq_unif
