@@ -1,7 +1,7 @@
 
 #' Theme GWAS (just a random theme, nothing really gwas specific)
 #'
-#' @param ... Inherited arguments from \code{\link{theme_gray}}.
+#' @inheritParams ggplot2::theme_gray
 #'
 #' @details Makes a few modifications to \code{\link{theme_gray}}. Similar to \code{\link{theme_bw}}.
 #' @return Returns an object of class theme and gg.

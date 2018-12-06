@@ -6,9 +6,6 @@
 \usage{
 theme_gwas(...)
 }
-\arguments{
-\item{...}{Inherited arguments from \code{\link{theme_gray}}.}
-}
 \value{
 Returns an object of class theme and gg.
 }

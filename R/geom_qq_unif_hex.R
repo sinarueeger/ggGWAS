@@ -1,22 +1,12 @@
-
-## mostly from : https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r
-
-
-#' QQ-plot
+#' Fast QQ-plot with hexagons
 #'
-#' @param mapping
-#' @param data
-#' @param geom
-#' @param position
-#' @param na.rm
-#' @param show.legend
-#' @param inherit.aes
-#' @param observed.thresh same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected
+#'
+#' @inheritParams ggplot2::stat_bin_hex
+#' @param observed.thresh Same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected.
 #' @param ...
-#' @param bins
-#' @param binwidth
 #'
-#' @return
+#' @details Code and documentation mostly from \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
+#'
 #' @export
 #'
 #' @examples
@@ -27,20 +17,18 @@
 #'
 #'
 #' (qp <- ggplot(df, aes(y = P)) +
-#'   stat_qqunif_hex() +
+#'   stat_qq_unif_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
 #'
 #' (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
-#'   stat_qqunif_hex() +
+#'   stat_qq_unif_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
 #'
 #'
 #'
 
 
-
-
-stat_qqunif_hex <- function(mapping = NULL,
+stat_qq_unif_hex <- function(mapping = NULL,
                           data = NULL,
                           geom = "hex",
                           position = "identity",
@@ -64,9 +52,10 @@ stat_qqunif_hex <- function(mapping = NULL,
     )
   }
 
-
-## define the ggproto file
-## ------------------
+#' @rdname ggplot2-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 StatQQplotHex <- ggplot2::ggproto(
   "StatQQplotHex",
   ggplot2::Stat,
@@ -123,7 +112,6 @@ StatQQplotHex <- ggplot2::ggproto(
 
 )
 
-
-
-
-geom_qqunif_hex <- stat_qqunif_hex
+#' @export
+#' @rdname stat_qq_unif_hex
+geom_qq_unif_hex <- stat_qq_unif_hex
