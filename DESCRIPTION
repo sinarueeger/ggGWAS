@@ -1,7 +1,7 @@
 Package: ggGWAS
 Type: Package
 Title: ggplot2 Extensions for Plotting GWAS Results
-Version: 0.1.0
+Version: 0.0.0.9000
 Author: Sina R<U+00FC>eger
 Maintainer: Sina R<U+00FC>eger <sina.rueeger@gmail.com>
 Description: Provides Manhattan plot and QQplot as a ggplot2 extension. 

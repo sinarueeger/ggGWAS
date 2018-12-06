@@ -8,6 +8,7 @@
 #' @seealso \code{\link[ggplot2]{stat_bin_hex}}
 #' @export
 #'
+#' @aliases stat_qqunif_hex
 #' @examples
 #' require(ggplot2)
 #'
@@ -91,8 +92,9 @@ StatQQplotHex <- ggproto(
 
     }
 
-    data$y = observed
-    data$x = expected
+    data$y <- observed
+    data$x <- expected
+
     #try_require("hexbin", "stat_binhex")
     binwidth <- binwidth %||% hex_binwidth(bins, scales)
     wt <- data$weight %||% rep(1L, nrow(data))

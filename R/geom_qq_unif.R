@@ -6,6 +6,7 @@
 #' @param geom \code{"point"} by default, \code{"ggrastr:::GeomPointRast"} for a rasterized version.
 #'
 #' @export
+#' @aliases stat_qqunif
 #' @details \code{\link[ggplot2]{stat_qq}} works for all kinds of distributions. But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation does not work neatly.
 #' @seealso \code{\link[ggplot2]{stat_qq}}, \code{\link{stat_qq_unif_hex}}
 #' @note Plotting several thousand points might take time. If you want to speed things up use \code{geom="ggrastr:::GeomPointRast"} or \code{\link{stat_qq_unif_hex}}.
