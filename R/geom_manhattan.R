@@ -1,18 +1,18 @@
 
-#' Manhattan plot with ggplot2 features
+#' @title Manhattan plot
+#' @description Manhattan plot for GWAS data
 #'
-#' @param mapping
-#' @param data
-#' @param geom
-#' @param position
-#' @param na.rm
-#' @param show.legend
-#' @param inherit.aes
-#' @param y.thresh a vector
-#' @param ...
-#'
-#' @return
+#' @inheritParams ggplot2::geom_point
+#' @param y.thresh cutoff for y-axis, defined as a vector of length two. If \code{c(K, NA)}, points with a y-value lower than K will be removed. If \code{c(NA, K)} points with y-values larger than K will be removed.
+#' @param chr.class Relevant for coloring of the points: what class the chromosomes should be represented as. If "numeric", coloring will be continuous. If "character" coloring will be discrete.
+#' @param geom \code{"point"} by default
+#' @return sdfsdf
 #' @export
+#' @importFrom ggplot2 layer
+#' @importFrom ggplot2 ggproto
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 Stat
+
 #' @details See also \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-qq.r}
 #'
 #' @examples
@@ -72,8 +72,9 @@
 #'
 #' ## facetting
 #'
-#' giant <- giant %>% dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))## generate two groups
-#'
+#' ## generate two groups
+#' giant <- giant %>%
+#'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))
 #' qp <- ggplot(data = giant) +
 #'   stat_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
 #'   ggtitle("GIANT summary statistics") +
@@ -110,16 +111,21 @@ stat_manhattan <-
     )
   }
 
+#' @export
+#' @rdname stat_manhattan
 geom_manhattan <- stat_manhattan
 
 
 
-
-StatManhattan <- ggplot2::ggproto(
+#' @rdname ggplot2-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
+StatManhattan <- ggproto(
   "StatManhattan",
-  ggplot2::Stat,
+  Stat,
   required_aes = c("y", "pos", "chr"),
-  default_aes = ggplot2::aes(
+  default_aes = aes(
     y = stat(y),
     x = stat(`Pos`),
     colour = stat(colour)
@@ -132,8 +138,8 @@ StatManhattan <- ggplot2::ggproto(
     ## only include points that are above this threshold
 
     if (!is.null(y.thresh)) {
-
-        if (!is.na(y.thresh[1])) {
+    ## try to solve this with ylim
+      if (!is.na(y.thresh[1])) {
         data <- data %>% dplyr::filter(y >= y.thresh[1])
       }
       if (!is.na(y.thresh[2])) {

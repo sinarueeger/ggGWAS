@@ -20,5 +20,5 @@ scale_x_continuous(trans = mlog10_trans()) +
 geom_abline(intercept = 0, slope = 1)
 }
 \references{
-https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html and https://gist.github.com/wch/3250485
+\url{https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html and https://gist.github.com/wch/3250485}
 }
