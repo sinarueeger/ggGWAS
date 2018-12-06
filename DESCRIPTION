@@ -10,17 +10,18 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-    ggplot2,
-    magrittr,
-    dplyr,
-    scales,
-    hexbin,
-    vctrs
+    ggplot2 (>= 3.1.0),
+    magrittr (>= 1.5),
+    dplyr (>= 0.7.8),
+    scales (>= 1.0.0),
+    hexbin (>= 1.27.2)
 Suggests:
-    ggrastr,
-    GWAS.utils,
-    testthat,
-    wesanderson
-RoxygenNote: 6.1.0
+    ggrastr (>= 0.1.7),
+    GWAS.utils (>= 0.0.0.9000),
+    testthat (>= 2.0.1),
+    wesanderson (>= 0.3.6),
+    vctrs (>= 0.1.0),
+    plyr (>= 1.8.4)
+RoxygenNote: 6.1.1
 BugReports: https://github.com/sinarueeger/ggGWAS/issues
 Depends: R (>= 2.10)

@@ -1,17 +1,11 @@
 
 #' Manhattan plot with ggplot2 features
 #'
-#' @param mapping
-#' @param data
-#' @param geom
-#' @param position
-#' @param na.rm
-#' @param show.legend
-#' @param inherit.aes
+#' @inheritParams ggplot2::geom_point
 #' @param y.thresh a vector
-#' @param ...
+#' @param ... more stuff
 #'
-#' @return
+#' @return sdfsdf
 #' @export
 #' @details See also \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-qq.r}
 #'
@@ -110,11 +104,16 @@ stat_manhattan <-
     )
   }
 
+#' @export
+#' @rdname stat_manhattan
 geom_manhattan <- stat_manhattan
 
 
 
-
+#' @rdname ggplot2-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 StatManhattan <- ggplot2::ggproto(
   "StatManhattan",
   ggplot2::Stat,

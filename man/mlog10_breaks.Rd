@@ -9,6 +9,12 @@ mlog10_breaks(n = 10)
 \arguments{
 \item{n}{}
 }
+\value{
+vector
+}
 \description{
 Breaks for -log10 axis
+}
+\references{
+From \url{https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html} and \url{https://gist.github.com/wch/3250485}
 }

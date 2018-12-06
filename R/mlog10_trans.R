@@ -1,26 +1,18 @@
-
-## add scale
-## source: https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html
-## and
-## https://gist.github.com/wch/3250485
-
 #' Breaks for -log10 axis
 #'
 #' @param n
 #'
-#' @return
+#' @return vector
+#' @references From \url{https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html} and \url{https://gist.github.com/wch/3250485}
 #' @export
-#'
-#' @examples
 mlog10_breaks <- function(n = 10) {
   function(x) as.numeric(scales::pretty_breaks(n)(x))
 }
 
 #' -log10 transformation
 #'
-#' @return
 #' @export
-#' @references https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html and https://gist.github.com/wch/3250485
+#' @references \url{https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html and https://gist.github.com/wch/3250485}
 #'
 #' @examples
 #' require(ggplot2)
