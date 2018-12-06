@@ -144,3 +144,4 @@ Another option is to use https://github.com/lionel-/vdiffr
 - http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html
 - https://www.r-graph-gallery.com/wp-content/uploads/2018/02/Manhattan_plot_in_R.html
 - https://genome.sph.umich.edu/wiki/Code_Sample:_Generating_QQ_Plots_in_R
+- https://rdrr.io/bioc/ramwas/man/qqplotFast.html
