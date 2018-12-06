@@ -3,7 +3,7 @@
 \name{stat_qq_unif}
 \alias{stat_qq_unif}
 \alias{geom_qq_unif}
-\title{QQ-plot}
+\title{Q-Q plot}
 \usage{
 stat_qq_unif(mapping = NULL, data = NULL, geom = "point",
   position = "identity", na.rm = FALSE, show.legend = NA,
@@ -33,6 +33,8 @@ A \code{function} will be called with a single argument,
 the plot data. The return value must be a \code{data.frame}, and
 will be used as the layer data.}
 
+\item{geom}{\code{"point"} by default, \code{"ggrastr:::GeomPointRast"} for a rasterized version.}
+
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
 
@@ -52,16 +54,19 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{observed.thresh}{same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected}
 
-\item{...}{}
+\item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
+often aesthetics, used to set an aesthetic to a fixed value, like
+\code{colour = "red"} or \code{size = 3}. They may also be parameters
+to the paired geom/stat.}
 }
 \description{
-QQ-plot
+Quantile-quantile plot to compare the p-values of a GWAS to a uniform distribution.
 }
 \details{
-\link{\code{stat_qq}} works for all kinds of distributions. But using \code{stat_qq} with \eqn{-log10()} transformation does not work neatly.
+\code{\link[ggplot2]{stat_qq}} works for all kinds of distributions. But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation does not work neatly.
 }
 \note{
-Plotting several thousand points might take time. If you want to speed things up
+Plotting several thousand points might take time. If you want to speed things up use \code{geom="ggrastr:::GeomPointRast"} or \code{\link{stat_qq_unif_hex}}.
 }
 \examples{
 require(ggplot2)
@@ -92,11 +97,12 @@ stat_qq_unif(geom = ggrastr:::GeomPointRast) +
 geom_abline(intercept = 0, slope = 1)
 
 ## adding nice stuff
+## identical limits (meaning truely square)
 qp +
   theme(aspect.ratio=1) + ## square shaped
-  expand_limits(x = -log10(max(df$P)), y = -log10(max(df$P))) + ## identical limits (meaning truely square)
-  ggtitle("QQplot") + ## title
-  xlab("Expected -log10(P)") + ## axis labels
+  expand_limits(x = -log10(max(df$P)), y = -log10(max(df$P))) +
+  ggtitle("QQplot") +
+  xlab("Expected -log10(P)") +
   ylab("Observed -log10(P)")
 
 ## color
@@ -121,12 +127,14 @@ library(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
 data("giant")
 ?giant
 
-giant <- giant \%>\% dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))## generate two groups
+## generate two groups
+giant <- giant \%>\%
+  dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))
 ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
   stat_qq_unif() +
   geom_abline(intercept = 0, slope = 1)
 
 }
 \seealso{
-\link{\code{stat_qq}}, \link{\code{stat_qq_unif_hex}}
+\code{\link[ggplot2]{stat_qq}}, \code{\link{stat_qq_unif_hex}}
 }

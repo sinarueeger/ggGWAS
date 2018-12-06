@@ -6,6 +6,9 @@
 \usage{
 theme_gwas(...)
 }
+\arguments{
+\item{...}{additional arguments}
+}
 \value{
 Returns an object of class theme and gg.
 }

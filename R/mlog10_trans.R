@@ -1,6 +1,6 @@
 #' Breaks for -log10 axis
 #'
-#' @param n
+#' @param n number of breaks
 #'
 #' @return vector
 #' @references From \url{https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html} and \url{https://gist.github.com/wch/3250485}

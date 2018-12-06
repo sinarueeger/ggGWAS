@@ -1,14 +1,14 @@
-
-#' QQ-plot
+#' @title Q-Q plot
+#' @description Quantile-quantile plot to compare the p-values of a GWAS to a uniform distribution.
 #'
 #' @inheritParams ggplot2::geom_point
 #' @param observed.thresh same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected
-#' @param ...
+#' @param geom \code{"point"} by default, \code{"ggrastr:::GeomPointRast"} for a rasterized version.
 #'
 #' @export
-#' @details \link{\code{stat_qq}} works for all kinds of distributions. But using \code{stat_qq} with \eqn{-log10()} transformation does not work neatly.
-#' @seealso \link{\code{stat_qq}}, \link{\code{stat_qq_unif_hex}}
-#' @note Plotting several thousand points might take time. If you want to speed things up
+#' @details \code{\link[ggplot2]{stat_qq}} works for all kinds of distributions. But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation does not work neatly.
+#' @seealso \code{\link[ggplot2]{stat_qq}}, \code{\link{stat_qq_unif_hex}}
+#' @note Plotting several thousand points might take time. If you want to speed things up use \code{geom="ggrastr:::GeomPointRast"} or \code{\link{stat_qq_unif_hex}}.
 #' @aliases geom_qq_unif
 #'
 #' @examples
@@ -40,11 +40,12 @@
 #' geom_abline(intercept = 0, slope = 1)
 #'
 #' ## adding nice stuff
+#' ## identical limits (meaning truely square)
 #' qp +
 #'   theme(aspect.ratio=1) + ## square shaped
-#'   expand_limits(x = -log10(max(df$P)), y = -log10(max(df$P))) + ## identical limits (meaning truely square)
-#'   ggtitle("QQplot") + ## title
-#'   xlab("Expected -log10(P)") + ## axis labels
+#'   expand_limits(x = -log10(max(df$P)), y = -log10(max(df$P))) +
+#'   ggtitle("QQplot") +
+#'   xlab("Expected -log10(P)") +
 #'   ylab("Observed -log10(P)")
 #'
 #' ## color
@@ -69,7 +70,9 @@
 #' data("giant")
 #' ?giant
 #'
-#' giant <- giant %>% dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))## generate two groups
+#' ## generate two groups
+#' giant <- giant %>%
+#'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))
 #' ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
 #'   stat_qq_unif() +
 #'   geom_abline(intercept = 0, slope = 1)
@@ -107,11 +110,12 @@ geom_qq_unif <- stat_qq_unif
 #' @format NULL
 #' @usage NULL
 #' @export
-StatQQplot <- ggplot2::ggproto(
+#' @keywords internal.
+StatQQplot <- ggproto(
   "StatQQplot",
-  ggplot2::Stat,
+  Stat,
   required_aes = c("observed"),
-  default_aes = ggplot2::aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),
+  default_aes = aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),
 
   compute_group = function(data,
                            scales,

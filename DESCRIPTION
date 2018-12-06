@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Sina R<U+00FC>eger
 Maintainer: Sina R<U+00FC>eger <sina.rueeger@gmail.com>
 Description: Provides Manhattan plot and QQplot as a ggplot2 extension. 
-    Use four spaces when indenting paragraphs within the Description.
+    For high-dimensional GWAS data there is a hex version of the QQplot (which is more of a diagnostics tool).
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

@@ -3,7 +3,7 @@
 \name{stat_manhattan}
 \alias{stat_manhattan}
 \alias{geom_manhattan}
-\title{Manhattan plot with ggplot2 features}
+\title{Manhattan plot}
 \usage{
 stat_manhattan(mapping = NULL, data = NULL, geom = "point",
   position = "identity", na.rm = FALSE, show.legend = NA,
@@ -33,6 +33,8 @@ A \code{function} will be called with a single argument,
 the plot data. The return value must be a \code{data.frame}, and
 will be used as the layer data.}
 
+\item{geom}{\code{"point"} by default}
+
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
 
@@ -50,15 +52,20 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
-\item{y.thresh}{a vector}
+\item{y.thresh}{cutoff for y-axis, defined as a vector of length two. If \code{c(K, NA)}, points with a y-value lower than K will be removed. If \code{c(NA, K)} points with y-values larger than K will be removed.}
 
-\item{...}{more stuff}
+\item{chr.class}{Relevant for coloring of the points: what class the chromosomes should be represented as. If "numeric", coloring will be continuous. If "character" coloring will be discrete.}
+
+\item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
+often aesthetics, used to set an aesthetic to a fixed value, like
+\code{colour = "red"} or \code{size = 3}. They may also be parameters
+to the paired geom/stat.}
 }
 \value{
 sdfsdf
 }
 \description{
-Manhattan plot with ggplot2 features
+Manhattan plot for GWAS data
 }
 \details{
 See also \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-qq.r}
@@ -120,8 +127,9 @@ print(qp)
 
 ## facetting
 
-giant <- giant \%>\% dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))## generate two groups
-
+## generate two groups
+giant <- giant \%>\%
+  dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))
 qp <- ggplot(data = giant) +
   stat_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
   ggtitle("GIANT summary statistics") +

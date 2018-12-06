@@ -7,7 +7,7 @@
 mlog10_breaks(n = 10)
 }
 \arguments{
-\item{n}{}
+\item{n}{number of breaks}
 }
 \value{
 vector

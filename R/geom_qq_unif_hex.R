@@ -1,12 +1,11 @@
-#' Fast QQ-plot with hexagons
+#' @title Efficient Q-Q plot
+#' @description Density-like QQ-plot with hexagons for high-dimensional data.
 #'
 #'
 #' @inheritParams ggplot2::stat_bin_hex
 #' @param observed.thresh Same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected.
-#' @param ...
-#'
 #' @details Code and documentation mostly from \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
-#'
+#' @seealso \code{\link[ggplot2]{stat_bin_hex}}
 #' @export
 #'
 #' @examples
@@ -56,11 +55,11 @@ stat_qq_unif_hex <- function(mapping = NULL,
 #' @format NULL
 #' @usage NULL
 #' @export
-StatQQplotHex <- ggplot2::ggproto(
+StatQQplotHex <- ggproto(
   "StatQQplotHex",
-  ggplot2::Stat,
+  Stat,
   required_aes = c("y"),
-  default_aes = ggplot2::aes(y = stat(y), x = stat(x), weight = 1, fill = stat(count)),
+  default_aes = aes(y = stat(y), x = stat(x), weight = 1, fill = stat(count)),
 
   compute_group = function(data,
                            scales,

@@ -3,7 +3,7 @@
 \name{stat_qq_unif_hex}
 \alias{stat_qq_unif_hex}
 \alias{geom_qq_unif_hex}
-\title{Fast QQ-plot with hexagons}
+\title{Efficient Q-Q plot}
 \usage{
 stat_qq_unif_hex(mapping = NULL, data = NULL, geom = "hex",
   position = "identity", na.rm = FALSE, bins = 30, binwidth = NULL,
@@ -61,10 +61,13 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{observed.thresh}{Same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected.}
 
-\item{...}{}
+\item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
+often aesthetics, used to set an aesthetic to a fixed value, like
+\code{colour = "red"} or \code{size = 3}. They may also be parameters
+to the paired geom/stat.}
 }
 \description{
-Fast QQ-plot with hexagons
+Density-like QQ-plot with hexagons for high-dimensional data.
 }
 \details{
 Code and documentation mostly from \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
@@ -86,4 +89,7 @@ df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replac
 
 
 
+}
+\seealso{
+\code{\link[ggplot2]{stat_bin_hex}}
 }

@@ -2,10 +2,17 @@
 #' Theme GWAS (just a random theme, nothing really gwas specific)
 #'
 #' @inheritParams ggplot2::theme_gray
-#'
+#' @param ... additional arguments
 #' @details Makes a few modifications to \code{\link{theme_gray}}. Similar to \code{\link{theme_bw}}.
 #' @return Returns an object of class theme and gg.
 #' @export
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 element_line
+#' @importFrom ggplot2 element_rect
+#' @importFrom ggplot2 %+replace%
+#' @importFrom ggplot2 theme_grey
+#'
 #'
 #' @examples
 #' require(ggplot2)
