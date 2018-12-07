@@ -2,6 +2,7 @@
 % Please edit documentation in R/geom_qq_unif.R
 \name{stat_qq_unif}
 \alias{stat_qq_unif}
+\alias{stat_qqunif}
 \alias{geom_qq_unif}
 \title{Q-Q plot}
 \usage{

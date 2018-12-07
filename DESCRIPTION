@@ -21,7 +21,10 @@ Suggests:
     testthat (>= 2.0.1),
     wesanderson (>= 0.3.6),
     vctrs (>= 0.1.0),
-    plyr (>= 1.8.4)
+    plyr (>= 1.8.4),
+    knitr,
+    rmarkdown
 RoxygenNote: 6.1.1
 BugReports: https://github.com/sinarueeger/ggGWAS/issues
 Depends: R (>= 2.10)
+VignetteBuilder: knitr

@@ -2,6 +2,7 @@
 % Please edit documentation in R/geom_qq_unif_hex.R
 \name{stat_qq_unif_hex}
 \alias{stat_qq_unif_hex}
+\alias{stat_qqunif_hex}
 \alias{geom_qq_unif_hex}
 \title{Efficient Q-Q plot}
 \usage{
