@@ -1,0 +1,160 @@
+---
+title: ggGWAS
+subtitle: Reasoning
+author: Sina Rueger
+date: "`r Sys.Date()`"
+show_toc: true
+slug: gggwas
+output: 
+  rmarkdown::html_vignette:
+      toc: yes
+vignette: >
+  %\VignetteIndexEntry{ggGWAS: Reasoning}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Why bother with ggplot2 extension for GWAS summary statistic data visualisations? 
+
+This vignette lays out the [motivation](#reasons) why having a ggplot2 extension is needed. But it also discusses existing [alternatives](#alternatives) and ways to create a ggplot2-like [Q-Q plot](#ways-of-making-a-ggplot2-like-qqplot-plot) and [Manhattanplot](#ways-of-making-a-ggplot2-like-manhattan-plot). 
+
+
+## GWAS data visualisations
+
+There are two main data visualisations^[There are also other tools used, such as locuszoom plots, but these are a bit harder to implement, will skip these for now.] that are done after the GWAS is run: 
+
+- [Q-Q plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot): checks the deviation of the P-value distribution from the uniform distribution. 
+
+- [Manhattan plot](https://en.wikipedia.org/wiki/Manhattan_plot): shows the P-value or summary statistic distribution along the chomosomal position. 
+
+![QQplot](https://user-images.githubusercontent.com/4454726/47022176-323fb600-d15d-11e8-892b-152816ce9574.png)
+
+<p><a href="https://commons.wikimedia.org/wiki/File:Manhattan_Plot.png#/media/File:Manhattan_Plot.png"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Manhattan_Plot.png" alt="Manhattan Plot.png" width="640" height="249"></a><br>By M. Kamran Ikram et al - Ikram MK et al (2010) Four Novel Loci (19q13, 6q24, 12q24, and 5q14) Influence the Microcirculation In Vivo. PLoS Genet. 2010 Oct 28;6(10):e1001184. <a href="https://en.wikipedia.org/wiki/Digital_object_identifier" class="extiw" title="w:Digital object identifier">doi</a>:<a rel="nofollow" class="external text" href="https://doi.org/10.1371%2Fjournal.pgen.1001184.g001">10.1371/journal.pgen.1001184.g001</a>, <a href="https://creativecommons.org/licenses/by/2.5" title="Creative Commons Attribution 2.5">CC BY 2.5</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=18056138">Link</a></p>
+
+
+## Alternatives
+
+Both plotting types can be applied in R with various functions. Just to name a few (which have also served as inspiration):
+
+- http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html
+- https://www.r-graph-gallery.com/wp-content/uploads/2018/02/Manhattan_plot_in_R.html
+- https://genome.sph.umich.edu/wiki/Code_Sample:_Generating_QQ_Plots_in_R
+- https://rdrr.io/bioc/ramwas/man/qqplotFast.html
+- https://github.com/pcgoddard/Burchardlab_Tutorials/wiki/GGplot2-Manhattan-Plot-Function
+- https://bioconductor.org/packages/release/bioc/html/ggbio.html
+- https://github.com/drveera/ggman
+
+An often used package is [qqman](https://rdrr.io/cran/qqman/man/qq.html), that has a function for Q-Q plots `qqman::qq` and Manhattan plots `qqman::manhattan`. 
+
+And there are various ggplot2 wrappers, but not actual extensions (which ones???)
+
+
+
+## Reasons
+The problem is two fold: 
+1. GWAS summary statistics usually contains around 1 mio of rows, so plotting becomes a lengthy process. 
+2. All existing packages use the base plotting functions, making it difficult to apply any functionalities that ggplot2 can (e.g. facetting, colouring).
+
+The idea is therefore to create a ggplot2 extension that would facilitate all this: 1) fast plotting (through hexagons and filtering) and 2) building ggplot2 geoms and stats. 
+
+
+By writing a ggplot2 extension, we can inherit lots of the default ggplot2 functionalities and shorten the input. 
+
+## Ways of making a ggplot2-like Q-Q plot plot
+
+Let's say we have GWAS summary statistics for a number of SNPs. Let's call this data `gwas.summarystats`: for a number of SNPs (rowwise) we know the SNP identifier (`SNP`) and the P-value (`P`). That would look like this:
+
+```
+SNP     P
+rs3342  1e-2
+rs83    1e-2
+...     ...
+```
+
+There is a [`geom_qq`](https://ggplot2.tidyverse.org/reference/geom_qq.html) in ggplot2 that implements quantile-quantile plots. However, this is not exactly the same as what we want. 
+
+
+```{r, fig.height = 5, fig.width = 5}
+## Describe how to make a qqplot from scratch
+```
+
+
+### Functionality wishlist
+
+`ggplot(data = gwas.summarystats) + geom_qqplot(aes(y = -log10(P)))`
+
+- implement a GWAS QQplot (representing how the P value distribution deviates from the uniform distribution under the null)
+- include correct labels (expected and observed)
+- make sure color, group, facetting all works
+- allow for the `raster` version (for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
+- if time: implement genomic inflation factor representation
+- while we are at it: plotting box should be squared and x and y axis range identical
+ 
+ 
+## Ways of making a ggplot2-like Manhattan plot
+
+```{r, fig.height = 5, fig.width = 5}
+## Describe how to make a manhattanplot from scratch
+```
+
+
+### Functionality wishlist
+
+`ggplot(data = gwas.summarystats) + geom_manhattan(aes(x = Pos, y = -log10(P), group = Chr))`
+
+
+- x axis spacing with space between chromosome and spaced as with position)
+- include correct y axis labels 
+- make sure color, group, facetting all works
+- allow for the `raster` version (for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
+- geom line too
+- if time: smart coloring (two alternating colors)
+
+
+## Useful links
+
+### How to make a ggplot2 extension
+
+- [Extending ggplot2 (vignette)](https://ggplot2.tidyverse.org/articles/extending-ggplot2.html#creating-a-new-geom)
+- [R help](https://www.rdocumentation.org/packages/ggplot2/versions/3.0.0/topics/ggplot2-ggproto)
+- [here (wiki)](https://github.com/tidyverse/ggplot2/wiki/Creating-a-new-geom) (from 2010)
+- [Programming with ggplot2](https://rpubs.com/hadley/97970)
+- [ggproto help](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html)
+- [Howto by R Peng](https://bookdown.org/rdpeng/RProgDA/building-new-graphical-elements.html)
+- [Creating ggplot2 extensions](https://rud.is/books/creating-ggplot2-extensions/)
+- https://twitter.com/DrMowinckels/status/1115124147405901824
+
+### Other ggplot2 extensions
+
+- https://github.com/LCBC-UiO/ggseg
+- https://www.garrickadenbuie.com/project/ggpomological/
+- https://coolbutuseless.github.io/2019/03/19/geom_blurry-proof-of-concept/
+
+
+## Misc
+
+### Testing
+
+How to test plots? 
+
+One option is, to compare ggplot2 object data. In the example below, we are comparing two ggplot2 outputs, one created with `qplot` and one with `ggplot`. 
+
+```
+gg1 <- qplot(Sepal.Length, Petal.Length, data = iris)
+gg2 <- ggplot(data = iris) + geom_point(aes(Sepal.Length, Petal.Length))
+identical(gg1$data, gg2$data)
+```
+We can apply this to our package by creating the qqplot and manhattanplots manually by hand, and then comparing the to the function outputs.
+
+Another option is to use https://github.com/lionel-/vdiffr
+
+
+
