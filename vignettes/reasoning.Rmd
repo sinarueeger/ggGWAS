@@ -29,48 +29,49 @@ This vignette lays out the [motivation](#reasons) why having a ggplot2 extension
 
 ## GWAS data visualisations
 
-There are two main data visualisations^[There are also other tools used, such as locuszoom plots, but these are a bit harder to implement, will skip these for now.] that are done after the GWAS is run: 
+There are two main data visualisations^[There are also other tools used, such as locuszoom plots, but these are harder to implement because they need access to external information, and we will skip these for now.] that are done after the GWAS is run^[We will not discuss their usefulness here.]: 
 
 - [Q-Q plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot): checks the deviation of the P-value distribution from the uniform distribution. 
 
 - [Manhattan plot](https://en.wikipedia.org/wiki/Manhattan_plot): shows the P-value or summary statistic distribution along the chomosomal position. 
 
-![QQplot](https://user-images.githubusercontent.com/4454726/47022176-323fb600-d15d-11e8-892b-152816ce9574.png)
+<img src="https://user-images.githubusercontent.com/4454726/47022176-323fb600-d15d-11e8-892b-152816ce9574.png" alt="QQplot" height="249">
 
 <p><a href="https://commons.wikimedia.org/wiki/File:Manhattan_Plot.png#/media/File:Manhattan_Plot.png"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Manhattan_Plot.png" alt="Manhattan Plot.png" width="640" height="249"></a><br>By M. Kamran Ikram et al - Ikram MK et al (2010) Four Novel Loci (19q13, 6q24, 12q24, and 5q14) Influence the Microcirculation In Vivo. PLoS Genet. 2010 Oct 28;6(10):e1001184. <a href="https://en.wikipedia.org/wiki/Digital_object_identifier" class="extiw" title="w:Digital object identifier">doi</a>:<a rel="nofollow" class="external text" href="https://doi.org/10.1371%2Fjournal.pgen.1001184.g001">10.1371/journal.pgen.1001184.g001</a>, <a href="https://creativecommons.org/licenses/by/2.5" title="Creative Commons Attribution 2.5">CC BY 2.5</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=18056138">Link</a></p>
 
 
 ## Alternatives
 
-Both plotting types can be applied in R with various functions. Just to name a few (which have also served as inspiration):
+Both plotting types can be applied in R with various functions. Just to name a few, here are some links which have also served as inspiration:
 
-- http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html
-- https://www.r-graph-gallery.com/wp-content/uploads/2018/02/Manhattan_plot_in_R.html
-- https://genome.sph.umich.edu/wiki/Code_Sample:_Generating_QQ_Plots_in_R
-- https://rdrr.io/bioc/ramwas/man/qqplotFast.html
-- https://github.com/pcgoddard/Burchardlab_Tutorials/wiki/GGplot2-Manhattan-Plot-Function
-- https://bioconductor.org/packages/release/bioc/html/ggbio.html
-- https://github.com/drveera/ggman
+- `qqman`: R package for GWAS results: http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html
+- Recipe to create Manhattanplot in R with `qqman`, `ggplot2` and `plotly`: https://www.r-graph-gallery.com/wp-content/uploads/2018/02/Manhattan_plot_in_R.html
+- Recipe for QQplots in `lattice` (for historical reasons) https://genome.sph.umich.edu/wiki/Code_Sample:_Generating_QQ_Plots_in_R
+- Fast QQplot implementation in `ramwas` package: https://rdrr.io/bioc/ramwas/man/qqplotFast.html
+- DYI `ggplot2` Manhattan plots: https://github.com/pcgoddard/Burchardlab_Tutorials/wiki/GGplot2-Manhattan-Plot-Function
+- `ggbio` package, a toolkit for genomic data (`plotGrandLinear` is an implementation for a Manhattan plot, uses `GRanges` objects, ggplot2 wrapper): https://bioconductor.org/packages/release/bioc/html/ggbio.html 
+- `ggman`, wrapper (but no ggplot2 extension) for Manhattan plots: https://github.com/drveera/ggman
 
 An often used package is [qqman](https://rdrr.io/cran/qqman/man/qq.html), that has a function for Q-Q plots `qqman::qq` and Manhattan plots `qqman::manhattan`. 
 
-And there are various ggplot2 wrappers, but not actual extensions (which ones???)
+And there are various ggplot2 wrappers (`ggbio`, `ggman`), but not actual extensions.
 
 
 
 ## Reasons
+
 The problem is two fold: 
+
 1. GWAS summary statistics usually contains around 1 mio of rows, so plotting becomes a lengthy process. 
-2. All existing packages use the base plotting functions, making it difficult to apply any functionalities that ggplot2 can (e.g. facetting, colouring).
+2. All existing packages use the base plotting functions, making it difficult to apply any functionalities that `ggplot2` can (e.g. facetting, colouring).
 
-The idea is therefore to create a ggplot2 extension that would facilitate all this: 1) fast plotting (through hexagons and filtering) and 2) building ggplot2 geoms and stats. 
-
+The idea is therefore to create a ggplot2 extension that would facilitate all this: 1) fast plotting (through hexagons and filtering) and 2) building `ggplot2` geoms and stats. 
 
 By writing a ggplot2 extension, we can inherit lots of the default ggplot2 functionalities and shorten the input. 
 
 ## Ways of making a ggplot2-like Q-Q plot plot
 
-Let's say we have GWAS summary statistics for a number of SNPs. Let's call this data `gwas.summarystats`: for a number of SNPs (rowwise) we know the SNP identifier (`SNP`) and the P-value (`P`). That would look like this:
+Let's say we have GWAS summary statistics for a number of SNPs. We call this data `gwas.summarystats`: for a number of SNPs listed by row, we know the SNP identifier (`SNP`) and the P-value (`P`). 
 
 ```
 SNP     P
@@ -79,44 +80,141 @@ rs83    1e-2
 ...     ...
 ```
 
-There is a [`geom_qq`](https://ggplot2.tidyverse.org/reference/geom_qq.html) in ggplot2 that implements quantile-quantile plots. However, this is not exactly the same as what we want. 
+For illustration purposes, we will use the summary statistics dataset `GWAS.utils::giant`.
 
+```{r}
+library(GWAS.utils)
+skimr::skim(giant)
+
+
+```
+
+### 1. qqman::qq
+
+`qqman::qq` is straightforward to use: just pass on the P-value column.
 
 ```{r, fig.height = 5, fig.width = 5}
-## Describe how to make a qqplot from scratch
+qqman::qq(giant$P)
+```
+
+### 2. ggplot2::geom_qq
+
+There is a [`geom_qq`](https://ggplot2.tidyverse.org/reference/geom_qq.html) in ggplot2 that implements quantile-quantile plots. However, this is only useful, if we can transform the axes with `-log10()`. How to create custom made ggplot2 scales is explained [here](https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html). 
+
+```{r, fig.height = 5, fig.width = 5}
+
+library(ggplot2)
+theme_set(theme_bw())
+
+## source: 
+(gg <- ggplot(data = giant) + 
+  geom_qq(aes(sample = P), distribution = stats::qunif)) +
+    theme(aspect.ratio = 1)
+
+# + scale_y_log10() + scale_x_log10()
+# + coord_trans(x = "log10", y = "log10")
+  
+f_trans_mlog10 <- function(x) -log10(x)
+f_trans_mlog10_inverse <- function(x) 10^(-x)
+
+mlog10_trans <- scales::trans_new("-log10",
+                                  transform = function(x) -log10(x),
+                                  inverse = function(x) 10^(-x))
+
+gg + 
+  scale_y_continuous(trans = mlog10_trans) + 
+  scale_x_continuous(trans = mlog10_trans) + 
+  geom_abline(intercept = 0, slope = 1) + 
+  theme(aspect.ratio = 1)
+```
+
+### 3. ggplot2::geom_point
+
+```{r, fig.height = 5, fig.width = 5}
+
+N <- nrow(giant)
+expected <- (1:N) / N - 1 / (2 * N)
+giant <- giant %>% dplyr::arrange(P) %>% dplyr::mutate(P_expected = expected)
+
+ggplot(data = giant) + 
+  geom_point(aes(-log10(P_expected), -log10(P))) + 
+  geom_abline(intercept = 0, slope = 1) + 
+  theme(aspect.ratio = 1) + 
+  xlab(expression(Expected ~ ~-log[10](italic(p)))) + ## from qqman::qq
+  ylab(expression(Observed ~ ~-log[10](italic(p)))) ## from qqman::qq
+
+
+
+## or with the scale_y_continous feature
+ggplot(data = giant) +
+geom_point(aes(P_expected, P)) + 
+  scale_y_continuous(trans = mlog10_trans) + 
+  scale_x_continuous(trans = mlog10_trans) + 
+  geom_abline(intercept = 0, slope = 1) + 
+  theme(aspect.ratio = 1) #+ ## square shaped
+#  expand_limits(x = -log10(max(giant$P)), y = -log10(max(giant$P)))
+  
 ```
 
 
-### Functionality wishlist
+### 4. ggGWAS::geom_gwas_qq
 
-`ggplot(data = gwas.summarystats) + geom_qqplot(aes(y = -log10(P)))`
+`ggplot(data = giant) + geom_gwas_qq(aes(observed = P))`
 
-- implement a GWAS QQplot (representing how the P value distribution deviates from the uniform distribution under the null)
+Here is a whishlist of what a `geom_gwas_qq` function should be able to do:
+
 - include correct labels (expected and observed)
 - make sure color, group, facetting all works
-- allow for the `raster` version (for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
+- allow for the `raster` version (for faster plotting), hexbins (also for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
 - if time: implement genomic inflation factor representation
-- while we are at it: plotting box should be squared and x and y axis range identical
+- while we are at it: plotting box should be squared (`theme(aspect.ratio = 1)`)
+ 
  
  
 ## Ways of making a ggplot2-like Manhattan plot
 
-```{r, fig.height = 5, fig.width = 5}
-## Describe how to make a manhattanplot from scratch
+### 1. qqman::manhattan
+
+
+```{r, fig.height = 5, fig.width = 8}
+qqman::manhattan(giant, chr = "CHR" , bp = "POS", p = "P")
+```
+
+### 2. ggplot2::geom_point
+
+```{r, fig.height = 5, fig.width = 8}
+
+## computing new x axis
+giant <- giant %>% dplyr::arrange(CHR, POS) %>% dplyr::mutate(tmp = 1, cumsum.tmp = cumsum(tmp))
+
+## calculating x axis location for chromosome label
+med.dat <- giant %>% dplyr::group_by(CHR) %>% dplyr::summarise(median.x = median(cumsum.tmp))
+
+ggplot(data = giant) + 
+  geom_point(aes(x = cumsum.tmp, y = -log10(P), color = CHR %%2 == 0)) + ## create alternate coloring
+  geom_hline(yintercept = -log10(5e-8)) + ## add horizontal line
+  scale_x_continuous(breaks = med.dat$median.x, labels = med.dat$CHR) + ## add new x labels 
+  guides(colour=FALSE) +  ## remove legend
+  xlab("Chromosome") + 
+  ylab(expression(-log[10](italic(p)))) + ## y label from qqman::qq
+  scale_color_manual(values = c(gray(0.5), gray(0))) ## instead of colors, go for gray
+  
 ```
 
 
-### Functionality wishlist
-
-`ggplot(data = gwas.summarystats) + geom_manhattan(aes(x = Pos, y = -log10(P), group = Chr))`
 
 
-- x axis spacing with space between chromosome and spaced as with position)
+### 3. ggGWAS::geom_gwas_manhattan
+
+`ggplot(data = giant) + geom_gwas_manhattan(aes(pos = POS, chr = CHR, y = -log10(P)))`
+
+Here is a whishlist of what a `geom_gwas_manhattan` function should be able to do:
+
+- x axis spacing with space between chromosome and spaced as with position
 - include correct y axis labels 
 - make sure color, group, facetting all works
 - allow for the `raster` version (for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
-- geom line too
-- if time: smart coloring (two alternating colors)
+- implement coloring (two alternating colors)
 
 
 ## Useful links
