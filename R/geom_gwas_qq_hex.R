@@ -12,49 +12,48 @@
 #'
 #' @examples
 #' require(ggplot2)
-#'
+#' 
 #' n.sample <- 1000
-#' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"),
-#' n.sample, replace = TRUE))
-#'
-#'
+#' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"),
+#'   n.sample,
+#'   replace = TRUE
+#' ))
+#' 
+#' 
 #' (qp <- ggplot(df, aes(y = P)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
-#'
+#' 
 #' (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
-#'
-#'
-#'
-
-
 stat_gwas_qq_hex <- function(mapping = NULL,
-                          data = NULL,
-                          geom = "hex",
-                          position = "identity",
-                          na.rm = FALSE,
-                          bins = 30,
-                          binwidth = NULL,
-                          show.legend = NA,
-                          inherit.aes = TRUE,
-                          observed.thresh = NULL,
-                          ...) {
-    layer(
-      stat = StatGwasQqplotHex,
-      data = data,
-      mapping = mapping,
-      geom = geom,
-      position = position,
-      show.legend = show.legend,
-      inherit.aes = inherit.aes,
-      params = list(na.rm = na.rm,
-                    observed.thresh = observed.thresh,
-                    bins = bins,
-                    binwidth = binwidth, ...)
+                             data = NULL,
+                             geom = "hex",
+                             position = "identity",
+                             na.rm = FALSE,
+                             bins = 30,
+                             binwidth = NULL,
+                             show.legend = NA,
+                             inherit.aes = TRUE,
+                             observed.thresh = NULL,
+                             ...) {
+  layer(
+    stat = StatGwasQqplotHex,
+    data = data,
+    mapping = mapping,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      na.rm = na.rm,
+      observed.thresh = observed.thresh,
+      bins = bins,
+      binwidth = binwidth, ...
     )
-  }
+  )
+}
 
 #' @rdname ggplot2-ggproto
 #' @format NULL
@@ -67,14 +66,13 @@ StatGwasQqplotHex <- ggproto(
   default_aes = aes(y = stat(y), x = stat(x), weight = 1, fill = stat(count)),
 
   compute_group = function(data,
-                           scales,
-                           dparams,
-                           na.rm,
-                           observed.thresh,
-                           binwidth = NULL, bins = 30) {
-
+                             scales,
+                             dparams,
+                             na.rm,
+                             observed.thresh,
+                             binwidth = NULL, bins = 30) {
     observed <-
-      data$y#[!is.na(data$x)]
+      data$y # [!is.na(data$x)]
     N <- length(observed)
 
 
@@ -85,21 +83,19 @@ StatGwasQqplotHex <- ggproto(
       sort(-log10(observed))
 
     ## remove points if observed thresh is set.
-    if (!is.null(observed.thresh))
-    {
+    if (!is.null(observed.thresh)) {
       observed.thresh <- -log10(observed.thresh)
 
       ind <-
         which(observed >= observed.thresh)
       expected <- expected[ind]
       observed <- observed[ind]
-
     }
 
     data$y <- observed
     data$x <- expected
 
-    #try_require("hexbin", "stat_binhex")
+    # try_require("hexbin", "stat_binhex")
     binwidth <- binwidth %||% hex_binwidth(bins, scales)
     wt <- data$weight %||% rep(1L, nrow(data))
     out <- hexBinSummarise(data$x, data$y, wt, binwidth, sum)
@@ -110,11 +106,8 @@ StatGwasQqplotHex <- ggproto(
     out$ncount <- out$count / max(out$count, na.rm = TRUE)
     out$value <- NULL
 
-      out
-
+    out
   }
-
-
 )
 
 #' @export

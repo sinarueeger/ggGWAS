@@ -17,23 +17,16 @@ mlog10_breaks <- function(n = 10) {
 #' @examples
 #' require(ggplot2)
 #' df <- data.frame(y = runif(1000))
-#'
+#' 
 #' ggplot(df, aes(sample = y)) +
-#' stat_qq(distribution = stats::qunif) +
-#' scale_y_continuous(trans = mlog10_trans()) +
-#' scale_x_continuous(trans = mlog10_trans()) +
-#' geom_abline(intercept = 0, slope = 1)
-
+#'   stat_qq(distribution = stats::qunif) +
+#'   scale_y_continuous(trans = mlog10_trans()) +
+#'   scale_x_continuous(trans = mlog10_trans()) +
+#'   geom_abline(intercept = 0, slope = 1)
 mlog10_trans <- function() {
   scales::trans_new("-log10",
-                    transform = function(x) -log10(x),
-                    inverse = function(x) 10^(-x),
-                    breaks = mlog10_breaks())
+    transform = function(x) -log10(x),
+    inverse = function(x) 10^(-x),
+    breaks = mlog10_breaks()
+  )
 }
-
-
-
-
-
-
-

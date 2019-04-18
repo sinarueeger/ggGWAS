@@ -17,9 +17,7 @@
 #' @examples
 #' require(ggplot2)
 #' qplot(Sepal.Length, Sepal.Width, data = iris) + theme_gwas()
-#'
 theme_gwas <- function(...) {
-
   theme_grey(...) %+replace%
     theme(
       strip.text.y = element_text(angle = 0), panel.background = element_rect(fill = "white", colour = NA), panel.border = element_rect(fill = NA, colour = "grey20"), panel.grid.major = element_line(colour = "grey92"),

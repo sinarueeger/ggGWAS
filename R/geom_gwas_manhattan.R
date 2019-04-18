@@ -25,84 +25,89 @@
 #' data("giant")
 #' ?giant
 #' theme_set(theme_gwas())
-#'
+#' 
 #' ## default: for -log10(P), by default chr is numeric
 #' qp <- ggplot(giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (by default CHR is numeric)")
 #' print(qp)
-#'
+#' 
 #' ## add nice color palette
 #' pal <- wesanderson::wes_palette("Zissou1", 22, type = "continuous")
 #' qp + scale_color_gradientn(colours = pal)
-#'
+#' 
 #' ## chr factor
 #' qp <- ggplot(giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
-#'   chr.class = "character") +
+#'     chr.class = "character"
+#'   ) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (CHR is now a character/factor)")
 #' print(qp)
 #' ## adding a nice color palette
 #' qp + scale_color_manual(values = wesanderson::wes_palette("Zissou1", 22,
-#' type = "continuous"))
-#'
+#'   type = "continuous"
+#' ))
+#' 
 #' ## turn all points black
 #' qp <- ggplot(giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
-#'   color = "black", alpha = I(0.4)) +
+#'     color = "black", alpha = I(0.4)
+#'   ) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
-#'
+#' 
 #' ## set lower threshold
 #' qp <- ggplot(data = giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
-#'   y.thresh= c(2, NA)) +
+#'     y.thresh = c(2, NA)
+#'   ) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
-#'
-#'
+#' 
+#' 
 #' ## for effect sizes
 #' qp <- ggplot(data = giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
 #'   ggtitle("GIANT effect sizes")
 #' print(qp)
-#'
+#' 
 #' ## use rastr
 #' qp <- ggplot(data = giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
-#'   geom = ggrastr:::GeomPointRast) +
+#'     geom = ggrastr:::GeomPointRast
+#'   ) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (rastr)")
 #' print(qp)
-#'
+#' 
 #' ## facetting
-#'
+#' 
 #' ## generate two groups
 #' giant <- giant %>%
-#'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size",
-#'   BETA > 0 ~ "Pos effect size"))
+#'   dplyr::mutate(gr = dplyr::case_when(
+#'     BETA <= 0 ~ "Neg effect size",
+#'     BETA > 0 ~ "Pos effect size"
+#'   ))
 #' qp <- ggplot(data = giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
 #'   ggtitle("GIANT summary statistics") +
 #'   facet_wrap(~gr)
 #' print(qp)
-
-
 stat_gwas_manhattan <-
   function(mapping = NULL,
-           data = NULL,
-           geom = "point",
-           position = "identity",
-           na.rm = FALSE,
-           show.legend = NA,
-           inherit.aes = TRUE,
-           y.thresh = NULL,
-           chr.class = "numeric",
-           ...) {
+             data = NULL,
+             geom = "point",
+             position = "identity",
+             na.rm = FALSE,
+             show.legend = NA,
+             inherit.aes = TRUE,
+             y.thresh = NULL,
+             chr.class = "numeric",
+             ...) {
     # , dparams = list()
     layer(
       stat = StatGwasManhattan,
@@ -148,7 +153,7 @@ StatGwasManhattan <- ggproto(
     ## only include points that are above this threshold
 
     if (!is.null(y.thresh)) {
-    ## try to solve this with ylim
+      ## try to solve this with ylim
       if (!is.na(y.thresh[1])) {
         data <- data %>% dplyr::filter(y >= y.thresh[1])
       }
@@ -178,8 +183,10 @@ StatGwasManhattan <- ggproto(
       data2$chr <- as.factor(as.numeric(data2$chr))
     }
 
-    data.frame(`Pos` = data2$cumsum.tmp,
-               y = data2$y,
-               colour = data2$chr)
+    data.frame(
+      `Pos` = data2$cumsum.tmp,
+      y = data2$y,
+      colour = data2$chr
+    )
   }
 )

@@ -31,7 +31,8 @@ hexBinSummarise <- function(x, y, z, binwidth, fun = mean, fun.args = list(),
 
   # Call hexbin
   hb <- hexbin::hexbin(
-    x, xbnds = xbnds, xbins = xbins,
+    x,
+    xbnds = xbnds, xbins = xbins,
     y, ybnds = ybnds, shape = ybins / xbins,
     IDs = TRUE
   )
@@ -48,17 +49,18 @@ hexBinSummarise <- function(x, y, z, binwidth, fun = mean, fun.args = list(),
 
 
 
-##copied from: https://github.com/tidyverse/ggplot2/blob/master/R/utilities.r
+## copied from: https://github.com/tidyverse/ggplot2/blob/master/R/utilities.r
 try_require <- function(package, fun) {
   if (requireNamespace(package, quietly = TRUE)) {
     library(package, character.only = TRUE)
     return(invisible())
   }
 
-  stop("Package `", package, "` required for `", fun , "`.\n",
-       "Please install and try again.", call. = FALSE)
+  stop("Package `", package, "` required for `", fun, "`.\n",
+    "Please install and try again.",
+    call. = FALSE
+  )
 }
 "%||%" <- function(a, b) {
   if (!is.null(a)) a else b
 }
-

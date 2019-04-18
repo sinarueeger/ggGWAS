@@ -22,95 +22,96 @@
 #' @examples
 #' require(ggplot2)
 #' n.sample <- 10000
-#' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample,
-#' replace = TRUE))
-#'
+#' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"), n.sample,
+#'   replace = TRUE
+#' ))
+#' 
 #' ## default
 #' (qp <- ggplot(df, aes(observed = P)) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1))
-#'
+#' 
 #' ## Group points
-#' (qp <- ggplot(df, aes(observed = P)) + stat_gwas_qq(aes(group = GWAS,
-#' color = GWAS)))
-#'
+#' (qp <- ggplot(df, aes(observed = P)) + stat_gwas_qq(aes(
+#'   group = GWAS,
+#'   color = GWAS
+#' )))
+#' 
 #' ## show only p-values above a cerain threshold
 #' ggplot(df, aes(observed = P)) +
-#' stat_gwas_qq(observed.thresh = 0.05) +
-#' geom_abline(intercept = 0, slope = 1)
-#'
+#'   stat_gwas_qq(observed.thresh = 0.05) +
+#'   geom_abline(intercept = 0, slope = 1)
+#' 
 #' ## plot a line instead
 #' ggplot(df, aes(observed = P)) +
-#' stat_gwas_qq(geom = "line") +
-#' geom_abline(intercept = 0, slope = 1)
-#'
+#'   stat_gwas_qq(geom = "line") +
+#'   geom_abline(intercept = 0, slope = 1)
+#' 
 #' ## plot efficiently
 #' ggplot(df, aes(observed = P)) +
-#' stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
-#' geom_abline(intercept = 0, slope = 1)
-#'
+#'   stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
+#'   geom_abline(intercept = 0, slope = 1)
+#' 
 #' ## adding nice stuff
 #' ## identical limits (meaning truely square)
 #' qp +
-#'   theme(aspect.ratio=1) + ## square shaped
+#'   theme(aspect.ratio = 1) + ## square shaped
 #'   expand_limits(x = -log10(max(df$P)), y = -log10(max(df$P))) +
 #'   ggtitle("QQplot") +
 #'   xlab("Expected -log10(P)") +
 #'   ylab("Observed -log10(P)")
-#'
+#' 
 #' ## color
 #' ggplot(df, aes(observed = P, color = GWAS)) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1)
-#'
+#' 
 #' ## facet
 #' ggplot(df, aes(observed = P)) +
 #'   facet_wrap(~GWAS) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1)
-#'
-#'
+#' 
+#' 
 #' ## group
 #' ggplot(df, aes(observed = P, group = GWAS)) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1)
-#'
+#' 
 #' ## group
 #' library(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
 #' data("giant")
 #' ?giant
-#'
+#' 
 #' ## generate two groups
 #' giant <- giant %>%
-#'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size",
-#'   BETA > 0 ~ "Pos effect size"))
+#'   dplyr::mutate(gr = dplyr::case_when(
+#'     BETA <= 0 ~ "Neg effect size",
+#'     BETA > 0 ~ "Pos effect size"
+#'   ))
 #' ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1)
-#'
-
-
-
 stat_gwas_qq <- function(mapping = NULL,
-                          data = NULL,
-                          geom = "point",
-                          position = "identity",
-                          na.rm = FALSE,
-                          show.legend = NA,
-                          inherit.aes = TRUE,
-                          observed.thresh = NULL,
-                          ...) {
-    layer(
-      stat = StatGwasQqplot,
-      data = data,
-      mapping = mapping,
-      geom = geom,
-      position = position,
-      show.legend = show.legend,
-      inherit.aes = inherit.aes,
-      params = list(na.rm = na.rm, observed.thresh = observed.thresh, ...)
-    )
-  }
+                         data = NULL,
+                         geom = "point",
+                         position = "identity",
+                         na.rm = FALSE,
+                         show.legend = NA,
+                         inherit.aes = TRUE,
+                         observed.thresh = NULL,
+                         ...) {
+  layer(
+    stat = StatGwasQqplot,
+    data = data,
+    mapping = mapping,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm, observed.thresh = observed.thresh, ...)
+  )
+}
 
 #' @export
 #' @rdname stat_gwas_qq
@@ -129,13 +130,12 @@ StatGwasQqplot <- ggproto(
   default_aes = aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),
 
   compute_group = function(data,
-                           scales,
-                           dparams,
-                           na.rm,
-                           observed.thresh) {
-
+                             scales,
+                             dparams,
+                             na.rm,
+                             observed.thresh) {
     observed <-
-      data$observed#[!is.na(data$x)]
+      data$observed # [!is.na(data$x)]
     N <- length(observed)
 
 
@@ -146,22 +146,20 @@ StatGwasQqplot <- ggproto(
       sort(-log10(observed))
 
     ## remove points if observed thresh is set.
-    if (!is.null(observed.thresh))
-    {
+    if (!is.null(observed.thresh)) {
       observed.thresh <- -log10(observed.thresh)
 
       ind <-
         which(observed >= observed.thresh)
       expected <- expected[ind]
       observed <- observed[ind]
-
     }
 
 
 
     data.frame(`observed_log10` = observed, `expected_log10` = expected)
   }
-    #,
+  # ,
   # draw_panels = function(data, panel_scales, coord) {
   #   ## Transform the data first
   #   coords <- coord$transform(data, panel_scales)
@@ -182,7 +180,4 @@ StatGwasQqplot <- ggproto(
   #  xlab(expression(Expected ~ ~-log[10](italic(p)))) +
   #  ylab(expression(Observed ~ ~-log[10](italic(p))))
   #     }
-
 )
-
-
