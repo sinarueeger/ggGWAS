@@ -13,7 +13,7 @@
 #' @details \code{\link[ggplot2]{stat_qq}} works for all kinds of distributions.
 #' But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation
 #' does not work neatly.
-#' @seealso \code{\link[ggplot2]{stat_qq}}, \code{\link{stat_geom_qq_hex}}
+#' @seealso \code{\link[ggplot2]{stat_qq}}, \code{\link{stat_gwas_qq_hex}}
 #' @note Plotting several thousand points might take time. If you want to speed
 #' things up use \code{geom="ggrastr:::GeomPointRast"} or
 #' \code{\link{stat_gwas_qq_hex}}.
@@ -25,33 +25,33 @@
 #' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"), n.sample,
 #'   replace = TRUE
 #' ))
-#' 
+#'
 #' ## default
 #' (qp <- ggplot(df, aes(observed = P)) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1))
-#' 
+#'
 #' ## Group points
 #' (qp <- ggplot(df, aes(observed = P)) + stat_gwas_qq(aes(
 #'   group = GWAS,
 #'   color = GWAS
 #' )))
-#' 
+#'
 #' ## show only p-values above a cerain threshold
 #' ggplot(df, aes(observed = P)) +
 #'   stat_gwas_qq(observed.thresh = 0.05) +
 #'   geom_abline(intercept = 0, slope = 1)
-#' 
+#'
 #' ## plot a line instead
 #' ggplot(df, aes(observed = P)) +
 #'   stat_gwas_qq(geom = "line") +
 #'   geom_abline(intercept = 0, slope = 1)
-#' 
+#'
 #' ## plot efficiently
 #' ggplot(df, aes(observed = P)) +
 #'   stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
 #'   geom_abline(intercept = 0, slope = 1)
-#' 
+#'
 #' ## adding nice stuff
 #' ## identical limits (meaning truely square)
 #' qp +
@@ -60,29 +60,29 @@
 #'   ggtitle("QQplot") +
 #'   xlab("Expected -log10(P)") +
 #'   ylab("Observed -log10(P)")
-#' 
+#'
 #' ## color
 #' ggplot(df, aes(observed = P, color = GWAS)) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1)
-#' 
+#'
 #' ## facet
 #' ggplot(df, aes(observed = P)) +
 #'   facet_wrap(~GWAS) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1)
-#' 
-#' 
+#'
+#'
 #' ## group
 #' ggplot(df, aes(observed = P, group = GWAS)) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1)
-#' 
+#'
 #' ## group
 #' library(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
 #' data("giant")
 #' ?giant
-#' 
+#'
 #' ## generate two groups
 #' giant <- giant %>%
 #'   dplyr::mutate(gr = dplyr::case_when(
