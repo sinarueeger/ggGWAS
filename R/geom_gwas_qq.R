@@ -121,8 +121,8 @@ geom_gwas_qq <- stat_gwas_qq
 #' @rdname ggplot2-ggproto
 #' @format NULL
 #' @usage NULL
-#' @export
-#' @keywords internal.
+# #' @export
+# #' @keywords internal.
 StatGwasQqplot <- ggproto(
   "StatGwasQqplot",
   Stat,

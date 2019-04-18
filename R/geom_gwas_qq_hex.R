@@ -59,7 +59,7 @@ stat_gwas_qq_hex <- function(mapping = NULL,
 #' @rdname ggplot2-ggproto
 #' @format NULL
 #' @usage NULL
-#' @export
+# #' @export
 StatGwasQqplotHex <- ggproto(
   "StatGwasQqplotHex",
   Stat,
