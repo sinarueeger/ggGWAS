@@ -32,13 +32,13 @@ df <-
 
 ## Q-Q plot --------------------
 
-ggplot(df, aes(observed = P)) + ggGWAS::stat_qqunif(aes(group = GWAS, color = GWAS))
+ggplot(df, aes(observed = P)) + ggGWAS::stat_qgwas_manhattanaes(group = GWAS, color = GWAS))
 
 
 ## Manhattan plot --------------------
 
 ggplot(data = df) +
-  ggGWAS::stat_manhattan(aes(
+  ggGWAS::stat_mgwas_anhattan(aes(
     pos = POS,
     y = -log10(P),
     chr = CHR

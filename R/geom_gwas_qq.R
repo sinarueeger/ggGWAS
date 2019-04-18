@@ -91,7 +91,7 @@ stat_gwas_qq <- function(mapping = NULL,
                           observed.thresh = NULL,
                           ...) {
     layer(
-      stat = StatGwasqqplot,
+      stat = StatGwasQqplot,
       data = data,
       mapping = mapping,
       geom = geom,
@@ -112,8 +112,8 @@ geom_gwas_qq <- stat_gwas_qq
 #' @usage NULL
 #' @export
 #' @keywords internal.
-StatGwasqqplot <- ggproto(
-  "StatGwasqqplot",
+StatGwasQqplot <- ggproto(
+  "StatGwasQqplot",
   Stat,
   required_aes = c("observed"),
   default_aes = aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),

@@ -24,7 +24,7 @@
 #'
 #' ## default: for -log10(P), by default chr is numeric
 #' qp <- ggplot(giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (by default CHR is numeric)")
 #' print(qp)
@@ -35,7 +35,7 @@
 #'
 #' ## chr factor
 #' qp <- ggplot(giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), chr.class = "character") +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), chr.class = "character") +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (CHR is now a character/factor)")
 #' print(qp)
@@ -44,14 +44,14 @@
 #'
 #' ## turn all points black
 #' qp <- ggplot(giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), color = "black", alpha = I(0.4)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), color = "black", alpha = I(0.4)) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
 #'
 #' ## set lower threshold
 #' qp <- ggplot(data = giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), y.thresh= c(2, NA)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), y.thresh= c(2, NA)) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
@@ -59,13 +59,13 @@
 #'
 #' ## for effect sizes
 #' qp <- ggplot(data = giant) +
-#'   stat_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
 #'   ggtitle("GIANT effect sizes")
 #' print(qp)
 #'
 #' ## use rastr
 #' qp <- ggplot(data = giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), geom = ggrastr:::GeomPointRast) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), geom = ggrastr:::GeomPointRast) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (rastr)")
 #' print(qp)
@@ -76,13 +76,13 @@
 #' giant <- giant %>%
 #'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))
 #' qp <- ggplot(data = giant) +
-#'   stat_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
 #'   ggtitle("GIANT summary statistics") +
 #'   facet_wrap(~gr)
 #' print(qp)
 
 
-stat_manhattan <-
+stat_gwas_manhattan <-
   function(mapping = NULL,
            data = NULL,
            geom = "point",
@@ -95,7 +95,7 @@ stat_manhattan <-
            ...) {
     # , dparams = list()
     layer(
-      stat = StatManhattan,
+      stat = StatGwasManhattan,
       data = data,
       mapping = mapping,
       geom = geom,
@@ -112,8 +112,8 @@ stat_manhattan <-
   }
 
 #' @export
-#' @rdname stat_manhattan
-geom_manhattan <- stat_manhattan
+#' @rdname stat_gwas_manhattan
+geom_gwas_manhattan <- stat_gwas_manhattan
 
 
 
@@ -121,8 +121,8 @@ geom_manhattan <- stat_manhattan
 #' @format NULL
 #' @usage NULL
 #' @export
-StatManhattan <- ggproto(
-  "StatManhattan",
+StatGwasManhattan <- ggproto(
+  "StatGwasManhattan",
   Stat,
   required_aes = c("y", "pos", "chr"),
   default_aes = aes(

@@ -39,7 +39,7 @@ stat_gwas_qq_hex <- function(mapping = NULL,
                           observed.thresh = NULL,
                           ...) {
     layer(
-      stat = StatQQplotHex,
+      stat = StatGwasQqplotHex,
       data = data,
       mapping = mapping,
       geom = geom,
@@ -55,8 +55,8 @@ stat_gwas_qq_hex <- function(mapping = NULL,
 #' @format NULL
 #' @usage NULL
 #' @export
-StatQQplotHex <- ggproto(
-  "StatQQplotHex",
+StatGwasQqplotHex <- ggproto(
+  "StatGwasQqplotHex",
   Stat,
   required_aes = c("y"),
   default_aes = aes(y = stat(y), x = stat(x), weight = 1, fill = stat(count)),
