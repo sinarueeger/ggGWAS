@@ -12,18 +12,18 @@
 #'
 #' @examples
 #' require(ggplot2)
-#' 
+#'
 #' n.sample <- 1000
 #' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"),
 #'   n.sample,
 #'   replace = TRUE
 #' ))
-#' 
-#' 
+#'
+#'
 #' (qp <- ggplot(df, aes(y = P)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
-#' 
+#'
 #' (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
@@ -54,6 +54,7 @@ stat_gwas_qq_hex <- function(mapping = NULL,
     )
   )
 }
+
 
 #' @rdname ggplot2-ggproto
 #' @format NULL

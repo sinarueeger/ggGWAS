@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "ggGWAS",
   "description": "Provides Manhattan plot and QQplot as a ggplot2 extension. \n    For high-dimensional GWAS data there is a hex version of the QQplot (which is more of a diagnostics tool).",
@@ -44,7 +47,19 @@
       "@type": "SoftwareApplication",
       "identifier": "GWAS.utils",
       "name": "GWAS.utils",
-      "version": ">= 0.0.0.9000"
+      "version": "> 0.0.0.9000"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "skimr",
+      "name": "skimr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=skimr"
     },
     {
       "@type": "SoftwareApplication",
@@ -121,6 +136,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "qqman",
+      "name": "qqman",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=qqman"
     }
   ],
   "softwareRequirements": [
@@ -198,5 +225,8 @@
   ],
   "codeRepository": "https://github.com/sinarueeger/ggGWAS",
   "readme": "https://github.com/sinarueeger/ggGWAS/blob/master/README.md",
-  "keywords": ["ggplot2-geom", "gwas-tools"]
+  "keywords": [
+    "ggplot2-geom",
+    "gwas-tools"
+  ]
 }
