@@ -3,8 +3,10 @@
 #'
 #'
 #' @inheritParams ggplot2::stat_bin_hex
-#' @param observed.thresh Same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected.
-#' @details Code and documentation mostly from \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
+#' @param observed.thresh Same scale as observed (e.g. 0.05),
+#' observed <= observed.thresh AFTER computing expected.
+#' @details Code and documentation mostly from
+#' \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
 #' @seealso \code{\link[ggplot2]{stat_bin_hex}}
 #' @export
 #'
@@ -12,7 +14,8 @@
 #' require(ggplot2)
 #'
 #' n.sample <- 1000
-#' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
+#' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"),
+#' n.sample, replace = TRUE))
 #'
 #'
 #' (qp <- ggplot(df, aes(y = P)) +
@@ -46,7 +49,9 @@ stat_gwas_qq_hex <- function(mapping = NULL,
       position = position,
       show.legend = show.legend,
       inherit.aes = inherit.aes,
-      params = list(na.rm = na.rm, observed.thresh = observed.thresh,   bins = bins,
+      params = list(na.rm = na.rm,
+                    observed.thresh = observed.thresh,
+                    bins = bins,
                     binwidth = binwidth, ...)
     )
   }

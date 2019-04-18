@@ -1,21 +1,29 @@
 #' @title Q-Q plot
-#' @description Quantile-quantile plot to compare the p-values of a GWAS to a uniform distribution.
+#' @description Quantile-quantile plot to compare the p-values of a GWAS to a
+#' uniform distribution.
 #'
 #' @inheritParams ggplot2::geom_point
-#' @param observed.thresh same scale as observed (e.g. 0.05), observed <= observed.thresh AFTER computing expected
-#' @param geom \code{"point"} by default, \code{"ggrastr:::GeomPointRast"} for a rasterized version.
+#' @param observed.thresh same scale as observed (e.g. 0.05),
+#' observed <= observed.thresh AFTER computing expected
+#' @param geom \code{"point"} by default,
+#' \code{"ggrastr:::GeomPointRast"} for a rasterized version.
 #'
 #' @export
 #' @aliases stat_qqunif
-#' @details \code{\link[ggplot2]{stat_qq}} works for all kinds of distributions. But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation does not work neatly.
+#' @details \code{\link[ggplot2]{stat_qq}} works for all kinds of distributions.
+#' But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation
+#' does not work neatly.
 #' @seealso \code{\link[ggplot2]{stat_qq}}, \code{\link{stat_geom_qq_hex}}
-#' @note Plotting several thousand points might take time. If you want to speed things up use \code{geom="ggrastr:::GeomPointRast"} or \code{\link{stat_gwas_qq_hex}}.
+#' @note Plotting several thousand points might take time. If you want to speed
+#' things up use \code{geom="ggrastr:::GeomPointRast"} or
+#' \code{\link{stat_gwas_qq_hex}}.
 #' @aliases geom_qq_unif
 #'
 #' @examples
 #' require(ggplot2)
 #' n.sample <- 10000
-#' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
+#' df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample,
+#' replace = TRUE))
 #'
 #' ## default
 #' (qp <- ggplot(df, aes(observed = P)) +
@@ -23,7 +31,8 @@
 #'   geom_abline(intercept = 0, slope = 1))
 #'
 #' ## Group points
-#' (qp <- ggplot(df, aes(observed = P)) + stat_gwas_qq(aes(group = GWAS, color = GWAS)))
+#' (qp <- ggplot(df, aes(observed = P)) + stat_gwas_qq(aes(group = GWAS,
+#' color = GWAS)))
 #'
 #' ## show only p-values above a cerain threshold
 #' ggplot(df, aes(observed = P)) +
@@ -73,7 +82,8 @@
 #'
 #' ## generate two groups
 #' giant <- giant %>%
-#'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))
+#'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size",
+#'   BETA > 0 ~ "Pos effect size"))
 #' ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1)

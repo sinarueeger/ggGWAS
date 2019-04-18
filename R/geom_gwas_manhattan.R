@@ -3,8 +3,12 @@
 #' @description Manhattan plot for GWAS data
 #'
 #' @inheritParams ggplot2::geom_point
-#' @param y.thresh cutoff for y-axis, defined as a vector of length two. If \code{c(K, NA)}, points with a y-value lower than K will be removed. If \code{c(NA, K)} points with y-values larger than K will be removed.
-#' @param chr.class Relevant for coloring of the points: what class the chromosomes should be represented as. If "numeric", coloring will be continuous. If "character" coloring will be discrete.
+#' @param y.thresh cutoff for y-axis, defined as a vector of length two.
+#' If \code{c(K, NA)}, points with a y-value lower than K will be removed.
+#' If \code{c(NA, K)} points with y-values larger than K will be removed.
+#' @param chr.class Relevant for coloring of the points: what class the
+#' chromosomes should be represented as. If "numeric", coloring will be
+#' continuous. If "character" coloring will be discrete.
 #' @param geom \code{"point"} by default
 #' @return sdfsdf
 #' @export
@@ -35,23 +39,27 @@
 #'
 #' ## chr factor
 #' qp <- ggplot(giant) +
-#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), chr.class = "character") +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
+#'   chr.class = "character") +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (CHR is now a character/factor)")
 #' print(qp)
 #' ## adding a nice color palette
-#' qp + scale_color_manual(values = wesanderson::wes_palette("Zissou1", 22, type = "continuous"))
+#' qp + scale_color_manual(values = wesanderson::wes_palette("Zissou1", 22,
+#' type = "continuous"))
 #'
 #' ## turn all points black
 #' qp <- ggplot(giant) +
-#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), color = "black", alpha = I(0.4)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
+#'   color = "black", alpha = I(0.4)) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
 #'
 #' ## set lower threshold
 #' qp <- ggplot(data = giant) +
-#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), y.thresh= c(2, NA)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
+#'   y.thresh= c(2, NA)) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
@@ -65,7 +73,8 @@
 #'
 #' ## use rastr
 #' qp <- ggplot(data = giant) +
-#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), geom = ggrastr:::GeomPointRast) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
+#'   geom = ggrastr:::GeomPointRast) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (rastr)")
 #' print(qp)
@@ -74,7 +83,8 @@
 #'
 #' ## generate two groups
 #' giant <- giant %>%
-#'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))
+#'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size",
+#'   BETA > 0 ~ "Pos effect size"))
 #' qp <- ggplot(data = giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
 #'   ggtitle("GIANT summary statistics") +
@@ -149,7 +159,9 @@ StatGwasManhattan <- ggproto(
 
 
     ## equidistance
-    data2 <- data %>% dplyr::arrange(chr, pos) %>% dplyr::mutate(tmp = 1, cumsum.tmp = cumsum(tmp))
+    data2 <- data %>%
+      dplyr::arrange(chr, pos) %>%
+      dplyr::mutate(tmp = 1, cumsum.tmp = cumsum(tmp))
 
 
     ## real distance
