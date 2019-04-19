@@ -74,7 +74,7 @@ To compare, we use the time to plot in base graphics (`qqman` package):
 
 
 ```{r}
-n.sample <- 1e6
+n.sample <- 1e3
 set.seed(3)
 df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
 system.time(qqman::qq(df$P))
