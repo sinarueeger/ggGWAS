@@ -18,7 +18,8 @@ With the vignette:
 ```
 remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
 vignette("reasoning")
-```
+`vignette("internals")
+``
 
 
 ## Basic usage
