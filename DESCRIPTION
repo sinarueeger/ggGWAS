@@ -17,13 +17,15 @@ Imports:
     hexbin (>= 1.27.2)
 Suggests:
     ggrastr (>= 0.1.7),
-    GWAS.utils (>= 0.0.0.9000),
+    GWAS.utils (> 0.0.0.9000),
+    skimr,
     testthat (>= 2.0.1),
     wesanderson (>= 0.3.6),
     vctrs (>= 0.1.0),
     plyr (>= 1.8.4),
     knitr,
-    rmarkdown
+    rmarkdown,
+    qqman
 RoxygenNote: 6.1.1
 BugReports: https://github.com/sinarueeger/ggGWAS/issues
 Depends: R (>= 2.10)
