@@ -10,13 +10,13 @@
 #' chromosomes should be represented as. If "numeric", coloring will be
 #' continuous. If "character" coloring will be discrete.
 #' @param geom \code{"point"} by default
-#' @return sdfsdf
+#' @return sdfsdf?
 #' @export
 #' @importFrom ggplot2 layer
 #' @importFrom ggplot2 ggproto
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 Stat
-
+#' @aliases geom_gwas_manhattan
 #' @details See also \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-qq.r}
 #'
 #' @examples
@@ -136,6 +136,8 @@ geom_gwas_manhattan <- stat_gwas_manhattan
 #' @format NULL
 #' @usage NULL
 # #' @export
+#' @keywords internal
+
 StatGwasManhattan <- ggproto(
   "StatGwasManhattan",
   Stat,

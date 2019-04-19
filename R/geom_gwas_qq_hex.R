@@ -9,6 +9,7 @@
 #' \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
 #' @seealso \code{\link[ggplot2]{stat_bin_hex}}
 #' @export
+#' @aliases geom_gwas_qq_hex
 #'
 #' @examples
 #' require(ggplot2)
@@ -60,6 +61,8 @@ stat_gwas_qq_hex <- function(mapping = NULL,
 #' @format NULL
 #' @usage NULL
 # #' @export
+#' @keywords internal
+
 StatGwasQqplotHex <- ggproto(
   "StatGwasQqplotHex",
   Stat,

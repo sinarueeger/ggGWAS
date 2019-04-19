@@ -17,7 +17,7 @@
 #' @note Plotting several thousand points might take time. If you want to speed
 #' things up use \code{geom="ggrastr:::GeomPointRast"} or
 #' \code{\link{stat_gwas_qq_hex}}.
-#' @aliases geom_qq_unif
+#' @aliases geom_gwas_qq
 #'
 #' @examples
 #' require(ggplot2)
@@ -122,7 +122,8 @@ geom_gwas_qq <- stat_gwas_qq
 #' @format NULL
 #' @usage NULL
 # #' @export
-# #' @keywords internal.
+#' @keywords internal
+
 StatGwasQqplot <- ggproto(
   "StatGwasQqplot",
   Stat,
