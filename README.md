@@ -18,13 +18,16 @@ With the vignette:
 ```
 remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
 vignette("reasoning")
-```
+`vignette("internals")
+``
 
 
 ## Basic usage
 
 ```
-## Random data --------------------
+library(ggGWAS)
+
+## Generate some random data
 
 df <-
   data.frame(
@@ -33,31 +36,29 @@ df <-
     P = runif(1000),
     GWAS = sample(c("a", "b"), 1000, replace = TRUE)
   )
-
-
-## Q-Q plot --------------------
-
-ggplot(df, aes(observed = P)) + ggGWAS::stat_qgwas_manhattanaes(group = GWAS, color = GWAS))
-
-
-## Manhattan plot --------------------
-
-ggplot(data = df) +
-  ggGWAS::stat_mgwas_anhattan(aes(
-    pos = POS,
-    y = -log10(P),
-    chr = CHR
-  ),  chr.class = "character") +
-  facet_wrap( ~ GWAS)
-
 ```
 
-
-To install the package *including* the vignette, use the following command:
+### Manhattan plot
 
 ```
-remotes::install_github("sinarueeger/ggGWAS", build = TRUE, 
-build_opts = c("--no-resave-data", "--no-manual")
+ggplot(df) + 
+stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
+
+ggplot(df) + 
+stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),  chr.class = "character") + 
+facet_wrap( ~ GWAS, label = label_both)
+
+?stat_gwas_manhattan ## for more examples
 ```
 
-Then look at the vignette with `vignette("gggwas-package")`.
+### Q-Q plot
+```
+ggplot(df) + stat_gwas_qq(aes(observed = P))
+
+ggplot(df) + stat_gwas_qq(aes(observed = P)) + 
+facet_wrap( ~ GWAS, label = label_both) + 
+geom_abline(intercept = 0, slope = 1)
+
+?stat_gwas_qq ## for more examples
+```
+

@@ -1,15 +1,14 @@
 ---
-title: ggGWAS
-subtitle: Reasoning
+title: ggGWAS reasoning
 author: Sina Rueger
 date: "`r Sys.Date()`"
 show_toc: true
-slug: gggwas
+slug: gggwas-reasoning
 output: 
   rmarkdown::html_vignette:
       toc: yes
 vignette: >
-  %\VignetteIndexEntry{ggGWAS: Reasoning}
+  %\VignetteIndexEntry{ggGWAS Reasoning}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -51,6 +50,8 @@ Both plotting types can be applied in R with various functions. Just to name a f
 - DYI `ggplot2` Manhattan plots: https://github.com/pcgoddard/Burchardlab_Tutorials/wiki/GGplot2-Manhattan-Plot-Function
 - `ggbio` package, a toolkit for genomic data (`plotGrandLinear` is an implementation for a Manhattan plot, uses `GRanges` objects, ggplot2 wrapper): https://bioconductor.org/packages/release/bioc/html/ggbio.html 
 - `ggman`, wrapper (but no ggplot2 extension) for Manhattan plots: https://github.com/drveera/ggman
+- https://www.gettinggeneticsdone.com/2010/07/qq-plots-of-p-values-in-r-using-base.html
+
 
 An often used package is [qqman](https://rdrr.io/cran/qqman/man/qq.html), that has a function for Q-Q plots `qqman::qq` and Manhattan plots `qqman::manhattan`. 
 
