@@ -118,7 +118,7 @@ stat_gwas_qq <- function(mapping = NULL,
 geom_gwas_qq <- stat_gwas_qq
 
 
-#' @rdname ggplot2-ggproto
+#' @rdname ggGWAS-ggproto
 #' @format NULL
 #' @usage NULL
 # #' @export

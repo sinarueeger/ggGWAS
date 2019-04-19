@@ -64,3 +64,10 @@ try_require <- function(package, fun) {
 "%||%" <- function(a, b) {
   if (!is.null(a)) a else b
 }
+
+
+
+#' ggproto copy
+#' @inheritParams ggplot2::ggproto
+#' @name ggGWAS-ggproto
+NULL

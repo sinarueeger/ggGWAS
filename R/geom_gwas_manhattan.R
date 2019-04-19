@@ -132,7 +132,8 @@ geom_gwas_manhattan <- stat_gwas_manhattan
 
 
 
-#' @rdname ggplot2-ggproto
+
+#' @rdname ggGWAS-ggproto
 #' @format NULL
 #' @usage NULL
 # #' @export

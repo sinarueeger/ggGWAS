@@ -66,7 +66,7 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 to the paired geom/stat.}
 }
 \value{
-sdfsdf
+sdfsdf?
 }
 \description{
 Manhattan plot for GWAS data
