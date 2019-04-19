@@ -1,6 +1,5 @@
 ---
-title: ggGWAS
-subtitle: Internals
+title: ggGWAS Internals
 author: Sina Rueger
 date: "`r Sys.Date()`"
 show_toc: true
@@ -9,7 +8,7 @@ output:
   rmarkdown::html_vignette:
       toc: yes
 vignette: >
-  %\VignetteIndexEntry{ggGWAS: Internals}
+  %\VignetteIndexEntry{ggGWAS Internals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
