@@ -10,9 +10,14 @@ An inspiration for ggGWAS has been the R-package [qqman](http://www.gettinggenet
 ```
 remotes::install_github("sinarueeger/ggGWAS")
 ```
-or (if you are courageous) load a specific branch:
+
+Install a`dev`branch:
+`remotes::install_github("sinarueeger/ggGWAS", ref = "[dev)`
+
+With the vignette: 
 ```
-remotes::install_github("sinarueeger/ggGWAS", ref = "[BRANCH]")
+remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
+vignette("reasoning")
 ```
 
 
