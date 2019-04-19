@@ -11,7 +11,7 @@ An inspiration for ggGWAS has been the R-package [qqman](http://www.gettinggenet
 remotes::install_github("sinarueeger/ggGWAS")
 ```
 
-Install a`dev`branch:
+Install the `dev`branch:
 ```
 remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
 ```
