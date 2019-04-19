@@ -21,5 +21,4 @@ Makes a few modifications to \code{\link{theme_gray}}. Similar to \code{\link{th
 \examples{
 require(ggplot2)
 qplot(Sepal.Length, Sepal.Width, data = iris) + theme_gwas()
-
 }

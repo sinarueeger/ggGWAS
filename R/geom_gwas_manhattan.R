@@ -3,16 +3,20 @@
 #' @description Manhattan plot for GWAS data
 #'
 #' @inheritParams ggplot2::geom_point
-#' @param y.thresh cutoff for y-axis, defined as a vector of length two. If \code{c(K, NA)}, points with a y-value lower than K will be removed. If \code{c(NA, K)} points with y-values larger than K will be removed.
-#' @param chr.class Relevant for coloring of the points: what class the chromosomes should be represented as. If "numeric", coloring will be continuous. If "character" coloring will be discrete.
+#' @param y.thresh cutoff for y-axis, defined as a vector of length two.
+#' If \code{c(K, NA)}, points with a y-value lower than K will be removed.
+#' If \code{c(NA, K)} points with y-values larger than K will be removed.
+#' @param chr.class Relevant for coloring of the points: what class the
+#' chromosomes should be represented as. If "numeric", coloring will be
+#' continuous. If "character" coloring will be discrete.
 #' @param geom \code{"point"} by default
-#' @return sdfsdf
+#' @return sdfsdf?
 #' @export
 #' @importFrom ggplot2 layer
 #' @importFrom ggplot2 ggproto
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 Stat
-
+#' @aliases geom_gwas_manhattan
 #' @details See also \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-qq.r}
 #'
 #' @examples
@@ -24,7 +28,7 @@
 #'
 #' ## default: for -log10(P), by default chr is numeric
 #' qp <- ggplot(giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (by default CHR is numeric)")
 #' print(qp)
@@ -35,23 +39,31 @@
 #'
 #' ## chr factor
 #' qp <- ggplot(giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), chr.class = "character") +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
+#'     chr.class = "character"
+#'   ) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (CHR is now a character/factor)")
 #' print(qp)
 #' ## adding a nice color palette
-#' qp + scale_color_manual(values = wesanderson::wes_palette("Zissou1", 22, type = "continuous"))
+#' qp + scale_color_manual(values = wesanderson::wes_palette("Zissou1", 22,
+#'   type = "continuous"
+#' ))
 #'
 #' ## turn all points black
 #' qp <- ggplot(giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), color = "black", alpha = I(0.4)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
+#'     color = "black", alpha = I(0.4)
+#'   ) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
 #'
 #' ## set lower threshold
 #' qp <- ggplot(data = giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), y.thresh= c(2, NA)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
+#'     y.thresh = c(2, NA)
+#'   ) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
@@ -59,13 +71,15 @@
 #'
 #' ## for effect sizes
 #' qp <- ggplot(data = giant) +
-#'   stat_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
 #'   ggtitle("GIANT effect sizes")
 #' print(qp)
 #'
 #' ## use rastr
 #' qp <- ggplot(data = giant) +
-#'   stat_manhattan(aes(pos = POS, y = -log10(P), chr = CHR), geom = ggrastr:::GeomPointRast) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
+#'     geom = ggrastr:::GeomPointRast
+#'   ) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (rastr)")
 #' print(qp)
@@ -74,28 +88,29 @@
 #'
 #' ## generate two groups
 #' giant <- giant %>%
-#'   dplyr::mutate(gr = dplyr::case_when(BETA <= 0 ~ "Neg effect size", BETA > 0 ~ "Pos effect size"))
+#'   dplyr::mutate(gr = dplyr::case_when(
+#'     BETA <= 0 ~ "Neg effect size",
+#'     BETA > 0 ~ "Pos effect size"
+#'   ))
 #' qp <- ggplot(data = giant) +
-#'   stat_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
+#'   stat_gwas_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
 #'   ggtitle("GIANT summary statistics") +
 #'   facet_wrap(~gr)
 #' print(qp)
-
-
-stat_manhattan <-
+stat_gwas_manhattan <-
   function(mapping = NULL,
-           data = NULL,
-           geom = "point",
-           position = "identity",
-           na.rm = FALSE,
-           show.legend = NA,
-           inherit.aes = TRUE,
-           y.thresh = NULL,
-           chr.class = "numeric",
-           ...) {
+             data = NULL,
+             geom = "point",
+             position = "identity",
+             na.rm = FALSE,
+             show.legend = NA,
+             inherit.aes = TRUE,
+             y.thresh = NULL,
+             chr.class = "numeric",
+             ...) {
     # , dparams = list()
     layer(
-      stat = StatManhattan,
+      stat = StatGwasManhattan,
       data = data,
       mapping = mapping,
       geom = geom,
@@ -112,17 +127,20 @@ stat_manhattan <-
   }
 
 #' @export
-#' @rdname stat_manhattan
-geom_manhattan <- stat_manhattan
+#' @rdname stat_gwas_manhattan
+geom_gwas_manhattan <- stat_gwas_manhattan
 
 
 
-#' @rdname ggplot2-ggproto
+
+#' @rdname ggGWAS-ggproto
 #' @format NULL
 #' @usage NULL
-#' @export
-StatManhattan <- ggproto(
-  "StatManhattan",
+# #' @export
+#' @keywords internal
+
+StatGwasManhattan <- ggproto(
+  "StatGwasManhattan",
   Stat,
   required_aes = c("y", "pos", "chr"),
   default_aes = aes(
@@ -138,7 +156,7 @@ StatManhattan <- ggproto(
     ## only include points that are above this threshold
 
     if (!is.null(y.thresh)) {
-    ## try to solve this with ylim
+      ## try to solve this with ylim
       if (!is.na(y.thresh[1])) {
         data <- data %>% dplyr::filter(y >= y.thresh[1])
       }
@@ -149,7 +167,9 @@ StatManhattan <- ggproto(
 
 
     ## equidistance
-    data2 <- data %>% dplyr::arrange(chr, pos) %>% dplyr::mutate(tmp = 1, cumsum.tmp = cumsum(tmp))
+    data2 <- data %>%
+      dplyr::arrange(chr, pos) %>%
+      dplyr::mutate(tmp = 1, cumsum.tmp = cumsum(tmp))
 
 
     ## real distance
@@ -166,8 +186,10 @@ StatManhattan <- ggproto(
       data2$chr <- as.factor(as.numeric(data2$chr))
     }
 
-    data.frame(`Pos` = data2$cumsum.tmp,
-               y = data2$y,
-               colour = data2$chr)
+    data.frame(
+      `Pos` = data2$cumsum.tmp,
+      y = data2$y,
+      colour = data2$chr
+    )
   }
 )

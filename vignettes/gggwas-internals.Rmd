@@ -1,0 +1,170 @@
+---
+title: ggGWAS Internals
+author: Sina Rueger
+date: "`r Sys.Date()`"
+show_toc: true
+slug: gggwas-internals
+output: 
+  rmarkdown::html_vignette:
+      toc: yes
+vignette: >
+  %\VignetteIndexEntry{ggGWAS Internals}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(ggplot2)
+library(ggGWAS)
+library(GWAS.utils)
+```
+This vignette contains some technical aspects about developing the `ggGWAS` package. 
+
+
+## New scale `-log10`
+
+There are different scales available in ggplot2.
+
+- `scale_x_log10` and `scale_y_log10`
+- `scale_x_continuous(trans = "log10")` and `scale_y_continuous(trans = "log10")`
+- `coord_trans(x = "log10", y = "log10")`
+
+```{r}
+library(ggplot2)
+df <- data.frame(y = runif(1000))
+
+qp <- ggplot(df, aes(sample = y)) +
+  stat_qq(distribution = stats::qunif)
+
+qp + scale_x_log10() + scale_y_log10()
+qp + scale_x_continuous(trans = "log10") + scale_y_continuous(trans = "log10")
+qp + coord_trans(x = "log10", y = "log10")
+
+```
+
+For our Q-Q plot we want to create a new transformation called `-log10`. 
+
+
+```{r}
+
+ggplot(giant, aes(sample = P)) +
+   stat_qq(distribution = stats::qunif) +
+     scale_y_continuous(trans = ggGWAS::mlog10_trans()) +
+   scale_x_continuous(trans = ggGWAS::mlog10_trans()) +
+   geom_abline(intercept = 0, slope = 1)
+
+```
+
+
+## Speed
+
+One aspect of `ggGWAS` is improving speed. Even though `ggplot2` itself is not known for its speed, we can apply a few tricks to beat the base plot speed. 
+
+1. Using rastering (`ggrastr:::GeomPointRast`)
+2. Using hexagons (`ggplot::geom_hex`)
+3. Subsetting data
+4. Avoiding passing on the full datasets (???)
+
+To compare, we use the time to plot in base graphics (`qqman` package):
+
+
+```{r}
+n.sample <- 1e3
+set.seed(3)
+df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
+system.time(qqman::qq(df$P))
+```
+
+
+### 1. Raster
+
+The R-package `ggrastr` does ???. 
+
+It creates very light output, but is not necessarily fast. 
+
+Here is a comparison of the actual pdf file size.
+
+```{r eval=FALSE, include=FALSE}
+
+## >>>>>>> just check if ggrastr is installed
+
+## raster
+gg_vec <- ggplot(df, aes(x = P, y = P)) + geom_point()
+gg_ras <- gg_vec + ggrastr::geom_point_rast(size = 0.5)
+
+PrintFileSize <- function(gg, name) {
+  invisible(ggsave("tmp.pdf", gg, width = 4, height = 4))
+  cat(name, ": ", file.info("tmp.pdf")$size / 1024, " Kb.\n", sep = "")
+  unlink("tmp.pdf")
+}
+
+PrintFileSize(gg_ras, "Raster")
+PrintFileSize(gg_vec, "Vector")
+
+```
+
+We can use the rastering functionality as geom in our function. 
+
+```{r eval=FALSE, include=FALSE}
+
+qp_points <- ggplot(df, aes(observed = P)) +
+  stat_gwas_qq() +
+  geom_abline(intercept = 0, slope = 1)
+system.time(print(qp_points))
+
+qp_raster <- ggplot(df, aes(observed = P)) +
+  stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
+  geom_abline(intercept = 0, slope = 1)
+system.time(print(qp_raster))
+
+PrintFileSize(qp_points, "Vector")
+PrintFileSize(qp_raster, "Raster")
+
+
+```
+
+### 2. Hexagons
+
+```{r}
+
+qp_hex <- ggplot(df, aes(y = P)) +
+  stat_gwas_qq_hex() +
+  geom_abline(intercept = 0, slope = 1)
+system.time(print(qp_hex))
+```
+
+Problem is, that the original dataset is still passed on, which makes it slow.
+
+
+
+### 3. Avoiding passing on the full datasets (???)
+
+
+```{r}
+
+ggplot_build(qp_hex) ## data structure
+
+ggplot_gtable(ggplot_build(qp_hex)) ## grid object
+
+```
+
+
+### 4. Subsetting data
+
+Something very simple is to subset the data, since we are usually not interested in the very high P-values (although, we are at times, when it comes to model sanity checks).
+
+
+```{r}
+qp_subset <- ggplot(df, aes(observed = P)) +
+  stat_gwas_qq(observed.thresh = 0.05) +
+  geom_abline(intercept = 0, slope = 1)
+system.time(print(qp_subset))
+
+
+```
+
+
