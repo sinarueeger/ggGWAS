@@ -88,7 +88,7 @@ It creates very light output, but is not necessarily fast.
 
 Here is a comparison of the actual pdf file size.
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 ## raster
 gg_vec <- ggplot(df, aes(x = P, y = P)) + geom_point()
@@ -107,7 +107,7 @@ PrintFileSize(gg_vec, "Vector")
 
 We can use the rastering functionality as geom in our function. 
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 qp_points <- ggplot(df, aes(observed = P)) +
   stat_gwas_qq() +
