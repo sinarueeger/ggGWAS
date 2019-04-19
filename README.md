@@ -12,14 +12,17 @@ remotes::install_github("sinarueeger/ggGWAS")
 ```
 
 Install a`dev`branch:
-`remotes::install_github("sinarueeger/ggGWAS", ref = "dev")`
+```
+remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
+```
 
-With the vignette: 
+
+Install including vignettes: 
 ```
 remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
 vignette("reasoning")
-`vignette("internals")
-``
+vignette("internals")
+```
 
 
 ## Basic usage
