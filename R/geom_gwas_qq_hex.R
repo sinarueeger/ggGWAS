@@ -19,7 +19,7 @@
 #'   n.sample,
 #'   replace = TRUE
 #' ))
-#'
+#' theme_set(theme_bw())
 #'
 #' (qp <- ggplot(df, aes(y = P)) +
 #'   stat_gwas_qq_hex() +
