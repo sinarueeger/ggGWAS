@@ -33,6 +33,9 @@
 #'     stat_gwas_qq() +
 #'     geom_abline(intercept = 0, slope = 1))
 #'
+#' ## use geom instead of qq
+#' ggplot(df, aes(observed = P)) +
+#' geom_gwas_qq()
 #'
 #' ## show only p-values above a cerain threshold
 #' ggplot(df, aes(observed = P)) +
