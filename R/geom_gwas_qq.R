@@ -26,6 +26,8 @@
 #'   replace = TRUE
 #' ))
 #'
+#' theme_set(theme_bw())
+#'
 #' ## default
 #' (qp <- ggplot(df, aes(observed = P)) +
 #'   stat_gwas_qq() +
