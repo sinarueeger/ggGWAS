@@ -83,6 +83,8 @@ df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"), n.sample,
   replace = TRUE
 ))
 
+theme_set(theme_bw())
+
 ## default
 (qp <- ggplot(df, aes(observed = P)) +
   stat_gwas_qq() +
