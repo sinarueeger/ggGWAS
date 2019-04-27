@@ -8,7 +8,7 @@ usethis::use_description(fields = list(Title = "ggplot2 Extensions for Plotting 
                                        Description = "Provides Manhattan plot and QQplot as a ggplot2 extension. For high-dimensional GWAS data there is a hex version of the QQplot (which is more of a diagnostics tool)."))
 
 usethis::use_github_links()
-usethis::use_version(which = "minor") ## "major", "minor", "patch", "dev"
+usethis::use_version(which = "patch") ## "major", "minor", "patch", "dev"
 
 # initial setup
 usethis::use_data_raw()

@@ -46,6 +46,7 @@ Install including
 library(ggGWAS)
 library(ggplot2)
 
+theme_set(theme_bw())
 ## Generate some random data
 
 df <-
