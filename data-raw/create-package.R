@@ -2,7 +2,7 @@
 #install.packages("usethis")
 
 usethis::use_description(fields = list(Title = "ggplot2 Extensions for Plotting GWAS Summary Statistics",
-                                       `Authors@R` = 'person("Sina", "R<U+00FC>eger",
+                                       `Authors@R` = 'person("Sina", "Rüeger",
                                        email = "sina.rueeger@gmail.com",
                                        role = c("aut", "cre"))',
                                        Description = "Provides Manhattan plot and QQplot as a ggplot2 extension. For high-dimensional GWAS data there is a hex version of the QQplot (which is more of a diagnostics tool)."))
@@ -13,7 +13,7 @@ usethis::use_version(which = "minor") ## "major", "minor", "patch", "dev"
 # initial setup
 usethis::use_data_raw()
 #usethis::use_cran_badge()
-usethis::use_mit_license("Sina R<U+00FC>eger")
+usethis::use_mit_license("Sina Rüeger")
 usethis::use_readme_rmd()
 
 ## create `testthat` folder
