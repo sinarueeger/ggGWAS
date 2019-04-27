@@ -4,3 +4,11 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^codemeta\.json$
+^data-raw$
+^LICENSE\.md$
+^README\.Rmd$
+^README\.md$
+^data-raw$
+^\.travis\.yml$
+^appveyor\.yml$
+^codecov\.yml$

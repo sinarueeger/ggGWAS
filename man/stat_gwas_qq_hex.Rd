@@ -82,7 +82,7 @@ df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"),
   n.sample,
   replace = TRUE
 ))
-
+theme_set(theme_bw())
 
 (qp <- ggplot(df, aes(y = P)) +
   stat_gwas_qq_hex() +
@@ -91,6 +91,7 @@ df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"),
 (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1))
+
 }
 \seealso{
 \code{\link[ggplot2]{stat_bin_hex}}

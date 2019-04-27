@@ -1,32 +1,38 @@
 Package: ggGWAS
-Type: Package
-Title: ggplot2 Extensions for Plotting GWAS Results
+Title: ggplot2 Extensions for Plotting GWAS Summary Statistics
 Version: 0.0.1.9000
-Author: Sina R<U+00FC>eger
-Maintainer: Sina R<U+00FC>eger <sina.rueeger@gmail.com>
-Description: Provides Manhattan plot and QQplot as a ggplot2 extension. 
-    For high-dimensional GWAS data there is a hex version of the QQplot (which is more of a diagnostics tool).
-License: GPL-3
+Authors@R: 
+    person(given = "Sina",
+           family = "Rüeger",
+           role = c("aut", "cre"),
+           email = "sina.rueeger@gmail.com")
+Description: Provides Manhattan plot and QQplot as a ggplot2
+    extension. For high-dimensional GWAS data there is a hex version of
+    the QQplot (which is more of a diagnostics tool).
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports:
-    ggplot2 (>= 3.1.0),
-    magrittr (>= 1.5),
-    dplyr (>= 0.7.8),
-    scales (>= 1.0.0),
-    hexbin (>= 1.27.2)
-Suggests:
+Suggests: 
+    testthat,
     ggrastr (>= 0.1.7),
-    GWAS.utils (> 0.0.0.9000),
+    GWAS.utils,
     skimr,
-    testthat (>= 2.0.1),
+    plyr (>= 1.8.4),
     wesanderson (>= 0.3.6),
     vctrs (>= 0.1.0),
-    plyr (>= 1.8.4),
-    knitr,
+    knitr (>= 0.1.7),
     rmarkdown,
-    qqman
+    qqman,
+    covr
+Remotes: 
+    sinarueeger/GWAS.utils,
+    VPetukhov/ggrastr
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-BugReports: https://github.com/sinarueeger/ggGWAS/issues
-Depends: R (>= 2.10)
+Imports: 
+    ggplot2 (>= 3.1.0),
+    dplyr (>= 0.7.8),
+    scales (>= 1.0.0),
+    hexbin (>= 1.27.2),
+    magrittr
 VignetteBuilder: knitr

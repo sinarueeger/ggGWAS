@@ -24,7 +24,7 @@
 #' require(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
 #' data("giant")
 #' ?giant
-#' theme_set(theme_gwas())
+#' theme_set(theme_bw())
 #'
 #' ## default: for -log10(P), by default chr is numeric
 #' qp <- ggplot(giant) +

@@ -19,7 +19,7 @@
 #'   n.sample,
 #'   replace = TRUE
 #' ))
-#'
+#' theme_set(theme_bw())
 #'
 #' (qp <- ggplot(df, aes(y = P)) +
 #'   stat_gwas_qq_hex() +
@@ -28,6 +28,7 @@
 #' (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
+#'
 stat_gwas_qq_hex <- function(mapping = NULL,
                              data = NULL,
                              geom = "hex",

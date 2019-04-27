@@ -5,10 +5,10 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "ggGWAS",
-  "description": "Provides Manhattan plot and QQplot as a ggplot2 extension. \n    For high-dimensional GWAS data there is a hex version of the QQplot (which is more of a diagnostics tool).",
-  "name": "ggGWAS: ggplot2 Extensions for Plotting GWAS Results",
+  "description": "Provides Manhattan plot and QQplot as a ggplot2\n    extension. For high-dimensional GWAS data there is a hex version of\n    the QQplot (which is more of a diagnostics tool).",
+  "name": "ggGWAS: ggplot2 Extensions for Plotting GWAS Summary Statistics",
   "issueTracker": "https://github.com/sinarueeger/ggGWAS/issues",
-  "license": "https://spdx.org/licenses/GPL-3.0",
+  "license": "https://spdx.org/licenses/MIT",
   "version": "0.0.0.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
@@ -21,8 +21,8 @@
     {
       "@type": "Person",
       "givenName": "Sina",
-      "familyName": "Reger",
-      "email": "U+00FC"
+      "familyName": "Rüeger",
+      "email": "sina.rueeger@gmail.com"
     }
   ],
   "contributor": {},
@@ -31,12 +31,24 @@
   "maintainer": [
     {
       "@type": "Person",
-      "givenName": ["Sina", "Reger"],
-      "familyName": "<sina.rueeger@gmail.com>",
+      "givenName": "Sina",
+      "familyName": "Rüeger",
       "email": "sina.rueeger@gmail.com"
     }
   ],
   "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "ggrastr",
@@ -47,7 +59,7 @@
       "@type": "SoftwareApplication",
       "identifier": "GWAS.utils",
       "name": "GWAS.utils",
-      "version": "> 0.0.0.9000"
+      "version": ">= 0.0.0.9000"
     },
     {
       "@type": "SoftwareApplication",
@@ -63,16 +75,16 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "testthat",
-      "name": "testthat",
-      "version": ">= 2.0.1",
+      "identifier": "plyr",
+      "name": "plyr",
+      "version": ">= 1.8.4",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=testthat"
+      "sameAs": "https://CRAN.R-project.org/package=plyr"
     },
     {
       "@type": "SoftwareApplication",
@@ -102,21 +114,9 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "plyr",
-      "name": "plyr",
-      "version": ">= 1.8.4",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=plyr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
+      "version": ">= 0.1.7",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -166,19 +166,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "magrittr",
-      "name": "magrittr",
-      "version": ">= 1.5",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=magrittr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
       "version": ">= 0.7.8",
@@ -218,9 +205,15 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "R",
-      "name": "R",
-      "version": ">= 2.10"
+      "identifier": "magrittr",
+      "name": "magrittr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=magrittr"
     }
   ],
   "codeRepository": "https://github.com/sinarueeger/ggGWAS",
@@ -228,5 +221,6 @@
   "keywords": [
     "ggplot2-geom",
     "gwas-tools"
-  ]
+  ],
+  "fileSize": "1043.751KB"
 }
