@@ -54,7 +54,6 @@ codemetar::write_codemeta()
 
 ## CI
 usethis::use_travis()
-usethis::use_appveyor()
 usethis::use_coverage(type = c("codecov"))
 
 ## run examples
