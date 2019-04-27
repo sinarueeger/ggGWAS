@@ -43,7 +43,6 @@ usethis::use_package("qqman", type = "Suggests")
 # https://cran.r-project.org/web/packages/devtools/vignettes/dependencies.html
 ## add to
 ## Remotes: sinarueeger/GWAS.utils,
-## VPetukhov/ggrastr
 
 usethis::use_pipe()
 

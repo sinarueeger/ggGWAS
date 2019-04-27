@@ -15,7 +15,7 @@ LazyData: true
 Suggests: 
     testthat,
     ggrastr (>= 0.1.7),
-    GWAS.utils (>= 0.0.0.9000),
+    GWAS.utils,
     skimr,
     plyr (>= 1.8.4),
     wesanderson (>= 0.3.6),
