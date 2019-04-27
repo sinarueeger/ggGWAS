@@ -91,6 +91,7 @@ theme_set(theme_bw())
 (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1))
+
 }
 \seealso{
 \code{\link[ggplot2]{stat_bin_hex}}
