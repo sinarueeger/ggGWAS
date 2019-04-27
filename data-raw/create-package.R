@@ -29,8 +29,8 @@ usethis::use_package("dplyr", type = "Import", min_version = "0.7.8" )
 usethis::use_package("scales", type = "Import", min_version = "1.0.0" )
 usethis::use_package("hexbin", type = "Import", min_version = "1.27.2" )
 
-usethis::use_package("ggrastr", type = "Suggests", min_version = "0.1.7" )
-usethis::use_package("GWAS.utils", type = "Suggests", min_version = "0.0.0.9000" )
+#usethis::use_package("ggrastr", type = "Suggests", min_version = "0.1.7" )
+#usethis::use_package("GWAS.utils", type = "Remotes", min_version = "0.0.0.9000" )
 usethis::use_package("skimr", type = "Suggests" )
 usethis::use_package("plyr", type = "Suggests", min_version = "1.8.4" )
 usethis::use_package("wesanderson", type = "Suggests", min_version = "0.3.6" )
@@ -38,6 +38,11 @@ usethis::use_package("vctrs", type = "Suggests", min_version = "0.1.0" )
 usethis::use_package("knitr", type = "Suggests", min_version = "0.1.7" )
 usethis::use_package("rmarkdown", type = "Suggests")
 usethis::use_package("qqman", type = "Suggests")
+
+# https://cran.r-project.org/web/packages/devtools/vignettes/dependencies.html
+## add to
+## Remotes: sinarueeger/GWAS.utils,
+## VPetukhov/ggrastr
 
 usethis::use_pipe()
 
