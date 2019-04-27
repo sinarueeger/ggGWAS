@@ -4,16 +4,14 @@
 \name{ggGWAS-package}
 \alias{ggGWAS}
 \alias{ggGWAS-package}
-\title{ggGWAS: ggplot2 Extensions for Plotting GWAS Results}
+\title{ggGWAS: ggplot2 Extensions for Plotting GWAS Summary Statistics}
 \description{
-Provides Manhattan plot and QQplot as a ggplot2 extension. 
-    For high-dimensional GWAS data there is a hex version of the QQplot (which is more of a diagnostics tool).
+Provides Manhattan plot and QQplot as a ggplot2
+    extension. For high-dimensional GWAS data there is a hex version of
+    the QQplot (which is more of a diagnostics tool).
 }
-\seealso{
-Useful links:
-\itemize{
-  \item Report bugs at \url{https://github.com/sinarueeger/ggGWAS/issues}
-}
+\author{
+\strong{Maintainer}: Sina Rüeger \email{sina.rueeger@gmail.com}
 
 }
 \keyword{internal}
