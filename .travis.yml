@@ -2,3 +2,6 @@
 
 language: R
 cache: packages
+
+r_github_packages: VPetukhov/ggrastr
+r_github_packages: sinarueeger/GWAS.utils
