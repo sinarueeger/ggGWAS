@@ -24,6 +24,9 @@ Suggests:
     rmarkdown,
     qqman,
     covr
+Remotes: 
+    sinarueeger/GWAS.utils,
+    VPetukhov/ggrastr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Imports: 

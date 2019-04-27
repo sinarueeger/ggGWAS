@@ -39,6 +39,7 @@ usethis::use_package("knitr", type = "Suggests", min_version = "0.1.7" )
 usethis::use_package("rmarkdown", type = "Suggests")
 usethis::use_package("qqman", type = "Suggests")
 
+## manually adding remote
 # https://cran.r-project.org/web/packages/devtools/vignettes/dependencies.html
 ## add to
 ## Remotes: sinarueeger/GWAS.utils,
