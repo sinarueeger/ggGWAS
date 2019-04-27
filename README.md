@@ -5,6 +5,12 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/sinarueeger/ggGWAS.svg?branch=master)](https://travis-ci.org/sinarueeger/ggGWAS)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/sinarueeger/ggGWAS?branch=master&svg=true)](https://ci.appveyor.com/project/sinarueeger/ggGWAS)
+[![Codecov test
+coverage](https://codecov.io/gh/sinarueeger/ggGWAS/branch/master/graph/badge.svg)](https://codecov.io/gh/sinarueeger/ggGWAS?branch=master)
 <!-- badges: end -->
 
 An R-Package (*work-in-progress*) that contains ggplot2-extensions of
