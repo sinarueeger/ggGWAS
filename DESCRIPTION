@@ -22,7 +22,8 @@ Suggests:
     vctrs (>= 0.1.0),
     knitr (>= 0.1.7),
     rmarkdown,
-    qqman
+    qqman,
+    covr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Imports: 

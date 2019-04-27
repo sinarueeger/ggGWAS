@@ -52,5 +52,10 @@ devtools::build()
 usethis::use_package_doc()
 codemetar::write_codemeta()
 
+## CI
+usethis::use_travis()
+usethis::use_appveyor()
+usethis::use_coverage(type = c("codecov"))
+
 ## run examples
 devtools::run_examples()
