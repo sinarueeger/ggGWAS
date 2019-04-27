@@ -131,6 +131,7 @@ qp <- ggplot(data = giant) +
 print(qp)
 
 ## use rastr
+\dontrun{
 qp <- ggplot(data = giant) +
   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
     geom = ggrastr:::GeomPointRast
@@ -138,6 +139,7 @@ qp <- ggplot(data = giant) +
   geom_hline(yintercept = 8) +
   ggtitle("GIANT summary statistics (rastr)")
 print(qp)
+}
 
 ## facetting
 

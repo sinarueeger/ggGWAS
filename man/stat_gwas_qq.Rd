@@ -106,9 +106,11 @@ ggplot(df, aes(observed = P)) +
   stat_gwas_qq(geom = "line", size = 1.5) +
   geom_abline(intercept = 0, slope = 1, linetype = 2)
 ## plot efficiently
+\dontrun{
 ggplot(df, aes(observed = P)) +
 stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
 geom_abline(intercept = 0, slope = 1)
+}
 
 ## Group and color points according to GWAS
 (qp <- ggplot(df, aes(observed = P)) + stat_gwas_qq(aes(
