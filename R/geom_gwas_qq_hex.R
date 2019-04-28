@@ -39,6 +39,7 @@ stat_gwas_qq_hex <- function(mapping = NULL,
                              show.legend = NA,
                              inherit.aes = TRUE,
                              observed.thresh = NULL,
+                             hex.function = hexBinSummarise_custom
                              ...) {
   layer(
     stat = StatGwasQqplotHex,
@@ -52,7 +53,9 @@ stat_gwas_qq_hex <- function(mapping = NULL,
       na.rm = na.rm,
       observed.thresh = observed.thresh,
       bins = bins,
-      binwidth = binwidth, ...
+      binwidth = binwidth,
+      hex_function = hex_function,
+      ...
     )
   )
 }
@@ -75,7 +78,8 @@ StatGwasQqplotHex <- ggproto(
                              dparams,
                              na.rm,
                              observed.thresh,
-                             binwidth = NULL, bins = 30) {
+                             binwidth = NULL, bins = 30, hex_function = hexBinSummarise_custom) {
+
     observed <-
       data$y # [!is.na(data$x)]
     N <- length(observed)
@@ -103,7 +107,7 @@ StatGwasQqplotHex <- ggproto(
     # try_require("hexbin", "stat_binhex")
     binwidth <- binwidth %||% hex_binwidth(bins, scales)
     wt <- data$weight %||% rep(1L, nrow(data))
-    out <- hexBinSummarise(data$x, data$y, wt, binwidth, sum)
+    out <- hex_function(data$x, data$y, wt, binwidth, sum)
 
     out$density <- as.vector(out$value / sum(out$value, na.rm = TRUE))
     out$ndensity <- out$density / max(out$density, na.rm = TRUE)
