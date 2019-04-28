@@ -16,7 +16,7 @@ hex_bounds <- function(x, binwidth) {
   )
 }
 
-hexBinSummarise <- function(x, y, z, binwidth, fun = mean, fun.args = list(),
+hexBinSummarise_custom <- function(x, y, z, binwidth, fun = mean, fun.args = list(),
                             drop = TRUE) {
   if (length(binwidth) == 1) {
     binwidth <- rep(binwidth, 2)
@@ -27,7 +27,7 @@ hexBinSummarise <- function(x, y, z, binwidth, fun = mean, fun.args = list(),
   xbins <- diff(xbnds) / binwidth[1]
 
   ybnds <- hex_bounds(y, binwidth[2])
-  ybins <- diff(ybnds) / binwidth[2]
+  ybins <- xbins#diff(ybnds) / binwidth[2]
 
   # Call hexbin
   hb <- hexbin::hexbin(
