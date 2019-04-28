@@ -72,13 +72,8 @@ ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)
 
 ``` r
 
-ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),  chr.class = "character") + facet_wrap( ~ GWAS, label = label_both)
-```
-
-<img src="man/figures/README-mhtplot-2.png" width="100%" />
-
-``` r
-
+c
+#> function (...)  .Primitive("c")
 ?stat_gwas_manhattan ## for more examples
 ```
 
