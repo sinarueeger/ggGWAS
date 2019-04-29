@@ -7,11 +7,13 @@
 \usage{
 stat_gwas_qq_hex(mapping = NULL, data = NULL, geom = "hex",
   position = "identity", na.rm = FALSE, bins = 30, binwidth = NULL,
-  show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL, ...)
+  show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL,
+  hex.function = hexBinSummarise_custom, ...)
 
 geom_gwas_qq_hex(mapping = NULL, data = NULL, geom = "hex",
   position = "identity", na.rm = FALSE, bins = 30, binwidth = NULL,
-  show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL, ...)
+  show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL,
+  hex.function = hexBinSummarise_custom, ...)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -62,6 +64,8 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 \item{observed.thresh}{Same scale as observed (e.g. 0.05),
 observed <= observed.thresh AFTER computing expected.}
 
+\item{hex.function}{\code{hexBinSummarise_custom} or \code{hexBinSummarise}}
+
 \item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
@@ -91,7 +95,6 @@ theme_set(theme_bw())
 (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1))
-
 }
 \seealso{
 \code{\link[ggplot2]{stat_bin_hex}}

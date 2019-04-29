@@ -25,18 +25,18 @@
 #' data("giant")
 #' ?giant
 #' theme_set(theme_bw())
-#'
+#' 
 #' ## default: for -log10(P), by default chr is numeric
 #' qp <- ggplot(giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)) +
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (by default CHR is numeric)")
 #' print(qp)
-#'
+#' 
 #' ## add nice color palette
 #' pal <- wesanderson::wes_palette("Zissou1", 22, type = "continuous")
 #' qp + scale_color_gradientn(colours = pal)
-#'
+#' 
 #' ## chr factor
 #' qp <- ggplot(giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
@@ -49,7 +49,7 @@
 #' qp + scale_color_manual(values = wesanderson::wes_palette("Zissou1", 22,
 #'   type = "continuous"
 #' ))
-#'
+#' 
 #' ## turn all points black
 #' qp <- ggplot(giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
@@ -58,7 +58,7 @@
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
-#'
+#' 
 #' ## set lower threshold
 #' qp <- ggplot(data = giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
@@ -67,14 +67,14 @@
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics")
 #' print(qp)
-#'
-#'
+#' 
+#' 
 #' ## for effect sizes
 #' qp <- ggplot(data = giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = BETA, chr = CHR)) +
 #'   ggtitle("GIANT effect sizes")
 #' print(qp)
-#'
+#' 
 #' ## use rastr
 #' qp <- ggplot(data = giant) +
 #'   stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),
@@ -83,9 +83,9 @@
 #'   geom_hline(yintercept = 8) +
 #'   ggtitle("GIANT summary statistics (rastr)")
 #' print(qp)
-#'
+#' 
 #' ## facetting
-#'
+#' 
 #' ## generate two groups
 #' giant <- giant %>%
 #'   dplyr::mutate(gr = dplyr::case_when(

@@ -87,12 +87,12 @@ theme_set(theme_bw())
 
 ## default
 (qp <- ggplot(df, aes(observed = P)) +
-    stat_gwas_qq() +
-    geom_abline(intercept = 0, slope = 1))
+  stat_gwas_qq() +
+  geom_abline(intercept = 0, slope = 1))
 
 ## use geom instead of qq
 ggplot(df, aes(observed = P)) +
-geom_gwas_qq()
+  geom_gwas_qq()
 
 ## show only p-values above a cerain threshold
 ggplot(df, aes(observed = P)) +
@@ -105,14 +105,15 @@ ggplot(df, aes(observed = P)) +
 ggplot(df, aes(observed = P)) +
   stat_gwas_qq(geom = "line", size = 1.5) +
   geom_abline(intercept = 0, slope = 1, linetype = 2)
+
 ## plot efficiently
 ggplot(df, aes(observed = P)) +
-stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
-geom_abline(intercept = 0, slope = 1)
+  stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
+  geom_abline(intercept = 0, slope = 1)
 
 ## Group and color points according to GWAS
 (qp <- ggplot(df, aes(observed = P)) + stat_gwas_qq(aes(
-group = GWAS, color = GWAS
+  group = GWAS, color = GWAS
 )))
 
 ## facet
@@ -140,10 +141,10 @@ data("giant")
 
 ## generate two groups
 giant <- giant \%>\%
-dplyr::mutate(gr = dplyr::case_when(
-BETA <= 0 ~ "Neg effect size",
-BETA > 0 ~ "Pos effect size"
-))
+  dplyr::mutate(gr = dplyr::case_when(
+    BETA <= 0 ~ "Neg effect size",
+    BETA > 0 ~ "Pos effect size"
+  ))
 ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
   stat_gwas_qq() +
   geom_abline(intercept = 0, slope = 1)
