@@ -167,4 +167,13 @@ system.time(print(qp_subset))
 
 ```
 
+## New color palette
+
+See also: https://github.com/mkanai/ggman/blob/master/R/scale-colour-dichromatic.R
+
+## New theme
+
+See also: https://github.com/mkanai/ggman/blob/master/R/theme-publication.R
+
+
 

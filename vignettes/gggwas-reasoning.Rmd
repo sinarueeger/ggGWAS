@@ -44,6 +44,7 @@ There are two main data visualisations^[There are also other tools used, such as
 Both plotting types can be applied in R with various functions. Just to name a few, here are some links which have also served as inspiration:
 
 - `qqman`: R package for GWAS results: http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html
+- `ggman`: R package with ggplot2 wrapper with some neat hacks https://github.com/mkanai/ggman
 - Recipe to create Manhattanplot in R with `qqman`, `ggplot2` and `plotly`: https://www.r-graph-gallery.com/wp-content/uploads/2018/02/Manhattan_plot_in_R.html
 - Recipe for QQplots in `lattice` (for historical reasons) https://genome.sph.umich.edu/wiki/Code_Sample:_Generating_QQ_Plots_in_R
 - Fast QQplot implementation in `ramwas` package: https://rdrr.io/bioc/ramwas/man/qqplotFast.html
