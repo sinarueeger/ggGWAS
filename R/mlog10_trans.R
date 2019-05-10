@@ -47,8 +47,7 @@ log_sub_breaks_gggwas <- function (rng, n = 5, base = 10)
 #' @references From \url{https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html} and \url{https://gist.github.com/wch/3250485}
 #' @export
 #' @examples
-#' require(scales)
-#' mlog_breaks()(runif(1000))
+#' # mlog_breaks()(runif(1000))
 #'
 
 mlog_breaks <- function (n = 5, base = 10)
@@ -80,6 +79,8 @@ mlog_breaks <- function (n = 5, base = 10)
 }
 
 #' Minus log transformation
+#'
+#' @param base base of logarithm to use
 #'
 #' @export
 #' @references \url{https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html and https://gist.github.com/wch/3250485}

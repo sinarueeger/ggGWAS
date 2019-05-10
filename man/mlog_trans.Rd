@@ -6,6 +6,9 @@
 \usage{
 mlog_trans(base = 10)
 }
+\arguments{
+\item{base}{base of logarithm to use}
+}
 \description{
 Minus log transformation
 }

@@ -120,8 +120,8 @@ f_trans_mlog10 <- function(x) -log10(x)
 f_trans_mlog10_inverse <- function(x) 10^(-x)
 
 mlog10_trans <- scales::trans_new("-log10",
-                                  transform = function(x) -log10(x),
-                                  inverse = function(x) 10^(-x))
+                                  transform = f_trans_mlog10,
+                                  inverse = f_trans_mlog10_inverse)
 
 gg + 
   scale_y_continuous(trans = mlog10_trans) + 
