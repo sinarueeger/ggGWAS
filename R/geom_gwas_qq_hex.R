@@ -23,11 +23,11 @@
 #' ))
 #' theme_set(theme_bw())
 #'
-#' (qp <- ggplot(df, aes(y = P)) +
+#' (qp <- ggplot(df, aes(observed = P)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
 #'
-#' (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
+#' (qp <- ggplot(df, aes(observed = P, group = GWAS, color = GWAS)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
 stat_gwas_qq_hex <- function(mapping = NULL,
@@ -73,8 +73,10 @@ stat_gwas_qq_hex <- function(mapping = NULL,
 StatGwasQqplotHex <- ggproto(
   "StatGwasQqplotHex",
   Stat,
+  #required_aes = c("y"),
+  #default_aes = aes(y = stat(y), x = stat(x), weight = 1),
   required_aes = c("y"),
-  default_aes = aes(y = stat(y), x = stat(x), weight = 1),
+  default_aes = aes(y = stat(`observed_log10`), x = stat(`expected_log10`), weight = 1),
 
   compute_group = function(data,
                              scales,
@@ -84,7 +86,7 @@ StatGwasQqplotHex <- ggproto(
                              binwidth = NULL, bins = 30, fill = "black", hex.function = hexBinSummarise) {
     # browser()
     observed <-
-      data$y # [!is.na(data$x)]
+      data$y#[!is.na(data$obs)]
     N <- length(observed)
 
 
@@ -112,16 +114,21 @@ StatGwasQqplotHex <- ggproto(
     wt <- data$weight %||% rep(1L, nrow(data))
     out <- hex.function(data$x, data$y, wt, binwidth, sum)
 
+    ## no color needed
     # out$density <- as.vector(out$value / sum(out$value, na.rm = TRUE))
-    #  out$ndensity <- out$density / max(out$density, na.rm = TRUE)
+    # out$ndensity <- out$density / max(out$density, na.rm = TRUE)
     # out$count <- out$value
     # out$ncount <- out$count / max(out$count, na.rm = TRUE)
+
     out$value <- NULL
     out$fill <- fill
-
-    data <- NA
+    out$expected_log10 <- out$x
+    out$observed_log10 <- out$y
+   # out$x <- NULL
+   # out$y <- NULL
 
     out
+
   }
 )
 
