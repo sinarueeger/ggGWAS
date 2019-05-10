@@ -64,7 +64,7 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 \item{observed.thresh}{Same scale as observed (e.g. 0.05),
 observed <= observed.thresh AFTER computing expected.}
 
-\item{hex.function}{\code{hexBinSummarise} or \code{ggplot2:::hexBinSummarise}}
+\item{hex.function}{\code{ggGWAS:::hexBinSummarise} or \code{ggplot2:::hexBinSummarise}}
 
 \item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like

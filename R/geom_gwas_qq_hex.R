@@ -5,7 +5,7 @@
 #' @inheritParams ggplot2::stat_bin_hex
 #' @param observed.thresh Same scale as observed (e.g. 0.05),
 #' observed <= observed.thresh AFTER computing expected.
-#' @param hex.function \code{hexBinSummarise} or \code{ggplot2:::hexBinSummarise}
+#' @param hex.function \code{ggGWAS:::hexBinSummarise} or \code{ggplot2:::hexBinSummarise}
 #' @details Code and documentation mostly from
 #' \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
 #' @seealso \code{\link[ggplot2]{stat_bin_hex}}
