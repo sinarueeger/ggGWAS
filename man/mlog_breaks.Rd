@@ -18,8 +18,7 @@ function
 Minus log breaks (integer breaks on -log-trnsformed scales)
 }
 \examples{
-require(scales)
-mlog_breaks()(runif(1000))
+# mlog_breaks()(runif(1000))
 
 }
 \references{
