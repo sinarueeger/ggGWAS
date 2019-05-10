@@ -23,7 +23,8 @@ Suggests:
     knitr (>= 0.1.7),
     rmarkdown,
     qqman,
-    covr
+    covr,
+    pryr
 Remotes: 
     sinarueeger/GWAS.utils,
     VPetukhov/ggrastr
