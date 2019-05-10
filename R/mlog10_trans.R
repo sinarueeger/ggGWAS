@@ -91,12 +91,12 @@ mlog_breaks <- function (n = 5, base = 10)
 #'
 #' ggplot(df, aes(sample = y)) +
 #'   stat_qq(distribution = stats::qunif) +
-#'   scale_y_continuous(trans = mlog_trans()) +
-#'   scale_x_continuous(trans = mlog_trans()) +
+#'   scale_y_continuous(trans = "mlog") +
+#'   scale_x_continuous(trans = "mlog") +
 #'   geom_abline(intercept = 0, slope = 1)
 mlog_trans <- function(base = 10) {
 
-  #force(base) ## no clue what this does
+  #force(base)
   trans <- function(x) -log(x, base)
   inv <- function(x) base^(-x)
 
@@ -119,8 +119,8 @@ mlog_trans <- function(base = 10) {
 #'
 #' ggplot(df, aes(sample = y)) +
 #'   stat_qq(distribution = stats::qunif) +
-#'   scale_y_continuous(trans = mlog10_trans()) +
-#'   scale_x_continuous(trans = mlog10_trans()) +
+#'   scale_y_continuous(trans = "mlog10") +
+#'   scale_x_continuous(trans = "mlog10") +
 #'   geom_abline(intercept = 0, slope = 1)
 mlog10_trans <- function()
 {

@@ -18,8 +18,8 @@ df <- data.frame(y = runif(1000))
 
 ggplot(df, aes(sample = y)) +
   stat_qq(distribution = stats::qunif) +
-  scale_y_continuous(trans = mlog_trans()) +
-  scale_x_continuous(trans = mlog_trans()) +
+  scale_y_continuous(trans = "mlog") +
+  scale_x_continuous(trans = "mlog") +
   geom_abline(intercept = 0, slope = 1)
 }
 \references{

@@ -15,7 +15,7 @@ df <- data.frame(y = runif(1000))
 
 ggplot(df, aes(sample = y)) +
   stat_qq(distribution = stats::qunif) +
-  scale_y_continuous(trans = mlog10_trans()) +
-  scale_x_continuous(trans = mlog10_trans()) +
+  scale_y_continuous(trans = "mlog10") +
+  scale_x_continuous(trans = "mlog10") +
   geom_abline(intercept = 0, slope = 1)
 }

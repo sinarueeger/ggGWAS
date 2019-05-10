@@ -5,7 +5,7 @@
 #' @inheritParams ggplot2::stat_bin_hex
 #' @param observed.thresh Same scale as observed (e.g. 0.05),
 #' observed <= observed.thresh AFTER computing expected.
-#' @param hex.function \code{hexBinSummarise_custom} or \code{hexBinSummarise}
+#' @param hex.function \code{hexBinSummarise} or \code{ggplot2:::hexBinSummarise}
 #' @details Code and documentation mostly from
 #' \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
 #' @seealso \code{\link[ggplot2]{stat_bin_hex}}
@@ -39,7 +39,7 @@ stat_gwas_qq_hex <- function(mapping = NULL,
                              show.legend = NA,
                              inherit.aes = TRUE,
                              observed.thresh = NULL,
-                             hex.function = hexBinSummarise_custom,
+                             hex.function = hexBinSummarise,
                              ...) {
   layer(
     stat = StatGwasQqplotHex,
@@ -71,14 +71,15 @@ StatGwasQqplotHex <- ggproto(
   "StatGwasQqplotHex",
   Stat,
   required_aes = c("y"),
-  default_aes = aes(y = stat(y), x = stat(x), weight = 1), # , fill = stat(count)),
+  default_aes = aes(y = stat(y), x = stat(x), weight = 1),
+  #fill = "black", # , fill = stat(count)),
 
   compute_group = function(data,
                              scales,
                              dparams,
                              na.rm,
                              observed.thresh,
-                             binwidth = NULL, bins = 30, hex.function = hexBinSummarise_custom) {
+                             binwidth = NULL, bins = 30, hex.function = hexBinSummarise) {
     # browser()
     observed <-
       data$y # [!is.na(data$x)]
@@ -124,3 +125,5 @@ StatGwasQqplotHex <- ggproto(
 #' @export
 #' @rdname stat_gwas_qq_hex
 geom_gwas_qq_hex <- stat_gwas_qq_hex
+
+
