@@ -45,6 +45,7 @@ First, there is `scale_x_continuous`, which simply applies the `log10` function 
 
 ```{r}
 
+set.seed(3)
 df <- data.frame(y = runif(1000))
 
 qp <- ggplot(df, aes(sample = y)) +
@@ -58,11 +59,6 @@ Second, there is `scale_{x|y}_log10`, which simply applies the `log10` function 
 
 ```{r}
 
-df <- data.frame(y = runif(1000))
-
-qp <- ggplot(df, aes(sample = y)) +
-  stat_qq(distribution = stats::qunif)
-
 qp + scale_x_log10() + scale_y_log10()
 
 ```
@@ -71,10 +67,6 @@ Third, there is `coord_trans`, that takes as input the transformation (which sta
 
 ```{r}
 
-df <- data.frame(y = runif(1000))
-
-qp <- ggplot(df, aes(sample = y)) +
-  stat_qq(distribution = stats::qunif)
 
 qp + coord_trans(x = "log10", y = "log10")
 
@@ -82,18 +74,27 @@ qp + coord_trans(x = "log10", y = "log10")
 
 For our Q-Q plot we want to create a new transformation that performs a `-log10` transformation, which we will call `mlog10`. 
 
-
+Either we use `scale_y_continuous`
 ```{r}
 
-ggplot(giant, aes(sample = P)) +
-   stat_qq(distribution = stats::qunif) +
-     scale_y_continuous(trans = ggGWAS::mlog10_trans()) +
-   scale_x_continuous(trans = ggGWAS::mlog10_trans()) +
-   geom_abline(intercept = 0, slope = 1)
+qp + 
+  scale_y_continuous(trans = "mlog10") +
+  scale_x_continuous(trans = "mlog10") +
+  geom_abline(intercept = 0, slope = 1)
 
 
 ```
 
+or `coord_trans` (not sure why this won't work)
+
+```{r}
+
+qp + 
+  coord_trans(x = "mlog10", y = "mlog10") + 
+  geom_abline(intercept = 0, slope = 1)
+
+
+```
 
 ## R object size, rendering speed and image file size
 
