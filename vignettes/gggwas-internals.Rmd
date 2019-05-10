@@ -248,10 +248,18 @@ Problem is, that the original dataset is still passed on. This is not a problem 
 Note, that the used `hex.function` called `hexBinSummarise_custom` does not have the usual properties, in that it will have the hexagon shape, but not any count legend. Also has a tweaked `hexbinheight`. If `hex.function = hexBinSummarise` is used, the plot will have the usual properties. 
 
 ```{r}
-## fix this
-#gg <- ggplot(data = df) + stat_gwas_qq_hex(aes(y = P), fill = "black", hex.function = hexBinSummarise) # 418x13 table in gb$data
+## old version
+ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P), hex.function = ggplot2:::hexBinSummarise) 
+
+## new version
+ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P))
+
+## same as
+ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P), hex.function = ggGWAS:::hexBinSummarise) 
 
 ```
+
+
 
 
 ### 3. Subsetting data
