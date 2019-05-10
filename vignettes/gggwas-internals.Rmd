@@ -13,40 +13,74 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r knitrsetup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+```
+
+```{r setup, include = TRUE}
 library(ggplot2)
 library(ggGWAS)
 library(GWAS.utils)
+theme_set(theme_bw())
 ```
 This vignette contains some technical aspects about developing the `ggGWAS` package. 
 
 
 ## New scale `-log10`
 
-There are different scales available in ggplot2.
+There are different scales available in ggplot2 that apply a `log10` transformation. 
 
 - `scale_x_log10` and `scale_y_log10`
 - `scale_x_continuous(trans = "log10")` and `scale_y_continuous(trans = "log10")`
 - `coord_trans(x = "log10", y = "log10")`
 
+They all to slightly different things. 
+
+
+
+First, there is `scale_x_continuous`, which simply applies the `log10` function to the data. Available transformations include "asn", "atanh", "boxcox", "exp", "identity", "log", "log10", "log1p", "log2", "logit", "probability", "probit", "reciprocal", "reverse" and "sqrt" (from `?scale_x_continuous`)
+
 ```{r}
-library(ggplot2)
+
+df <- data.frame(y = runif(1000))
+
+qp <- ggplot(df, aes(sample = y)) +
+  stat_qq(distribution = stats::qunif)
+
+qp + scale_x_continuous(trans = "log10") + scale_y_continuous(trans = "log10")
+
+```
+
+Second, there is `scale_{x|y}_log10`, which simply applies the `log10` function to the data. 
+
+```{r}
+
 df <- data.frame(y = runif(1000))
 
 qp <- ggplot(df, aes(sample = y)) +
   stat_qq(distribution = stats::qunif)
 
 qp + scale_x_log10() + scale_y_log10()
-qp + scale_x_continuous(trans = "log10") + scale_y_continuous(trans = "log10")
+
+```
+
+Third, there is `coord_trans`, that takes as input the transformation (which start with `scales::*_trans`). Note that the grid is different. 
+
+```{r}
+
+df <- data.frame(y = runif(1000))
+
+qp <- ggplot(df, aes(sample = y)) +
+  stat_qq(distribution = stats::qunif)
+
 qp + coord_trans(x = "log10", y = "log10")
 
 ```
 
-For our Q-Q plot we want to create a new transformation called `-log10`. 
+For our Q-Q plot we want to create a new transformation that performs a `-log10` transformation, which we will call `mlog10`. 
 
 
 ```{r}
@@ -57,128 +91,211 @@ ggplot(giant, aes(sample = P)) +
    scale_x_continuous(trans = ggGWAS::mlog10_trans()) +
    geom_abline(intercept = 0, slope = 1)
 
+
 ```
 
 
-## Speed
+## R object size, rendering speed and image file size
 
-One aspect of `ggGWAS` is improving speed. Even though `ggplot2` itself is not known for its speed, we can apply a few tricks to beat the base plot speed. 
+Three major problems with ggplot2 plots of large datasets are 1) object size, 2) rendering speed and 3) the resulting image file size (e.g. pdf or png). 
+
+Passing on a large dataset to ggplot2 will create a large object (because the dataset will actually - in various forms - become part of the object). To manipulate this, would mean to manipulate some core parts of ggplot2. 
+
+However, rendering a large object does not necessarily take long. For example, we can avoid plotting each single observation by using hexagons. 
+
+A more complex topic is rastering. Rastering actually increases the time to render a plot, but decreases the file output size. 
+
+In the following we are going through options to optimise plotting and then measure object size, rendering speed and file output size (as a pdf). 
+
+Here are the options: 
 
 1. Using rastering (`ggrastr:::GeomPointRast`)
 2. Using hexagons (`ggplot::geom_hex`)
 3. Subsetting data
-4. Avoiding passing on the full datasets (???)
-
-To compare, we use the time to plot in base graphics (`qqman` package):
+4. Avoiding passing on the full datasets
 
 
-```{r}
+And here are the the metrics used to measure object size, rendering time and file output size.
+
+```{r, functions}
+
+
+print_object_size <- function(x) {
+  pryr::object_size(x) ## in bytes
+  ## do not use object.size(), as not accurate, or use pryr::compare_size(x)
+  }
+
+print_rendering_time <- function(x) {
+  system.time(x)
+}
+## check out a better benchmarking time post: https://www.alexejgossmann.com/benchmarking_r/
+## maybe microbenchmark package? 
+
+print_file_size <- function(gg) {
+  invisible(ggsave("tmp.pdf", gg, width = 4, height = 4))
+  cat(file.info("tmp.pdf")$size / 1024, " Kb.\n", sep = "")
+  unlink("tmp.pdf")
+}
+
+```
+
+
+### Benchmark: base graphics
+
+Our benchmark is the base plot version from the `qqman` package:
+
+
+```{r dataset}
 n.sample <- 1e3
 set.seed(3)
 df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
-system.time(qqman::qq(df$P))
+```
+
+```{r base-metrics}
+
+## Object size
+print_object_size(qqman::qq(df$P))
+
+## Rendering speed
+print_rendering_time(qqman::qq(df$P))
+
+## File output size
+print_file_size(qqman::qq(df$P))
+
+```
+
+### ggplot2 example
+
+
+```{r ggplot2-example, eval=TRUE, include=TRUE}
+
+qp_points <- ggplot(df, aes(observed = P)) +
+  stat_gwas_qq() +
+  geom_abline(intercept = 0, slope = 1)
+
+
+```
+
+```{r ggplot2-metrics}
+
+## Object size
+print_object_size(qp_points)
+
+## Rendering speed
+print_rendering_time(print(qp_points))
+
+## File output size
+print_file_size(qp_points)
+
 ```
 
 
 ### 1. Raster
 
-The R-package `ggrastr` does ???. 
+The R-package `ggrastr` does ???. (for the price of longer rendering time).
 
 It creates very light output, but is not necessarily fast. 
 
-Here is a comparison of the actual pdf file size.
-
-```{r eval=FALSE, include=FALSE}
-
-## >>>>>>> just check if ggrastr is installed
-
-## raster
-gg_vec <- ggplot(df, aes(x = P, y = P)) + geom_point()
-gg_ras <- gg_vec + ggrastr::geom_point_rast(size = 0.5)
-
-PrintFileSize <- function(gg, name) {
-  invisible(ggsave("tmp.pdf", gg, width = 4, height = 4))
-  cat(name, ": ", file.info("tmp.pdf")$size / 1024, " Kb.\n", sep = "")
-  unlink("tmp.pdf")
-}
-
-PrintFileSize(gg_ras, "Raster")
-PrintFileSize(gg_vec, "Vector")
-
-```
-
 We can use the rastering functionality as geom in our function. 
 
-```{r eval=FALSE, include=FALSE}
-
-qp_points <- ggplot(df, aes(observed = P)) +
-  stat_gwas_qq() +
-  geom_abline(intercept = 0, slope = 1)
-system.time(print(qp_points))
+```{r rastr-example, eval=TRUE, include=TRUE}
 
 qp_raster <- ggplot(df, aes(observed = P)) +
   stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
   geom_abline(intercept = 0, slope = 1)
-system.time(print(qp_raster))
 
-PrintFileSize(qp_points, "Vector")
-PrintFileSize(qp_raster, "Raster")
 
+```
+
+```{r rastr-metrics}
+
+## Object size
+print_object_size(qp_raster)
+
+## Rendering speed
+print_rendering_time(print(qp_raster))
+
+## File output size
+print_file_size(qp_raster)
 
 ```
 
 ### 2. Hexagons
 
-```{r}
+```{r hex-example}
 
 qp_hex <- ggplot(df, aes(y = P)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1)
-system.time(print(qp_hex))
 ```
 
-Problem is, that the original dataset is still passed on. This is not a problem in terms of speed, but can be for memeory. 
+```{r hex-metrics}
 
-```{r}
-#library(pryr)
-#object_size(gg)
+## Object size
+print_object_size(qp_hex)
+
+## Rendering speed
+print_rendering_time(print(qp_hex))
+
+## File output size
+print_file_size(qp_hex)
 
 ```
 
-The default `hex.function` `hexBinSummarise_custom` does not have the usual properties. Will have the hexagon shape, but not any count. Tweaked `hexbinheight`.
+Problem is, that the original dataset is still passed on. This is not a problem in terms of speed, but can be for memory. More about this further down.  
 
-`hexBinSummarise` will have the usual properties.
+Note, that the used `hex.function` called `hexBinSummarise_custom` does not have the usual properties, in that it will have the hexagon shape, but not any count legend. Also has a tweaked `hexbinheight`. If `hex.function = hexBinSummarise` is used, the plot will have the usual properties. 
+
 ```{r}
+## fix this
 #gg <- ggplot(data = df) + stat_gwas_qq_hex(aes(y = P), fill = "black", hex.function = hexBinSummarise) # 418x13 table in gb$data
 
 ```
 
 
-### 3. Avoiding passing on the full datasets (???)
-
-
-```{r}
-
-ggplot_build(qp_hex) ## data structure
-
-ggplot_gtable(ggplot_build(qp_hex)) ## grid object
-
-```
-
-
-### 4. Subsetting data
+### 3. Subsetting data
 
 Something very simple is to subset the data, since we are usually not interested in the very high P-values (although, we are at times, when it comes to model sanity checks).
 
 
-```{r}
+```{r subset-example}
 qp_subset <- ggplot(df, aes(observed = P)) +
   stat_gwas_qq(observed.thresh = 0.05) +
   geom_abline(intercept = 0, slope = 1)
-system.time(print(qp_subset))
-
 
 ```
+
+```{r subset-metrics}
+
+## Object size
+print_object_size(qp_subset)
+
+## Rendering speed
+print_rendering_time(print(qp_subset))
+
+## File output size
+print_file_size(qp_subset)
+
+```
+
+### 4. Avoiding passing on the full datasets (???)
+
+What makes a ggplot2 object really heavy, is that the dataset is passed on several times into the object. 
+
+```{r}
+
+## data structure
+ggplot_build(qp_hex) %>% str()
+object.size(ggplot_build(qp_hex))
+object.size(ggplot_build(qp_points))
+
+## grid object
+## ggplot_gtable(ggplot_build(qp_hex)) %>% str()
+object.size(ggplot_gtable(ggplot_build(qp_points)))
+object.size(ggplot_gtable(ggplot_build(qp_hex)))
+
+```
+
 
 ## New color palette
 
