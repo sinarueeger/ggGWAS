@@ -5,6 +5,7 @@
 #' @inheritParams ggplot2::stat_bin_hex
 #' @param observed.thresh Same scale as observed (e.g. 0.05),
 #' observed <= observed.thresh AFTER computing expected.
+#' @param fill color by which hexagons are filled, by default black.
 #' @param hex.function \code{ggGWAS:::hexBinSummarise} or \code{ggplot2:::hexBinSummarise}
 #' @details Code and documentation mostly from
 #' \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.

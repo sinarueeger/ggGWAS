@@ -66,6 +66,8 @@ observed <= observed.thresh AFTER computing expected.}
 
 \item{hex.function}{\code{ggGWAS:::hexBinSummarise} or \code{ggplot2:::hexBinSummarise}}
 
+\item{fill}{color by which hexagons are filled, by default black.}
+
 \item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters

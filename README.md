@@ -72,27 +72,32 @@ ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)
 
 ``` r
 
-c
-#> function (...)  .Primitive("c")
 ?stat_gwas_manhattan ## for more examples
 ```
 
 ### Q-Q plot
+
+Lightweight Q-Q plot (with hex tiles)
+
+``` r
+
+ggplot(data = df) + stat_gwas_qq_hex(aes(y = P))
+```
+
+<img src="man/figures/README-qqplot-hex-1.png" width="100%" />
+
+``` r
+
+?stat_gwas_qq_hex ## for more examples
+```
+
+Conventional Q-Q plot
 
 ``` r
 ggplot(data = df) + stat_gwas_qq(aes(observed = P))
 ```
 
 <img src="man/figures/README-qqplot-1.png" width="100%" />
-
-``` r
-
-ggplot(data = df) + stat_gwas_qq(aes(observed = P)) + 
-facet_wrap( ~ GWAS, label = label_both) + 
-geom_abline(intercept = 0, slope = 1)
-```
-
-<img src="man/figures/README-qqplot-2.png" width="100%" />
 
 ``` r
 
