@@ -137,8 +137,21 @@ qp_hex <- ggplot(df, aes(y = P)) +
 system.time(print(qp_hex))
 ```
 
-Problem is, that the original dataset is still passed on, which makes it slow.
+Problem is, that the original dataset is still passed on. This is not a problem in terms of speed, but can be for memeory. 
 
+```{r}
+#library(pryr)
+#object_size(gg)
+
+```
+
+The default `hex.function` `hexBinSummarise_custom` does not have the usual properties. Will have the hexagon shape, but not any count. Tweaked `hexbinheight`.
+
+`hexBinSummarise` will have the usual properties.
+```{r}
+#gg <- ggplot(data = df) + stat_gwas_qq_hex(aes(y = P), fill = "black", hex.function = hexBinSummarise) # 418x13 table in gb$data
+
+```
 
 
 ### 3. Avoiding passing on the full datasets (???)
