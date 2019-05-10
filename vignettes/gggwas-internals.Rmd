@@ -228,6 +228,7 @@ print_file_size(qp_raster)
 qp_hex <- ggplot(df, aes(y = P)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1)
+
 ```
 
 ```{r hex-metrics}
@@ -247,15 +248,15 @@ Problem is, that the original dataset is still passed on. This is not a problem 
 
 Note, that the used `hex.function` called `hexBinSummarise_custom` does not have the usual properties, in that it will have the hexagon shape, but not any count legend. Also has a tweaked `hexbinheight`. If `hex.function = hexBinSummarise` is used, the plot will have the usual properties. 
 
-```{r}
+```{r, eval=TRUE, include=TRUE}
 ## old version
-ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P), hex.function = ggplot2:::hexBinSummarise) 
+ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(observed = P), hex.function = ggplot2:::hexBinSummarise) 
 
 ## new version
-ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P))
+#ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P))
 
 ## same as
-ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P), hex.function = ggGWAS:::hexBinSummarise) 
+ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(observed = P), hex.function = ggGWAS:::hexBinSummarise) 
 
 ```
 
