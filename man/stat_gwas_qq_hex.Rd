@@ -90,11 +90,11 @@ df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"),
 ))
 theme_set(theme_bw())
 
-(qp <- ggplot(df, aes(y = P)) +
+(qp <- ggplot(df, aes(observed = P)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1))
 
-(qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
+(qp <- ggplot(df, aes(observed = P, group = GWAS, color = GWAS)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1))
 }

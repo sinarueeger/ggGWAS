@@ -63,6 +63,8 @@ try_require <- function(package, fun) {
     call. = FALSE
   )
 }
+
+
 "%||%" <- function(a, b) {
   if (!is.null(a)) a else b
 }
