@@ -8,12 +8,12 @@
 stat_gwas_qq_hex(mapping = NULL, data = NULL, geom = "hex",
   position = "identity", na.rm = FALSE, bins = 30, binwidth = NULL,
   show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL,
-  hex.function = hexBinSummarise, ...)
+  hex.function = hexBinSummarise, fill = "black", ...)
 
 geom_gwas_qq_hex(mapping = NULL, data = NULL, geom = "hex",
   position = "identity", na.rm = FALSE, bins = 30, binwidth = NULL,
   show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL,
-  hex.function = hexBinSummarise, ...)
+  hex.function = hexBinSummarise, fill = "black", ...)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
