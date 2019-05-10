@@ -79,17 +79,23 @@ df <-
 ```{r mhtplot}
 ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
 
-c
 ?stat_gwas_manhattan ## for more examples
 ```
 
 ### Q-Q plot
+
+Lightweight Q-Q plot (with hex tiles)
+
+```{r qqplot-hex}
+
+ggplot(data = df) + stat_gwas_qq_hex(aes(y = P))
+
+?stat_gwas_qq_hex ## for more examples
+```
+
+Conventional Q-Q plot
 ```{r qqplot}
 ggplot(data = df) + stat_gwas_qq(aes(observed = P))
-
-ggplot(data = df) + stat_gwas_qq(aes(observed = P)) + 
-facet_wrap( ~ GWAS, label = label_both) + 
-geom_abline(intercept = 0, slope = 1)
 
 ?stat_gwas_qq ## for more examples
 ```

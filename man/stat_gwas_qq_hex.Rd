@@ -8,12 +8,12 @@
 stat_gwas_qq_hex(mapping = NULL, data = NULL, geom = "hex",
   position = "identity", na.rm = FALSE, bins = 30, binwidth = NULL,
   show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL,
-  hex.function = hexBinSummarise_custom, ...)
+  hex.function = hexBinSummarise, fill = "black", ...)
 
 geom_gwas_qq_hex(mapping = NULL, data = NULL, geom = "hex",
   position = "identity", na.rm = FALSE, bins = 30, binwidth = NULL,
   show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL,
-  hex.function = hexBinSummarise_custom, ...)
+  hex.function = hexBinSummarise, fill = "black", ...)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -64,7 +64,9 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 \item{observed.thresh}{Same scale as observed (e.g. 0.05),
 observed <= observed.thresh AFTER computing expected.}
 
-\item{hex.function}{\code{hexBinSummarise_custom} or \code{hexBinSummarise}}
+\item{hex.function}{\code{ggGWAS:::hexBinSummarise} or \code{ggplot2:::hexBinSummarise}}
+
+\item{fill}{color by which hexagons are filled, by default black.}
 
 \item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
