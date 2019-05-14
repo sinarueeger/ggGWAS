@@ -170,7 +170,7 @@ print_file_size(qqman::qq(df$P))
 
 ```{r ggplot2-example, eval=TRUE, include=TRUE}
 
-qp_points <- ggplot(df, aes(observed = P)) +
+qp_points <- ggplot(df, aes(y = P)) +
   stat_gwas_qq() +
   geom_abline(intercept = 0, slope = 1)
 
@@ -201,7 +201,7 @@ We can use the rastering functionality as geom in our function.
 
 ```{r rastr-example, eval=TRUE, include=TRUE}
 
-qp_raster <- ggplot(df, aes(observed = P)) +
+qp_raster <- ggplot(df, aes(y = P)) +
   stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
   geom_abline(intercept = 0, slope = 1)
 
@@ -228,6 +228,7 @@ print_file_size(qp_raster)
 qp_hex <- ggplot(df, aes(y = P)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1)
+
 ```
 
 ```{r hex-metrics}
@@ -247,12 +248,12 @@ Problem is, that the original dataset is still passed on. This is not a problem 
 
 Note, that the used `hex.function` called `hexBinSummarise_custom` does not have the usual properties, in that it will have the hexagon shape, but not any count legend. Also has a tweaked `hexbinheight`. If `hex.function = hexBinSummarise` is used, the plot will have the usual properties. 
 
-```{r}
+```{r, eval=TRUE, include=TRUE}
 ## old version
 ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P), hex.function = ggplot2:::hexBinSummarise) 
 
 ## new version
-ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P))
+#ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P))
 
 ## same as
 ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P), hex.function = ggGWAS:::hexBinSummarise) 
@@ -268,8 +269,8 @@ Something very simple is to subset the data, since we are usually not interested
 
 
 ```{r subset-example}
-qp_subset <- ggplot(df, aes(observed = P)) +
-  stat_gwas_qq(observed.thresh = 0.05) +
+qp_subset <- ggplot(df, aes(y = P)) +
+  stat_gwas_qq(y.thresh = 0.05) +
   geom_abline(intercept = 0, slope = 1)
 
 ```

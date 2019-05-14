@@ -41,8 +41,8 @@ Install including
     vignettes:
 
     remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
-    vignette("reasoning")
-    vignette("internals")
+    vignette("rgggwas-easoning")
+    vignette("igggwas-nternals")
 
 ## Basic usage
 

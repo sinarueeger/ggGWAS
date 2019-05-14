@@ -161,11 +161,11 @@ geom_point(aes(P_expected, P)) +
 
 ### 4. ggGWAS::geom_gwas_qq
 
-`ggplot(data = giant) + geom_gwas_qq(aes(observed = P))`
+`ggplot(data = giant) + geom_gwas_qq(aes(y = P))`
 
 Here is a whishlist of what a `geom_gwas_qq` function should be able to do:
 
-- include correct labels (expected and observed)
+- include correct labels (expected as x-label and observed as y-label)
 - make sure color, group, facetting all works
 - allow for the `raster` version (for faster plotting), hexbins (also for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
 - if time: implement genomic inflation factor representation
