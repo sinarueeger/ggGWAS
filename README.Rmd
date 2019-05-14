@@ -95,7 +95,7 @@ ggplot(data = df) + stat_gwas_qq_hex(aes(y = P))
 
 Conventional Q-Q plot
 ```{r qqplot}
-ggplot(data = df) + stat_gwas_qq(aes(observed = P))
+ggplot(data = df) + stat_gwas_qq(aes(oy= P))
 
 ?stat_gwas_qq ## for more examples
 ```

@@ -7,12 +7,12 @@
 \usage{
 stat_gwas_qq_hex(mapping = NULL, data = NULL, geom = "hex",
   position = "identity", na.rm = FALSE, bins = 30, binwidth = NULL,
-  show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL,
+  show.legend = NA, inherit.aes = TRUE, y.thresh = NULL,
   hex.function = hexBinSummarise, fill = "black", ...)
 
 geom_gwas_qq_hex(mapping = NULL, data = NULL, geom = "hex",
   position = "identity", na.rm = FALSE, bins = 30, binwidth = NULL,
-  show.legend = NA, inherit.aes = TRUE, observed.thresh = NULL,
+  show.legend = NA, inherit.aes = TRUE, y.thresh = NULL,
   hex.function = hexBinSummarise, fill = "black", ...)
 }
 \arguments{
@@ -61,8 +61,8 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
-\item{observed.thresh}{Same scale as observed (e.g. 0.05),
-observed <= observed.thresh AFTER computing expected.}
+\item{y.thresh}{Same scale as y (e.g. 0.05),
+y <= y.thresh AFTER computing expected.}
 
 \item{hex.function}{\code{ggGWAS:::hexBinSummarise} or \code{ggplot2:::hexBinSummarise}}
 
@@ -90,11 +90,11 @@ df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"),
 ))
 theme_set(theme_bw())
 
-(qp <- ggplot(df, aes(observed = P)) +
+(qp <- ggplot(df, aes(y = P)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1))
 
-(qp <- ggplot(df, aes(observed = P, group = GWAS, color = GWAS)) +
+(qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
   stat_gwas_qq_hex() +
   geom_abline(intercept = 0, slope = 1))
 }
