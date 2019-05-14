@@ -10,6 +10,11 @@
 #' @details Code and documentation mostly from
 #' \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
 #' @seealso \code{\link[ggplot2]{stat_bin_hex}}
+#' Variables computed by `stat_gwas_qq_hex`:
+#' \describe{
+#'   \item{observed (y)}{P-value quantiles}
+#'   \item{expected (x)}{theoretical quantiles}
+#' }
 #' @export
 #' @aliases geom_gwas_qq_hex
 #'

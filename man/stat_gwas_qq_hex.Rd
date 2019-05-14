@@ -100,4 +100,9 @@ theme_set(theme_bw())
 }
 \seealso{
 \code{\link[ggplot2]{stat_bin_hex}}
+Variables computed by \code{stat_gwas_qq_hex}:
+\describe{
+\item{observed (y)}{P-value quantiles}
+\item{expected (x)}{theoretical quantiles}
+}
 }

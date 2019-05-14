@@ -18,7 +18,11 @@
 #' things up use \code{geom="ggrastr:::GeomPointRast"} or
 #' \code{\link{stat_gwas_qq_hex}}.
 #' @aliases geom_gwas_qq
-#'
+#' Variables computed by `stat_gwas_qq`:
+#' \describe{
+#'   \item{observed}{P-value quantiles}
+#'   \item{expected}{theoretical quantiles}
+#' }
 #' @examples
 #' require(ggplot2)
 #' n.sample <- 10000
@@ -160,25 +164,5 @@ StatGwasQqplot <- ggproto(
 
     data.frame(y = observed, `expected` = expected)
   }
-  # ,
-  # draw_panels = function(data, panel_scales, coord) {
-  #   ## Transform the data first
-  #   coords <- coord$transform(data, panel_scales)
-  #
-  #   ## Let's print out the structure of the 'coords' object
-  #   str(coords)
-  #
-  #   ## Construct a grid grob
-  #   pointsGrob(
-  #     x = coords$x,
-  #     y = coords$y,
-  #     pch = coords$shape
-  #   )
-  # },
-  # draw_labels <- function(data, panel_scales, coord) {
-  #  has something to do with gtable: https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html
-  ## labels from qqman::qq()
-  #  xlab(expression(Expected ~ ~-log[10](italic(p)))) +
-  #  ylab(expression(Observed ~ ~-log[10](italic(p))))
-  #     }
+
 )
