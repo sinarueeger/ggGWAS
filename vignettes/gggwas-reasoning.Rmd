@@ -236,12 +236,13 @@ Here is a whishlist of what a `geom_gwas_manhattan` function should be able to d
 ### How to make a ggplot2 extension
 
 - [Extending ggplot2 (vignette)](https://ggplot2.tidyverse.org/articles/extending-ggplot2.html#creating-a-new-geom)
-- [Programming with ggplot2](https://rpubs.com/hadley/97970)
+- [Programming with ggplot2 (rubs)](https://rpubs.com/hadley/97970)
 - [R help](https://www.rdocumentation.org/packages/ggplot2/versions/3.0.0/topics/ggplot2-ggproto)
 - [here (wiki)](https://github.com/tidyverse/ggplot2/wiki/Creating-a-new-geom) (from 2010)
 - [ggproto help](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html)
 - [Howto by R Peng](https://bookdown.org/rdpeng/RProgDA/building-new-graphical-elements.html)
-- [Creating ggplot2 extensions](https://rud.is/books/creating-ggplot2-extensions/)
+- [Creating ggplot2 extensions (rud)](https://rud.is/books/creating-ggplot2-extensions/)
+- [Creating stats and geoms (rud)](https://rud.is/b/2015/09/08/roll-your-own-stats-and-geoms-in-ggplot2-part-1-splines/)
 - https://twitter.com/DrMowinckels/status/1115124147405901824
 
 ### Other ggplot2 extensions
