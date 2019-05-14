@@ -67,14 +67,12 @@ Quantile-quantile plot to compare the p-values of a GWAS to a
 uniform distribution.
 }
 \details{
-\code{\link[ggplot2]{stat_qq}} works for all kinds of distributions.
-But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation
-does not work neatly.
+Alternatively, use \code{\link[ggplot2]{stat_qq}}, that works for
+all kinds of distributions, together with \code{\link[ggplot2]{mlog_trans}}.
 }
 \note{
 Plotting several thousand points might take time. If you want to speed
-things up use \code{geom="ggrastr:::GeomPointRast"} or
-\code{\link{stat_gwas_qq_hex}}.
+things up use \code{\link{stat_gwas_qq_hex}}.
 }
 \examples{
 require(ggplot2)

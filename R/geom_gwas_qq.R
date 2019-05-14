@@ -10,19 +10,20 @@
 #'
 #' @export
 #' @aliases stat_qqunif
-#' @details \code{\link[ggplot2]{stat_qq}} works for all kinds of distributions.
-#' But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation
-#' does not work neatly.
+#' @details Alternatively, use \code{\link[ggplot2]{stat_qq}}, that works for
+#' all kinds of distributions, together with \code{\link[ggplot2]{mlog_trans}}.
 #' @seealso \code{\link[ggplot2]{stat_qq}}, \code{\link{stat_gwas_qq_hex}}
 #' @note Plotting several thousand points might take time. If you want to speed
-#' things up use \code{geom="ggrastr:::GeomPointRast"} or
-#' \code{\link{stat_gwas_qq_hex}}.
+#' things up use \code{\link{stat_gwas_qq_hex}}.
+#'
 #' @aliases geom_gwas_qq
+#'
 #' Variables computed by `stat_gwas_qq`:
 #' \describe{
 #'   \item{observed}{P-value quantiles}
 #'   \item{expected}{theoretical quantiles}
 #' }
+#'
 #' @examples
 #' require(ggplot2)
 #' n.sample <- 10000
