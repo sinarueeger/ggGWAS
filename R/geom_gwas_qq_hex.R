@@ -41,7 +41,6 @@ stat_gwas_qq_hex <- function(mapping = NULL,
                              inherit.aes = TRUE,
                              observed.thresh = NULL,
                              hex.function = hexBinSummarise,
-                             fill = "black",
                              ...) {
   layer(
     stat = StatGwasQqplotHex,
@@ -57,7 +56,6 @@ stat_gwas_qq_hex <- function(mapping = NULL,
       bins = bins,
       binwidth = binwidth,
       hex.function = hex.function,
-      fill = fill,
       ...
     )
   )
@@ -75,14 +73,13 @@ StatGwasQqplotHex <- ggproto(
   Stat,
   default_aes = aes(y = stat(y), x = stat(x), weight = 1),
   required_aes = c("y"),
-  #default_aes = aes(y = stat(`observed_log10`), x = stat(`expected_log10`), weight = 1),
 
   compute_group = function(data,
                              scales,
                              dparams,
                              na.rm,
                              observed.thresh,
-                             binwidth = NULL, bins = 30, fill = "black", hex.function = hexBinSummarise) {
+                             binwidth = NULL, bins = 30, hex.function = hexBinSummarise) {
     # browser()
     observed <-
       data$y#[!is.na(data$obs)]
@@ -120,11 +117,6 @@ StatGwasQqplotHex <- ggproto(
     # out$ncount <- out$count / max(out$count, na.rm = TRUE)
 
     out$value <- NULL
-    out$fill <- fill
-   # out$expected_log10 <- out$x
-  #  out$observed_log10 <- out$y
-   # out$x <- NULL
-   # out$y <- NULL
 
     out
 
