@@ -3,8 +3,8 @@
 #'
 #'
 #' @inheritParams ggplot2::stat_bin_hex
-#' @param observed.thresh Same scale as observed (e.g. 0.05),
-#' observed <= observed.thresh AFTER computing expected.
+#' @param y.thresh Same scale as y (e.g. 0.05),
+#' y <= y.thresh AFTER computing expected.
 #' @param fill color by which hexagons are filled, by default black.
 #' @param hex.function \code{ggGWAS:::hexBinSummarise} or \code{ggplot2:::hexBinSummarise}
 #' @details Code and documentation mostly from
@@ -23,11 +23,11 @@
 #' ))
 #' theme_set(theme_bw())
 #'
-#' (qp <- ggplot(df, aes(observed = P)) +
+#' (qp <- ggplot(df, aes(y = P)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
 #'
-#' (qp <- ggplot(df, aes(observed = P, group = GWAS, color = GWAS)) +
+#' (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
 stat_gwas_qq_hex <- function(mapping = NULL,
@@ -39,8 +39,9 @@ stat_gwas_qq_hex <- function(mapping = NULL,
                              binwidth = NULL,
                              show.legend = NA,
                              inherit.aes = TRUE,
-                             observed.thresh = NULL,
+                             y.thresh = NULL,
                              hex.function = hexBinSummarise,
+                             fill = "black",
                              ...) {
   layer(
     stat = StatGwasQqplotHex,
@@ -52,10 +53,11 @@ stat_gwas_qq_hex <- function(mapping = NULL,
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
-      observed.thresh = observed.thresh,
+      y.thresh = y.thresh,
       bins = bins,
       binwidth = binwidth,
       hex.function = hex.function,
+      fill = fill,
       ...
     )
   )
@@ -78,8 +80,8 @@ StatGwasQqplotHex <- ggproto(
                              scales,
                              dparams,
                              na.rm,
-                             observed.thresh,
-                             binwidth = NULL, bins = 30, hex.function = hexBinSummarise) {
+                             y.thresh,
+                             binwidth = NULL, bins = 30,  fill = "black", hex.function = hexBinSummarise) {
     # browser()
     observed <-
       data$y#[!is.na(data$obs)]
@@ -93,11 +95,11 @@ StatGwasQqplotHex <- ggproto(
       sort(-log10(observed))
 
     ## remove points if observed thresh is set.
-    if (!is.null(observed.thresh)) {
-      observed.thresh <- -log10(observed.thresh)
+    if (!is.null(y.thresh)) {
+      y.thresh <- -log10(y.thresh)
 
       ind <-
-        which(observed >= observed.thresh)
+        which(observed >= y.thresh)
       expected <- expected[ind]
       observed <- observed[ind]
     }
@@ -117,7 +119,7 @@ StatGwasQqplotHex <- ggproto(
     # out$ncount <- out$count / max(out$count, na.rm = TRUE)
 
     out$value <- NULL
-
+    out$fill <- fill
     out
 
   }
