@@ -68,7 +68,7 @@ uniform distribution.
 }
 \details{
 Alternatively, use \code{\link[ggplot2]{stat_qq}}, that works for
-all kinds of distributions, together with \code{\link[ggplot2]{mlog_trans}}.
+all kinds of distributions, together with \code{\link{mlog_trans}}.
 }
 \note{
 Plotting several thousand points might take time. If you want to speed
