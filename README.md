@@ -31,13 +31,14 @@ You can install the development version from
 remotes::install_github("sinarueeger/ggGWAS")
 ```
 
-Install the `dev`branch:
+Install the `dev`b ranch:
 
 ``` r
 remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
 ```
 
-Install including vignettes:
+Install including
+vignettes:
 
 ``` r
 remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
@@ -50,6 +51,7 @@ vignette("gggwas-internals")
 ``` r
 library(ggGWAS)
 library(ggplot2)
+#> Warning: package 'ggplot2' was built under R version 3.5.2
 
 theme_set(theme_bw())
 ## Generate some random data
@@ -95,7 +97,7 @@ ggplot(data = df) + stat_gwas_qq_hex(aes(y = P))
 Conventional Q-Q plot
 
 ``` r
-ggplot(data = df) + stat_gwas_qq(aes(observed = P))
+ggplot(data = df) + stat_gwas_qq(aes(y = P))
 ```
 
 <img src="man/figures/README-qqplot-1.png" width="100%" />
