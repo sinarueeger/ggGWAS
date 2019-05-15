@@ -10,7 +10,7 @@ usethis::use_description(fields = list(
 ))
 
 usethis::use_github_links()
-usethis::use_version(which = "patch") ## "major", "minor", "patch", "dev"
+usethis::use_version(which = "dev") ## "major", "minor", "patch", "dev"
 
 # initial setup
 usethis::use_data_raw()
