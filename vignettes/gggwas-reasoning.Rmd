@@ -44,6 +44,7 @@ There are two main data visualisations^[There are also other tools used, such as
 Both plotting types can be applied in R with various functions. Just to name a few, here are some links which have also served as inspiration:
 
 - `qqman`: R package for GWAS results: http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html
+- `ggman`: R package with ggplot2 wrapper with some neat hacks https://github.com/mkanai/ggman
 - Recipe to create Manhattanplot in R with `qqman`, `ggplot2` and `plotly`: https://www.r-graph-gallery.com/wp-content/uploads/2018/02/Manhattan_plot_in_R.html
 - Recipe for QQplots in `lattice` (for historical reasons) https://genome.sph.umich.edu/wiki/Code_Sample:_Generating_QQ_Plots_in_R
 - Fast QQplot implementation in `ramwas` package: https://rdrr.io/bioc/ramwas/man/qqplotFast.html
@@ -119,8 +120,8 @@ f_trans_mlog10 <- function(x) -log10(x)
 f_trans_mlog10_inverse <- function(x) 10^(-x)
 
 mlog10_trans <- scales::trans_new("-log10",
-                                  transform = function(x) -log10(x),
-                                  inverse = function(x) 10^(-x))
+                                  transform = f_trans_mlog10,
+                                  inverse = f_trans_mlog10_inverse)
 
 gg + 
   scale_y_continuous(trans = mlog10_trans) + 
@@ -160,17 +161,29 @@ geom_point(aes(P_expected, P)) +
 
 ### 4. ggGWAS::geom_gwas_qq
 
-`ggplot(data = giant) + geom_gwas_qq(aes(observed = P))`
+`ggplot(data = giant) + geom_gwas_qq(aes(y = P))`
 
 Here is a whishlist of what a `geom_gwas_qq` function should be able to do:
 
-- include correct labels (expected and observed)
+- include correct labels (expected as x-label and observed as y-label)
 - make sure color, group, facetting all works
 - allow for the `raster` version (for faster plotting), hexbins (also for faster plotting) and Pvalue thresholding (removing the high Pvalue SNPs from the plot)
 - if time: implement genomic inflation factor representation
 - while we are at it: plotting box should be squared (`theme(aspect.ratio = 1)`)
  
- 
+<!-------
+### 5. Ascii
+
+https://stackoverflow.com/questions/14736556/ascii-plotting-functions-for-r/14742722#14742722
+
+```{r, eval=FALSE, include=FALSE}
+library(txtplot)
+
+with(giant, txtplot(P_expected, P))
+```
+Kinda pointless, but worth a try. 
+
+------->
  
 ## Ways of making a ggplot2-like Manhattan plot
 
@@ -223,12 +236,14 @@ Here is a whishlist of what a `geom_gwas_manhattan` function should be able to d
 ### How to make a ggplot2 extension
 
 - [Extending ggplot2 (vignette)](https://ggplot2.tidyverse.org/articles/extending-ggplot2.html#creating-a-new-geom)
+- [Base ggproto classes for ggplot2 (help)](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html)
+- [Programming with ggplot2 (rubs)](https://rpubs.com/hadley/97970)
 - [R help](https://www.rdocumentation.org/packages/ggplot2/versions/3.0.0/topics/ggplot2-ggproto)
 - [here (wiki)](https://github.com/tidyverse/ggplot2/wiki/Creating-a-new-geom) (from 2010)
-- [Programming with ggplot2](https://rpubs.com/hadley/97970)
 - [ggproto help](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html)
 - [Howto by R Peng](https://bookdown.org/rdpeng/RProgDA/building-new-graphical-elements.html)
-- [Creating ggplot2 extensions](https://rud.is/books/creating-ggplot2-extensions/)
+- [Creating ggplot2 extensions (rud)](https://rud.is/books/creating-ggplot2-extensions/)
+- [Creating stats and geoms (rud)](https://rud.is/b/2015/09/08/roll-your-own-stats-and-geoms-in-ggplot2-part-1-splines/)
 - https://twitter.com/DrMowinckels/status/1115124147405901824
 
 ### Other ggplot2 extensions

@@ -2,12 +2,12 @@
 % Please edit documentation in R/mlog10_trans.R
 \name{mlog10_trans}
 \alias{mlog10_trans}
-\title{-log10 transformation}
+\title{Minus log-10 transformation}
 \usage{
 mlog10_trans()
 }
 \description{
--log10 transformation
+Minus log-10 transformation
 }
 \examples{
 require(ggplot2)
@@ -15,10 +15,7 @@ df <- data.frame(y = runif(1000))
 
 ggplot(df, aes(sample = y)) +
   stat_qq(distribution = stats::qunif) +
-  scale_y_continuous(trans = mlog10_trans()) +
-  scale_x_continuous(trans = mlog10_trans()) +
+  scale_y_continuous(trans = "mlog10") +
+  scale_x_continuous(trans = "mlog10") +
   geom_abline(intercept = 0, slope = 1)
-}
-\references{
-\url{https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html and https://gist.github.com/wch/3250485}
 }

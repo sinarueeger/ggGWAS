@@ -8,11 +8,11 @@
 \usage{
 stat_gwas_qq(mapping = NULL, data = NULL, geom = "point",
   position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, observed.thresh = NULL, ...)
+  inherit.aes = TRUE, y.thresh = NULL, ...)
 
 geom_gwas_qq(mapping = NULL, data = NULL, geom = "point",
   position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, observed.thresh = NULL, ...)
+  inherit.aes = TRUE, y.thresh = NULL, ...)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -54,8 +54,8 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
-\item{observed.thresh}{same scale as observed (e.g. 0.05),
-observed <= observed.thresh AFTER computing expected}
+\item{y.thresh}{same scale as y (e.g. 0.05),
+y <= y.thresh AFTER computing expected}
 
 \item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
@@ -67,14 +67,12 @@ Quantile-quantile plot to compare the p-values of a GWAS to a
 uniform distribution.
 }
 \details{
-\code{\link[ggplot2]{stat_qq}} works for all kinds of distributions.
-But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation
-does not work neatly.
+Alternatively, use \code{\link[ggplot2]{stat_qq}}, that works for
+all kinds of distributions, together with \code{\link{mlog_trans}}.
 }
 \note{
 Plotting several thousand points might take time. If you want to speed
-things up use \code{geom="ggrastr:::GeomPointRast"} or
-\code{\link{stat_gwas_qq_hex}}.
+things up use \code{\link{stat_gwas_qq_hex}}.
 }
 \examples{
 require(ggplot2)
@@ -86,37 +84,38 @@ df <- data.frame(P = runif(n.sample), GWAS = sample(c("a", "b"), n.sample,
 theme_set(theme_bw())
 
 ## default
-(qp <- ggplot(df, aes(observed = P)) +
-    stat_gwas_qq() +
-    geom_abline(intercept = 0, slope = 1))
+(qp <- ggplot(df, aes(y = P)) +
+  stat_gwas_qq() +
+  geom_abline(intercept = 0, slope = 1))
 
 ## use geom instead of qq
-ggplot(df, aes(observed = P)) +
-geom_gwas_qq()
+ggplot(df, aes(y = P)) +
+  geom_gwas_qq()
 
 ## show only p-values above a cerain threshold
-ggplot(df, aes(observed = P)) +
-  stat_gwas_qq(observed.thresh = 0.05) +
+ggplot(df, aes(y = P)) +
+  stat_gwas_qq(y.thresh = 0.05) +
   geom_abline(intercept = 0, slope = 1) +
   xlim(0, NA) + ylim(0, NA)
 
 
 ## plot a line instead
-ggplot(df, aes(observed = P)) +
+ggplot(df, aes(y = P)) +
   stat_gwas_qq(geom = "line", size = 1.5) +
   geom_abline(intercept = 0, slope = 1, linetype = 2)
+
 ## plot efficiently
-ggplot(df, aes(observed = P)) +
-stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
-geom_abline(intercept = 0, slope = 1)
+ggplot(df, aes(y = P)) +
+  stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
+  geom_abline(intercept = 0, slope = 1)
 
 ## Group and color points according to GWAS
-(qp <- ggplot(df, aes(observed = P)) + stat_gwas_qq(aes(
-group = GWAS, color = GWAS
+(qp <- ggplot(df, aes(y = P)) + stat_gwas_qq(aes(
+  group = GWAS, color = GWAS
 )))
 
 ## facet
-ggplot(df, aes(observed = P)) +
+ggplot(df, aes(y = P)) +
   facet_wrap(~GWAS) +
   stat_gwas_qq() +
   geom_abline(intercept = 0, slope = 1) +
@@ -129,7 +128,7 @@ qp +
   expand_limits(x = -log10(max(df$P)), y = -log10(max(df$P))) +
   ggtitle("QQplot") +
   xlab("Expected -log10(P)") +
-  ylab("Observed -log10(P)")
+  ylab("y -log10(P)")
 
 
 ## group
@@ -140,11 +139,11 @@ data("giant")
 
 ## generate two groups
 giant <- giant \%>\%
-dplyr::mutate(gr = dplyr::case_when(
-BETA <= 0 ~ "Neg effect size",
-BETA > 0 ~ "Pos effect size"
-))
-ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
+  dplyr::mutate(gr = dplyr::case_when(
+    BETA <= 0 ~ "Neg effect size",
+    BETA > 0 ~ "Pos effect size"
+  ))
+ggplot(data = giant, aes(y = P, group = gr, color = gr)) +
   stat_gwas_qq() +
   geom_abline(intercept = 0, slope = 1)
 }

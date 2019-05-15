@@ -1,4 +1,5 @@
 TODOs
 
 - take care of qqplot-branch
-- suggest ascii plots in reasoning vignette: https://stackoverflow.com/questions/14736556/ascii-plotting-functions-for-r/14742722#14742722
+- finish hexagon plot
+- look into travis

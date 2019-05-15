@@ -3,11 +3,18 @@
 #'
 #'
 #' @inheritParams ggplot2::stat_bin_hex
-#' @param observed.thresh Same scale as observed (e.g. 0.05),
-#' observed <= observed.thresh AFTER computing expected.
+#' @param y.thresh Same scale as y (e.g. 0.05),
+#' y <= y.thresh AFTER computing expected.
+#' @param fill color by which hexagons are filled, by default black.
+#' @param hex.function \code{ggGWAS:::hexBinSummarise} or \code{ggplot2:::hexBinSummarise}
 #' @details Code and documentation mostly from
 #' \url{https://github.com/tidyverse/ggplot2/blob/master/R/stat-binhex.r}.
 #' @seealso \code{\link[ggplot2]{stat_bin_hex}}
+#' Variables computed by `stat_gwas_qq_hex`:
+#' \describe{
+#'   \item{y}{Observed P-value quantiles}
+#'   \item{x}{Expected/theoretical quantiles}
+#' }
 #' @export
 #' @aliases geom_gwas_qq_hex
 #'
@@ -28,7 +35,6 @@
 #' (qp <- ggplot(df, aes(y = P, group = GWAS, color = GWAS)) +
 #'   stat_gwas_qq_hex() +
 #'   geom_abline(intercept = 0, slope = 1))
-#'
 stat_gwas_qq_hex <- function(mapping = NULL,
                              data = NULL,
                              geom = "hex",
@@ -38,7 +44,9 @@ stat_gwas_qq_hex <- function(mapping = NULL,
                              binwidth = NULL,
                              show.legend = NA,
                              inherit.aes = TRUE,
-                             observed.thresh = NULL,
+                             y.thresh = NULL,
+                             hex.function = hexBinSummarise,
+                             fill = "black",
                              ...) {
   layer(
     stat = StatGwasQqplotHex,
@@ -50,9 +58,12 @@ stat_gwas_qq_hex <- function(mapping = NULL,
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
-      observed.thresh = observed.thresh,
+      y.thresh = y.thresh,
       bins = bins,
-      binwidth = binwidth, ...
+      binwidth = binwidth,
+      hex.function = hex.function,
+      fill = fill,
+      ...
     )
   )
 }
@@ -67,17 +78,18 @@ stat_gwas_qq_hex <- function(mapping = NULL,
 StatGwasQqplotHex <- ggproto(
   "StatGwasQqplotHex",
   Stat,
+  default_aes = aes(y = stat(y), x = stat(x), weight = 1),
   required_aes = c("y"),
-  default_aes = aes(y = stat(y), x = stat(x), weight = 1, fill = stat(count)),
 
   compute_group = function(data,
                              scales,
                              dparams,
                              na.rm,
-                             observed.thresh,
-                             binwidth = NULL, bins = 30) {
+                             y.thresh,
+                             binwidth = NULL, bins = 30,  fill = "black", hex.function = hexBinSummarise) {
+    # browser()
     observed <-
-      data$y # [!is.na(data$x)]
+      data$y#[!is.na(data$obs)]
     N <- length(observed)
 
 
@@ -88,11 +100,11 @@ StatGwasQqplotHex <- ggproto(
       sort(-log10(observed))
 
     ## remove points if observed thresh is set.
-    if (!is.null(observed.thresh)) {
-      observed.thresh <- -log10(observed.thresh)
+    if (!is.null(y.thresh)) {
+      y.thresh <- -log10(y.thresh)
 
       ind <-
-        which(observed >= observed.thresh)
+        which(observed >= y.thresh)
       expected <- expected[ind]
       observed <- observed[ind]
     }
@@ -103,18 +115,23 @@ StatGwasQqplotHex <- ggproto(
     # try_require("hexbin", "stat_binhex")
     binwidth <- binwidth %||% hex_binwidth(bins, scales)
     wt <- data$weight %||% rep(1L, nrow(data))
-    out <- hexBinSummarise(data$x, data$y, wt, binwidth, sum)
+    out <- hex.function(data$x, data$y, wt, binwidth, sum)
 
-    out$density <- as.vector(out$value / sum(out$value, na.rm = TRUE))
-    out$ndensity <- out$density / max(out$density, na.rm = TRUE)
-    out$count <- out$value
-    out$ncount <- out$count / max(out$count, na.rm = TRUE)
+    ## no color needed
+    # out$density <- as.vector(out$value / sum(out$value, na.rm = TRUE))
+    # out$ndensity <- out$density / max(out$density, na.rm = TRUE)
+    # out$count <- out$value
+    # out$ncount <- out$count / max(out$count, na.rm = TRUE)
+
     out$value <- NULL
-
+    out$fill <- fill
     out
+
   }
 )
 
 #' @export
 #' @rdname stat_gwas_qq_hex
 geom_gwas_qq_hex <- stat_gwas_qq_hex
+
+

@@ -3,21 +3,26 @@
 #' uniform distribution.
 #'
 #' @inheritParams ggplot2::geom_point
-#' @param observed.thresh same scale as observed (e.g. 0.05),
-#' observed <= observed.thresh AFTER computing expected
+#' @param y.thresh same scale as y (e.g. 0.05),
+#' y <= y.thresh AFTER computing expected
 #' @param geom \code{"point"} by default,
 #' \code{"ggrastr:::GeomPointRast"} for a rasterized version.
 #'
 #' @export
 #' @aliases stat_qqunif
-#' @details \code{\link[ggplot2]{stat_qq}} works for all kinds of distributions.
-#' But using \code{\link[ggplot2]{stat_qq}} with \eqn{-log10()} transformation
-#' does not work neatly.
+#' @details Alternatively, use \code{\link[ggplot2]{stat_qq}}, that works for
+#' all kinds of distributions, together with \code{\link{mlog_trans}}.
 #' @seealso \code{\link[ggplot2]{stat_qq}}, \code{\link{stat_gwas_qq_hex}}
 #' @note Plotting several thousand points might take time. If you want to speed
-#' things up use \code{geom="ggrastr:::GeomPointRast"} or
-#' \code{\link{stat_gwas_qq_hex}}.
+#' things up use \code{\link{stat_gwas_qq_hex}}.
+#'
 #' @aliases geom_gwas_qq
+#'
+#' Variables computed by `stat_gwas_qq`:
+#' \describe{
+#'   \item{y}{Observed P-value quantiles}
+#'   \item{expected}{theoretical quantiles}
+#' }
 #'
 #' @examples
 #' require(ggplot2)
@@ -29,38 +34,38 @@
 #' theme_set(theme_bw())
 #'
 #' ## default
-#' (qp <- ggplot(df, aes(observed = P)) +
-#'     stat_gwas_qq() +
-#'     geom_abline(intercept = 0, slope = 1))
+#' (qp <- ggplot(df, aes(y = P)) +
+#'   stat_gwas_qq() +
+#'   geom_abline(intercept = 0, slope = 1))
 #'
 #' ## use geom instead of qq
-#' ggplot(df, aes(observed = P)) +
-#' geom_gwas_qq()
+#' ggplot(df, aes(y = P)) +
+#'   geom_gwas_qq()
 #'
 #' ## show only p-values above a cerain threshold
-#' ggplot(df, aes(observed = P)) +
-#'   stat_gwas_qq(observed.thresh = 0.05) +
+#' ggplot(df, aes(y = P)) +
+#'   stat_gwas_qq(y.thresh = 0.05) +
 #'   geom_abline(intercept = 0, slope = 1) +
 #'   xlim(0, NA) + ylim(0, NA)
 #'
 #'
 #' ## plot a line instead
-#' ggplot(df, aes(observed = P)) +
+#' ggplot(df, aes(y = P)) +
 #'   stat_gwas_qq(geom = "line", size = 1.5) +
 #'   geom_abline(intercept = 0, slope = 1, linetype = 2)
-
+#'
 #' ## plot efficiently
-#' ggplot(df, aes(observed = P)) +
-#' stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
-#' geom_abline(intercept = 0, slope = 1)
+#' ggplot(df, aes(y = P)) +
+#'   stat_gwas_qq(geom = ggrastr:::GeomPointRast) +
+#'   geom_abline(intercept = 0, slope = 1)
 #'
 #' ## Group and color points according to GWAS
-#' (qp <- ggplot(df, aes(observed = P)) + stat_gwas_qq(aes(
-#' group = GWAS, color = GWAS
+#' (qp <- ggplot(df, aes(y = P)) + stat_gwas_qq(aes(
+#'   group = GWAS, color = GWAS
 #' )))
 #'
 #' ## facet
-#' ggplot(df, aes(observed = P)) +
+#' ggplot(df, aes(y = P)) +
 #'   facet_wrap(~GWAS) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1) +
@@ -73,7 +78,7 @@
 #'   expand_limits(x = -log10(max(df$P)), y = -log10(max(df$P))) +
 #'   ggtitle("QQplot") +
 #'   xlab("Expected -log10(P)") +
-#'   ylab("Observed -log10(P)")
+#'   ylab("y -log10(P)")
 #'
 #'
 #' ## group
@@ -84,15 +89,13 @@
 #'
 #' ## generate two groups
 #' giant <- giant %>%
-#' dplyr::mutate(gr = dplyr::case_when(
-#' BETA <= 0 ~ "Neg effect size",
-#' BETA > 0 ~ "Pos effect size"
-#' ))
-#' ggplot(data = giant, aes(observed = P, group = gr, color = gr)) +
+#'   dplyr::mutate(gr = dplyr::case_when(
+#'     BETA <= 0 ~ "Neg effect size",
+#'     BETA > 0 ~ "Pos effect size"
+#'   ))
+#' ggplot(data = giant, aes(y = P, group = gr, color = gr)) +
 #'   stat_gwas_qq() +
 #'   geom_abline(intercept = 0, slope = 1)
-
-
 stat_gwas_qq <- function(mapping = NULL,
                          data = NULL,
                          geom = "point",
@@ -100,7 +103,7 @@ stat_gwas_qq <- function(mapping = NULL,
                          na.rm = FALSE,
                          show.legend = NA,
                          inherit.aes = TRUE,
-                         observed.thresh = NULL,
+                         y.thresh = NULL,
                          ...) {
   layer(
     stat = StatGwasQqplot,
@@ -110,7 +113,7 @@ stat_gwas_qq <- function(mapping = NULL,
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, observed.thresh = observed.thresh, ...)
+    params = list(na.rm = na.rm, y.thresh = y.thresh, ...)
   )
 }
 
@@ -128,16 +131,17 @@ geom_gwas_qq <- stat_gwas_qq
 StatGwasQqplot <- ggproto(
   "StatGwasQqplot",
   Stat,
-  required_aes = c("observed"),
-  default_aes = aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),
+  required_aes = c("y"),
+#  default_aes = aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),
+  default_aes = aes(y = stat(y), x = stat(`expected`)),
 
   compute_group = function(data,
                              scales,
                              dparams,
                              na.rm,
-                             observed.thresh) {
+                             y.thresh) {
     observed <-
-      data$observed # [!is.na(data$x)]
+      data$y # [!is.na(data$x)]
     N <- length(observed)
 
 
@@ -148,38 +152,18 @@ StatGwasQqplot <- ggproto(
       sort(-log10(observed))
 
     ## remove points if observed thresh is set.
-    if (!is.null(observed.thresh)) {
-      observed.thresh <- -log10(observed.thresh)
+    if (!is.null(y.thresh)) {
+      y.thresh <- -log10(y.thresh)
 
       ind <-
-        which(observed >= observed.thresh)
+        which(observed >= y.thresh)
       expected <- expected[ind]
       observed <- observed[ind]
     }
 
 
 
-    data.frame(`observed_log10` = observed, `expected_log10` = expected)
+    data.frame(y = observed, `expected` = expected)
   }
-  # ,
-  # draw_panels = function(data, panel_scales, coord) {
-  #   ## Transform the data first
-  #   coords <- coord$transform(data, panel_scales)
-  #
-  #   ## Let's print out the structure of the 'coords' object
-  #   str(coords)
-  #
-  #   ## Construct a grid grob
-  #   pointsGrob(
-  #     x = coords$x,
-  #     y = coords$y,
-  #     pch = coords$shape
-  #   )
-  # },
-  # draw_labels <- function(data, panel_scales, coord) {
-  #  has something to do with gtable: https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html
-  ## labels from qqman::qq()
-  #  xlab(expression(Expected ~ ~-log[10](italic(p)))) +
-  #  ylab(expression(Observed ~ ~-log[10](italic(p))))
-  #     }
+
 )

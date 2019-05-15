@@ -48,8 +48,8 @@ remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
 Install including vignettes: 
 ```
 remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
-vignette("reasoning")
-vignette("internals")
+vignette("rgggwas-easoning")
+vignette("igggwas-nternals")
 ```
 
 
@@ -79,18 +79,23 @@ df <-
 ```{r mhtplot}
 ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
 
-ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR),  chr.class = "character") + facet_wrap( ~ GWAS, label = label_both)
-
 ?stat_gwas_manhattan ## for more examples
 ```
 
 ### Q-Q plot
-```{r qqplot}
-ggplot(data = df) + stat_gwas_qq(aes(observed = P))
 
-ggplot(data = df) + stat_gwas_qq(aes(observed = P)) + 
-facet_wrap( ~ GWAS, label = label_both) + 
-geom_abline(intercept = 0, slope = 1)
+Lightweight Q-Q plot (with hex tiles)
+
+```{r qqplot-hex}
+
+ggplot(data = df) + stat_gwas_qq_hex(aes(y = P))
+
+?stat_gwas_qq_hex ## for more examples
+```
+
+Conventional Q-Q plot
+```{r qqplot}
+ggplot(data = df) + stat_gwas_qq(aes(oy= P))
 
 ?stat_gwas_qq ## for more examples
 ```
