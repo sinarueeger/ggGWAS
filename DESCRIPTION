@@ -1,6 +1,6 @@
 Package: ggGWAS
 Title: ggplot2 Extensions for Plotting GWAS Summary Statistics
-Version: 0.0.2
+Version: 0.0.2.9000
 Authors@R: 
     person(given = "Sina",
            family = "Rüeger",
