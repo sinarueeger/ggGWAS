@@ -37,12 +37,13 @@ Install the `dev`branch:
 remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
 ```
 
-Install including
-    vignettes:
+Install including vignettes:
 
-    remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
-    vignette("rgggwas-easoning")
-    vignette("igggwas-nternals")
+``` r
+remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
+vignette("gggwas-reasoning")
+vignette("gggwas-internals")
+```
 
 ## Basic usage
 
