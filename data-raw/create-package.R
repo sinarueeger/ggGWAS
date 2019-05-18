@@ -59,6 +59,7 @@ devtools::build_vignettes()
 devtools::build()
 usethis::use_package_doc()
 codemetar::write_codemeta()
+usethis::use_code_of_conduct()
 
 ## CI
 usethis::use_travis()
