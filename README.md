@@ -51,7 +51,6 @@ vignette("gggwas-internals")
 ``` r
 library(ggGWAS)
 library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 3.5.2
 
 theme_set(theme_bw())
 ## Generate some random data
@@ -106,3 +105,9 @@ ggplot(data = df) + stat_gwas_qq(aes(y = P))
 
 ?stat_gwas_qq ## for more examples
 ```
+
+## Contributing
+
+lease note that the ‘ggGWAS’ project is released with a [Contributor
+Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project,
+you agree to abide by its terms.
