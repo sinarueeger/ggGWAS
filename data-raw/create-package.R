@@ -46,6 +46,7 @@ usethis::use_package("pryr", type = "Suggests")
 # https://cran.r-project.org/web/packages/devtools/vignettes/dependencies.html
 ## add to
 ## Remotes: sinarueeger/GWAS.utils,
+## mkanai/ggman
 
 usethis::use_pipe()
 
@@ -59,6 +60,7 @@ devtools::build_vignettes()
 devtools::build()
 usethis::use_package_doc()
 codemetar::write_codemeta()
+usethis::use_code_of_conduct()
 
 ## CI
 usethis::use_travis()

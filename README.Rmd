@@ -62,13 +62,16 @@ library(ggplot2)
 
 theme_set(theme_bw())
 ## Generate some random data
+n <- 1000
+n_chr <- 4
 
 df <-
   data.frame(
-    POS = rep(1:250, 4),
-    CHR = 1:4,
-    P = runif(1000),
-    GWAS = sample(c("a", "b"), 1000, replace = TRUE)
+    POS = rep(1:(n/n_chr), n_chr),
+    CHR = rep(1:n_chr, rep(n/n_chr, n_chr)),
+    SNP = paste0("rs", 1:n),
+    P = runif(n),
+    GWAS = sample(c("a", "b"), n, replace = TRUE)
   )
 
 ```
@@ -77,10 +80,19 @@ df <-
 
 ### Manhattan plot
 
-```{r mhtplot}
-ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
+Currently working on `stat_gwas_manhattan()` that should at one point look like this:
 
-?stat_gwas_manhattan ## for more examples
+```
+ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
+```
+
+Till then, use the `ggman::ggmanhattan` function:
+
+```{r manhattanplot}
+library(dplyr)
+library(ggman)
+ggman::ggmanhattan(data = df, SNP = "SNP", chr = "CHR", bp = "POS", P = "P", sparsify = FALSE, theme_base = theme_bw(), build = 'hg18', highlight = df %>% slice(which.min(P)) %>% pull(SNP)) +
+  labs(title = "MHTPLOT" )
 ```
 
 ### Q-Q plot
@@ -88,15 +100,25 @@ ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)
 Lightweight Q-Q plot (with hex tiles)
 
 ```{r qqplot-hex}
-
-ggplot(data = df) + stat_gwas_qq_hex(aes(y = P))
+library(ggGWAS)
+ggplot(data = df) + 
+  stat_gwas_qq_hex(aes(y = P)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 3)
 
 ?stat_gwas_qq_hex ## for more examples
 ```
 
 Conventional Q-Q plot
 ```{r qqplot}
-ggplot(data = df) + stat_gwas_qq(aes(y = P))
+ggplot(data = df) +
+  stat_gwas_qq(aes(y = P)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 3)
 
 ?stat_gwas_qq ## for more examples
 ```
+
+
+## Contributing
+ lease note that the 'ggGWAS' project is released with a
+[Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.

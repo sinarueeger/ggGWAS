@@ -9,6 +9,10 @@
 #' \code{"ggrastr:::GeomPointRast"} for a rasterized version.
 #'
 #' @export
+#' @importFrom ggplot2 layer
+#' @importFrom ggplot2 ggproto
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 Stat
 #' @aliases stat_qqunif
 #' @details Alternatively, use \code{\link[ggplot2]{stat_qq}}, that works for
 #' all kinds of distributions, together with \code{\link{mlog_trans}}.
