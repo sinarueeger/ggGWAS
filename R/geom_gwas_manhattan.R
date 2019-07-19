@@ -9,10 +9,11 @@
 #' @aliases geom_gwas_manhattan
 #'
 #' @examples
-#' require(ggplot2)
-#' require(dplyr)
-#' require(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
-#' require(ggman)      ## devtools::install_github("mkanai/ggman")
+#' \dontrun{
+#' library(ggplot2)
+#' library(dplyr)
+#' library(GWAS.utils) ## devtools::install_github("sinarueeger/GWAS.utils")
+#' library(ggman)      ## devtools::install_github("mkanai/ggman")
 #' data("giant")
 #' ggman::ggmanhattan(data = giant, SNP = "SNP", chr = "CHR", bp = "POS",
 #'                    P = "P", sparsify = FALSE,
@@ -28,6 +29,7 @@
 #'                    theme_base = ggplot2::theme_bw(), build = 'hg18',
 #'                    highlight = giant %>% slice(which.min(P)) %>% pull(SNP)) +
 #'                    labs(title = "MHTPLOT" )
+#' }
 
 stat_gwas_manhattan <- function() {
 
