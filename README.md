@@ -54,28 +54,46 @@ library(ggplot2)
 
 theme_set(theme_bw())
 ## Generate some random data
+n <- 1000
+n_chr <- 4
 
 df <-
   data.frame(
-    POS = rep(1:250, 4),
-    CHR = 1:4,
-    P = runif(1000),
-    GWAS = sample(c("a", "b"), 1000, replace = TRUE)
+    POS = rep(1:(n/n_chr), n_chr),
+    CHR = rep(1:n_chr, rep(n/n_chr, n_chr)),
+    SNP = paste0("rs", 1:n),
+    P = runif(n),
+    GWAS = sample(c("a", "b"), n, replace = TRUE)
   )
 ```
 
 ### Manhattan plot
 
+Currently working on `stat_gwas_manhattan()` that should at one point
+look like
+    this:
+
+    ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
+
+Till then, use the `ggman::ggmanhattan` function:
+
 ``` r
-ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
+library(ggGWAS)
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+ggman::ggmanhattan(data = df, SNP = "SNP", chr = "CHR", bp = "POS", P = "P", sparsify = FALSE, theme_base = theme_bw(), build = 'hg18', highlight = df %>% slice(which.min(P)) %>% pull(SNP)) +
+  labs(title = "MHTPLOT" )
+#> Plotting 1000 points...
 ```
 
-<img src="man/figures/README-mhtplot-1.png" width="100%" />
-
-``` r
-
-?stat_gwas_manhattan ## for more examples
-```
+<img src="man/figures/README-manhattanplot-1.png" width="100%" />
 
 ### Q-Q plot
 
@@ -83,7 +101,9 @@ Lightweight Q-Q plot (with hex tiles)
 
 ``` r
 
-ggplot(data = df) + stat_gwas_qq_hex(aes(y = P))
+ggplot(data = df) + 
+  stat_gwas_qq_hex(aes(y = P)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 3)
 ```
 
 <img src="man/figures/README-qqplot-hex-1.png" width="100%" />
@@ -96,7 +116,9 @@ ggplot(data = df) + stat_gwas_qq_hex(aes(y = P))
 Conventional Q-Q plot
 
 ``` r
-ggplot(data = df) + stat_gwas_qq(aes(y = P))
+ggplot(data = df) +
+  stat_gwas_qq(aes(y = P)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 3)
 ```
 
 <img src="man/figures/README-qqplot-1.png" width="100%" />
