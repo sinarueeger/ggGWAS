@@ -78,7 +78,6 @@ look like
 Till then, use the `ggman::ggmanhattan` function:
 
 ``` r
-library(ggGWAS)
 library(dplyr)
 #> 
 #> Attaching package: 'dplyr'
@@ -88,6 +87,7 @@ library(dplyr)
 #> The following objects are masked from 'package:base':
 #> 
 #>     intersect, setdiff, setequal, union
+library(ggman)
 ggman::ggmanhattan(data = df, SNP = "SNP", chr = "CHR", bp = "POS", P = "P", sparsify = FALSE, theme_base = theme_bw(), build = 'hg18', highlight = df %>% slice(which.min(P)) %>% pull(SNP)) +
   labs(title = "MHTPLOT" )
 #> Plotting 1000 points...
@@ -100,7 +100,7 @@ ggman::ggmanhattan(data = df, SNP = "SNP", chr = "CHR", bp = "POS", P = "P", spa
 Lightweight Q-Q plot (with hex tiles)
 
 ``` r
-
+library(ggGWAS)
 ggplot(data = df) + 
   stat_gwas_qq_hex(aes(y = P)) + 
   geom_abline(intercept = 0, slope = 1, linetype = 3)
