@@ -15,7 +15,6 @@ LazyData: true
 Suggests: 
     testthat,
     ggrastr (>= 0.1.7),
-    GWAS.utils,
     skimr,
     plyr (>= 1.8.4),
     wesanderson (>= 0.3.6),
@@ -24,10 +23,8 @@ Suggests:
     rmarkdown,
     qqman,
     covr,
-    pryr
-Remotes: 
-    sinarueeger/GWAS.utils,
-    VPetukhov/ggrastr
+    pryr,
+    Rmpfr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Imports: 
@@ -37,3 +34,7 @@ Imports:
     hexbin (>= 1.27.2),
     magrittr
 VignetteBuilder: knitr
+Remotes: 
+    sinarueeger/GWAS.utils,
+    VPetukhov/ggrastr,
+    mkanai/ggman
