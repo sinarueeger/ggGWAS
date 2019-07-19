@@ -24,7 +24,6 @@ Suggests:
     qqman,
     covr,
     pryr,
-    Rmpfr,
     ggman,
     GWAS.utils
 Roxygen: list(markdown = TRUE)
