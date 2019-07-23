@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ggGWAS 🚧
+# ggGWAS
 
 <!-- badges: start -->
 
@@ -37,8 +37,7 @@ Install the `dev`b ranch:
 remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
 ```
 
-Install including
-vignettes:
+Install including vignettes:
 
 ``` r
 remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
@@ -51,6 +50,7 @@ vignette("gggwas-internals")
 ``` r
 library(ggGWAS)
 library(ggplot2)
+#> Warning: package 'ggplot2' was built under R version 3.5.2
 
 theme_set(theme_bw())
 ## Generate some random data
@@ -67,34 +67,6 @@ df <-
   )
 ```
 
-### Manhattan plot
-
-Currently working on `stat_gwas_manhattan()` that should at one point
-look like
-    this:
-
-    ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
-
-Till then, use the `ggman::ggmanhattan` function:
-
-``` r
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-library(ggman)
-ggman::ggmanhattan(data = df, SNP = "SNP", chr = "CHR", bp = "POS", P = "P", sparsify = FALSE, theme_base = theme_bw(), build = 'hg18', highlight = df %>% slice(which.min(P)) %>% pull(SNP)) +
-  labs(title = "MHTPLOT" )
-#> Plotting 1000 points...
-```
-
-<img src="man/figures/README-manhattanplot-1.png" width="100%" />
-
 ### Q-Q plot
 
 Lightweight Q-Q plot (with hex tiles)
@@ -106,7 +78,7 @@ ggplot(data = df) +
   geom_abline(intercept = 0, slope = 1, linetype = 3)
 ```
 
-<img src="man/figures/README-qqplot-hex-1.png" width="100%" />
+<img src="man/figures/README-qqplot-hex-1.png" width="60%" />
 
 ``` r
 
@@ -121,15 +93,31 @@ ggplot(data = df) +
   geom_abline(intercept = 0, slope = 1, linetype = 3)
 ```
 
-<img src="man/figures/README-qqplot-1.png" width="100%" />
+<img src="man/figures/README-qqplot-1.png" width="60%" />
 
 ``` r
 
 ?stat_gwas_qq ## for more examples
 ```
 
-## Contributing
+### Manhattan plot
 
-lease note that the ‘ggGWAS’ project is released with a [Contributor
-Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project,
-you agree to abide by its terms.
+Currently working on `stat_gwas_manhattan()` that should at one point
+look like this:
+
+    ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
+
+Till then, use the `ggman::ggmanhattan` function:
+
+``` r
+library(dplyr)
+library(ggman)
+ggman::ggmanhattan(data = df, SNP = "SNP", chr = "CHR", bp = "POS", P = "P", sparsify = FALSE, theme_base = theme_bw(), build = 'hg18', highlight = df %>% slice(which.min(P)) %>% pull(SNP)) +
+  labs(title = "MHTPLOT" )
+```
+
+<img src="man/figures/README-manhattanplot-1.png" width="60%" />
+
+\#\#Contributing lease note that the ‘ggGWAS’ project is released with a
+[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
+this project, you agree to abide by its terms.

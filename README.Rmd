@@ -9,10 +9,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "60%"
 )
 ```
-# ggGWAS 🚧
+# ggGWAS
 
 
 <!-- badges: start -->
@@ -78,6 +78,29 @@ df <-
 
 
 
+### Q-Q plot
+
+Lightweight Q-Q plot (with hex tiles)
+
+```{r qqplot-hex, fig.width = 6, fig.height = 6}
+library(ggGWAS)
+ggplot(data = df) + 
+  stat_gwas_qq_hex(aes(y = P)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 3)
+
+?stat_gwas_qq_hex ## for more examples
+```
+
+Conventional Q-Q plot
+```{r qqplot, fig.width = 6, fig.height = 6}
+ggplot(data = df) +
+  stat_gwas_qq(aes(y = P)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 3)
+
+?stat_gwas_qq ## for more examples
+```
+
+
 ### Manhattan plot
 
 Currently working on `stat_gwas_manhattan()` that should at one point look like this:
@@ -88,37 +111,14 @@ ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR)
 
 Till then, use the `ggman::ggmanhattan` function:
 
-```{r manhattanplot}
+```{r manhattanplot, message=FALSE, warning=FALSE, fig.width = 6, fig.height = 4}
 library(dplyr)
 library(ggman)
 ggman::ggmanhattan(data = df, SNP = "SNP", chr = "CHR", bp = "POS", P = "P", sparsify = FALSE, theme_base = theme_bw(), build = 'hg18', highlight = df %>% slice(which.min(P)) %>% pull(SNP)) +
   labs(title = "MHTPLOT" )
 ```
 
-### Q-Q plot
-
-Lightweight Q-Q plot (with hex tiles)
-
-```{r qqplot-hex}
-library(ggGWAS)
-ggplot(data = df) + 
-  stat_gwas_qq_hex(aes(y = P)) + 
-  geom_abline(intercept = 0, slope = 1, linetype = 3)
-
-?stat_gwas_qq_hex ## for more examples
-```
-
-Conventional Q-Q plot
-```{r qqplot}
-ggplot(data = df) +
-  stat_gwas_qq(aes(y = P)) + 
-  geom_abline(intercept = 0, slope = 1, linetype = 3)
-
-?stat_gwas_qq ## for more examples
-```
-
-
-## Contributing
+##Contributing
  lease note that the 'ggGWAS' project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.
