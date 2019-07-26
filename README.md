@@ -107,7 +107,7 @@ look like this:
 
     ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
 
-Till then, use the `ggman::ggmanhattan` function:
+Till then, use the `ggman::ggmanhattan` function from the [`ggman`](https://github.com/mkanai/ggman) package:
 
 ``` r
 library(dplyr)
