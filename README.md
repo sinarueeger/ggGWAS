@@ -31,12 +31,6 @@ You can install the development version from
 remotes::install_github("sinarueeger/ggGWAS")
 ```
 
-Install the `dev`b ranch:
-
-``` r
-remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
-```
-
 Install including vignettes:
 
 ``` r
@@ -44,6 +38,14 @@ remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no
 vignette("gggwas-reasoning")
 vignette("gggwas-internals")
 ```
+
+Install the `dev` branch:
+
+``` r
+remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
+```
+
+
 
 ## Basic usage
 
