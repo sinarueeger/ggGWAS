@@ -86,8 +86,8 @@ For illustration purposes, we will use the summary statistics dataset `GWAS.util
 
 ```{r}
 library(GWAS.utils)
-skimr::skim(giant)
-
+#skimr::skim(giant)
+summary(giant)
 
 ```
 
