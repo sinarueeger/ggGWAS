@@ -31,10 +31,13 @@ You can install the development version from
 remotes::install_github("sinarueeger/ggGWAS")
 ```
 
-Install including vignettes:
+Install including [vignettes](https://sinarueeger.github.io/ggGWAS/articles/):
 
 ``` r
-remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
+remotes::install_github("sinarueeger/ggGWAS", 
+build = TRUE, 
+build_opts = c("--no-resave-data", "--no-manual"))
+
 vignette("gggwas-reasoning")
 vignette("gggwas-internals")
 ```
