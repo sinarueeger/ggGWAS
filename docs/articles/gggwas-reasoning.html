@@ -74,9 +74,9 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>ggGWAS reasoning</h1>
-                        <h4 class="author">Sina Rueger</h4>
+                        <h4 class="author">Sina Rüeger</h4>
             
-            <h4 class="date">2019-07-29</h4>
+            <h4 class="date">2019-07-31</h4>
       
       
       <div class="hidden name"><code>gggwas-reasoning.Rmd</code></div>
@@ -150,97 +150,96 @@ rs3342  1e-2
 rs83    1e-2
 ...     ...</code></pre>
 <p>For illustration purposes, we will use the summary statistics dataset <code><a href="https://www.rdocumentation.org/packages/GWAS.utils/topics/giant">GWAS.utils::giant</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(GWAS.utils)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#skimr::skim(giant)</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(giant)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt;       CHR             POS                SNP            Tested_Allele     </span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;  Min.   : 1.00   Min.   :   220149   Length:10000       Length:10000      </span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt;  1st Qu.: 4.00   1st Qu.: 33810156   Class :character   Class :character  </span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt;  Median : 8.00   Median : 71004162   Mode  :character   Mode  :character  </span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;  Mean   : 8.55   Mean   : 79743155                                        </span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;  3rd Qu.:12.00   3rd Qu.:114753146                                        </span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt;  Max.   :22.00   Max.   :248476804                                        </span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt;  Other_Allele       Freq_Tested_Allele_in_HRS      BETA           </span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt;  Length:10000       Min.   :0.01023           Min.   :-4.980e-02  </span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt;  Class :character   1st Qu.:0.19750           1st Qu.:-2.800e-03  </span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt;  Mode  :character   Median :0.45710           Median :-1.000e-04  </span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt;                     Mean   :0.48108           Mean   :-4.439e-05  </span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt;                     3rd Qu.:0.75913           3rd Qu.: 2.600e-03  </span></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt;                     Max.   :0.98977           Max.   : 4.480e-02  </span></span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt;        SE                 P                N         </span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt;  Min.   :0.001600   Min.   :0.0000   Min.   :498178  </span></span>
-<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt;  1st Qu.:0.001800   1st Qu.:0.0460   1st Qu.:680198  </span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt;  Median :0.002100   Median :0.2600   Median :688732  </span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;  Mean   :0.002596   Mean   :0.3406   Mean   :683795  </span></span>
-<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt;  3rd Qu.:0.002800   3rd Qu.:0.6000   3rd Qu.:691571  </span></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt;  Max.   :0.010600   Max.   :1.0000   Max.   :795594</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(GWAS.utils)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">#skimr::skim(giant)</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(giant)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt;       CHR             POS                SNP            Tested_Allele     </span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt;  Min.   : 1.00   Min.   :   220149   Length:10000       Length:10000      </span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt;  1st Qu.: 4.00   1st Qu.: 33810156   Class :character   Class :character  </span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt;  Median : 8.00   Median : 71004162   Mode  :character   Mode  :character  </span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt;  Mean   : 8.55   Mean   : 79743155                                        </span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt;  3rd Qu.:12.00   3rd Qu.:114753146                                        </span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt;  Max.   :22.00   Max.   :248476804                                        </span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt;  Other_Allele       Freq_Tested_Allele_in_HRS      BETA           </span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt;  Length:10000       Min.   :0.01023           Min.   :-4.980e-02  </span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt;  Class :character   1st Qu.:0.19750           1st Qu.:-2.800e-03  </span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt;  Mode  :character   Median :0.45710           Median :-1.000e-04  </span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt;                     Mean   :0.48108           Mean   :-4.439e-05  </span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt;                     3rd Qu.:0.75913           3rd Qu.: 2.600e-03  </span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt;                     Max.   :0.98977           Max.   : 4.480e-02  </span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt;        SE                 P                N         </span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt;  Min.   :0.001600   Min.   :0.0000   Min.   :498178  </span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt;  1st Qu.:0.001800   1st Qu.:0.0460   1st Qu.:680198  </span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt;  Median :0.002100   Median :0.2600   Median :688732  </span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt;  Mean   :0.002596   Mean   :0.3406   Mean   :683795  </span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt;  3rd Qu.:0.002800   3rd Qu.:0.6000   3rd Qu.:691571  </span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt;  Max.   :0.010600   Max.   :1.0000   Max.   :795594</span></a></code></pre></div>
 <div id="qqmanqq" class="section level3">
 <h3 class="hasAnchor">
 <a href="#qqmanqq" class="anchor"></a>1. qqman::qq</h3>
 <p><code><a href="https://www.rdocumentation.org/packages/qqman/topics/qq">qqman::qq</a></code> is straightforward to use: just pass on the P-value column.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>qqman<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/qqman/topics/qq">qq</a></span>(giant<span class="op">$</span>P)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">qqman<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/qqman/topics/qq">qq</a></span>(giant<span class="op">$</span>P)</a></code></pre></div>
 <p><img src="gggwas-reasoning_files/figure-html/unnamed-chunk-2-1.png" width="480"></p>
 </div>
 <div id="ggplot2geom_qq" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ggplot2geom_qq" class="anchor"></a>2. ggplot2::geom_qq</h3>
 <p>There is a <a href="https://ggplot2.tidyverse.org/reference/geom_qq.html"><code>geom_qq</code></a> in ggplot2 that implements quantile-quantile plots. However, this is only useful, if we can transform the axes with <code>-log10()</code>. How to create custom made ggplot2 scales is explained <a href="https://stat.ethz.ch/pipermail/r-help/2014-April/373728.html">here</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 3.5.2</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>())</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">## source: </span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>(gg &lt;-<span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> giant) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">sample =</span> P), <span class="dt">distribution =</span> stats<span class="op">::</span>qunif)) <span class="op">+</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>())</a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">## source: </span></a>
+<a class="sourceLine" id="cb4-6" title="6">(gg &lt;-<span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> giant) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">sample =</span> P), <span class="dt">distribution =</span> stats<span class="op">::</span>qunif)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)</a></code></pre></div>
 <p><img src="gggwas-reasoning_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># + scale_y_log10() + scale_x_log10()</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># + coord_trans(x = "log10", y = "log10")</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>  </span>
-<span id="cb5-5"><a href="#cb5-5"></a>f_trans_mlog10 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(x)</span>
-<span id="cb5-6"><a href="#cb5-6"></a>f_trans_mlog10_inverse &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="dv">10</span><span class="op">^</span>(<span class="op">-</span>x)</span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a>mlog10_trans &lt;-<span class="st"> </span>scales<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/scales/topics/trans_new">trans_new</a></span>(<span class="st">"-log10"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9"></a>                                  <span class="dt">transform =</span> f_trans_mlog10,</span>
-<span id="cb5-10"><a href="#cb5-10"></a>                                  <span class="dt">inverse =</span> f_trans_mlog10_inverse)</span>
-<span id="cb5-11"><a href="#cb5-11"></a></span>
-<span id="cb5-12"><a href="#cb5-12"></a>gg <span class="op">+</span><span class="st"> </span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">trans =</span> mlog10_trans) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">trans =</span> mlog10_trans) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co"># + scale_y_log10() + scale_x_log10()</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co"># + coord_trans(x = "log10", y = "log10")</span></a>
+<a class="sourceLine" id="cb5-4" title="4">  </a>
+<a class="sourceLine" id="cb5-5" title="5">f_trans_mlog10 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(x)</a>
+<a class="sourceLine" id="cb5-6" title="6">f_trans_mlog10_inverse &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="dv">10</span><span class="op">^</span>(<span class="op">-</span>x)</a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8">mlog10_trans &lt;-<span class="st"> </span>scales<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/scales/topics/trans_new">trans_new</a></span>(<span class="st">"-log10"</span>,</a>
+<a class="sourceLine" id="cb5-9" title="9">                                  <span class="dt">transform =</span> f_trans_mlog10,</a>
+<a class="sourceLine" id="cb5-10" title="10">                                  <span class="dt">inverse =</span> f_trans_mlog10_inverse)</a>
+<a class="sourceLine" id="cb5-11" title="11"></a>
+<a class="sourceLine" id="cb5-12" title="12">gg <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">trans =</span> mlog10_trans) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">trans =</span> mlog10_trans) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)</a></code></pre></div>
 <p><img src="gggwas-reasoning_files/figure-html/unnamed-chunk-3-2.png" width="480"></p>
 </div>
 <div id="ggplot2geom_point" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ggplot2geom_point" class="anchor"></a>3. ggplot2::geom_point</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a></span>
-<span id="cb6-2"><a href="#cb6-2"></a>N &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(giant)</span>
-<span id="cb6-3"><a href="#cb6-3"></a>expected &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>N) <span class="op">/</span><span class="st"> </span>N <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>N)</span>
-<span id="cb6-4"><a href="#cb6-4"></a>giant &lt;-<span class="st"> </span>giant <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(P) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">P_expected =</span> expected)</span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> giant) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(P_expected), <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(P))) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(Expected <span class="op">~</span><span class="st"> </span><span class="er">~</span><span class="op">-</span>log[<span class="dv">10</span>](<span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/plotmath">italic</a></span>(p)))) <span class="op">+</span><span class="st"> </span><span class="co">## from qqman::qq</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(Observed <span class="op">~</span><span class="st"> </span><span class="er">~</span><span class="op">-</span>log[<span class="dv">10</span>](<span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/plotmath">italic</a></span>(p)))) <span class="co">## from qqman::qq</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"></a>
+<a class="sourceLine" id="cb6-2" title="2">N &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(giant)</a>
+<a class="sourceLine" id="cb6-3" title="3">expected &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>N) <span class="op">/</span><span class="st"> </span>N <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>N)</a>
+<a class="sourceLine" id="cb6-4" title="4">giant &lt;-<span class="st"> </span>giant <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(P) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">P_expected =</span> expected)</a>
+<a class="sourceLine" id="cb6-5" title="5"></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> giant) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(P_expected), <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(P))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(Expected <span class="op">~</span><span class="st"> </span><span class="er">~</span><span class="op">-</span>log[<span class="dv">10</span>](<span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/plotmath">italic</a></span>(p)))) <span class="op">+</span><span class="st"> </span><span class="co">## from qqman::qq</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(Observed <span class="op">~</span><span class="st"> </span><span class="er">~</span><span class="op">-</span>log[<span class="dv">10</span>](<span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/plotmath">italic</a></span>(p)))) <span class="co">## from qqman::qq</span></a></code></pre></div>
 <p><img src="gggwas-reasoning_files/figure-html/unnamed-chunk-4-1.png" width="480"></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a></span>
-<span id="cb7-2"><a href="#cb7-2"></a></span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">## or with the scale_y_continous feature</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> giant) <span class="op">+</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(P_expected, P)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">trans =</span> mlog10_trans) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">trans =</span> mlog10_trans) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="co">#+ ## square shaped</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"></a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">## or with the scale_y_continous feature</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> giant) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(P_expected, P)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">trans =</span> mlog10_trans) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">trans =</span> mlog10_trans) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="co">#+ ## square shaped</span></a></code></pre></div>
 <p><img src="gggwas-reasoning_files/figure-html/unnamed-chunk-4-2.png" width="480"></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#  expand_limits(x = -log10(max(giant$P)), y = -log10(max(giant$P)))</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>  </span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co">#  expand_limits(x = -log10(max(giant$P)), y = -log10(max(giant$P)))</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  </a></code></pre></div>
 </div>
 <div id="gggwasgeom_gwas_qq" class="section level3">
 <h3 class="hasAnchor">
@@ -271,27 +270,27 @@ Kinda pointless, but worth a try.
 <div id="qqmanmanhattan" class="section level3">
 <h3 class="hasAnchor">
 <a href="#qqmanmanhattan" class="anchor"></a>1. qqman::manhattan</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>qqman<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/qqman/topics/manhattan">manhattan</a></span>(giant, <span class="dt">chr =</span> <span class="st">"CHR"</span> , <span class="dt">bp =</span> <span class="st">"POS"</span>, <span class="dt">p =</span> <span class="st">"P"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">qqman<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/qqman/topics/manhattan">manhattan</a></span>(giant, <span class="dt">chr =</span> <span class="st">"CHR"</span> , <span class="dt">bp =</span> <span class="st">"POS"</span>, <span class="dt">p =</span> <span class="st">"P"</span>)</a></code></pre></div>
 <p><img src="gggwas-reasoning_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
 </div>
 <div id="ggplot2geom_point-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ggplot2geom_point-1" class="anchor"></a>2. ggplot2::geom_point</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="co">## computing new x axis</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a>giant &lt;-<span class="st"> </span>giant <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(CHR, POS) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">tmp =</span> <span class="dv">1</span>, <span class="dt">cumsum.tmp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cumsum">cumsum</a></span>(tmp))</span>
-<span id="cb10-4"><a href="#cb10-4"></a></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">## calculating x axis location for chromosome label</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a>med.dat &lt;-<span class="st"> </span>giant <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(CHR) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">median.x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(cumsum.tmp))</span>
-<span id="cb10-7"><a href="#cb10-7"></a></span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> giant) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> cumsum.tmp, <span class="dt">y =</span> <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(P), <span class="dt">color =</span> CHR <span class="op">%%</span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)) <span class="op">+</span><span class="st"> </span><span class="co">## create alternate coloring</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(<span class="fl">5e-8</span>)) <span class="op">+</span><span class="st"> </span><span class="co">## add horizontal line</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">breaks =</span> med.dat<span class="op">$</span>median.x, <span class="dt">labels =</span> med.dat<span class="op">$</span>CHR) <span class="op">+</span><span class="st"> </span><span class="co">## add new x labels </span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span>(<span class="dt">colour=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span><span class="co">## remove legend</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Chromosome"</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb10-14"><a href="#cb10-14"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="op">-</span>log[<span class="dv">10</span>](<span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/plotmath">italic</a></span>(p)))) <span class="op">+</span><span class="st"> </span><span class="co">## y label from qqman::qq</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/gray">gray</a></span>(<span class="fl">0.5</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/gray">gray</a></span>(<span class="dv">0</span>))) <span class="co">## instead of colors, go for gray</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="co">## computing new x axis</span></a>
+<a class="sourceLine" id="cb10-3" title="3">giant &lt;-<span class="st"> </span>giant <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(CHR, POS) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">tmp =</span> <span class="dv">1</span>, <span class="dt">cumsum.tmp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cumsum">cumsum</a></span>(tmp))</a>
+<a class="sourceLine" id="cb10-4" title="4"></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="co">## calculating x axis location for chromosome label</span></a>
+<a class="sourceLine" id="cb10-6" title="6">med.dat &lt;-<span class="st"> </span>giant <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(CHR) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">median.x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(cumsum.tmp))</a>
+<a class="sourceLine" id="cb10-7" title="7"></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> giant) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> cumsum.tmp, <span class="dt">y =</span> <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(P), <span class="dt">color =</span> CHR <span class="op">%%</span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)) <span class="op">+</span><span class="st"> </span><span class="co">## create alternate coloring</span></a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(<span class="fl">5e-8</span>)) <span class="op">+</span><span class="st"> </span><span class="co">## add horizontal line</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">breaks =</span> med.dat<span class="op">$</span>median.x, <span class="dt">labels =</span> med.dat<span class="op">$</span>CHR) <span class="op">+</span><span class="st"> </span><span class="co">## add new x labels </span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span>(<span class="dt">colour=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span><span class="co">## remove legend</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Chromosome"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="op">-</span>log[<span class="dv">10</span>](<span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/plotmath">italic</a></span>(p)))) <span class="op">+</span><span class="st"> </span><span class="co">## y label from qqman::qq</span></a>
+<a class="sourceLine" id="cb10-15" title="15"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/gray">gray</a></span>(<span class="fl">0.5</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/gray">gray</a></span>(<span class="dv">0</span>))) <span class="co">## instead of colors, go for gray</span></a></code></pre></div>
 <p><img src="gggwas-reasoning_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
 </div>
 <div id="gggwasgeom_gwas_manhattan" class="section level3">
@@ -356,8 +355,8 @@ identical(gg1$data, gg2$data)</code></pre>
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>There are also other tools used, such as locuszoom plots, but these are harder to implement because they need access to external information, and we will skip these for now.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>We will not discuss their usefulness here.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>There are also other tools used, such as locuszoom plots, but these are harder to implement because they need access to external information, and we will skip these for now.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>We will not discuss their usefulness here.<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
   </div>
