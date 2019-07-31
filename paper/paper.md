@@ -22,39 +22,26 @@ bibliography: paper.bib
 
 # Summary
 
-The forces on stars, galaxies, and dark matter under external gravitational
-fields lead to the dynamical evolution of structures in the universe. The orbits
-of these bodies are therefore key to understanding the formation, history, and
-future state of galaxies. The field of "galactic dynamics," which aims to model
-the gravitating components of galaxies to study their structure and evolution,
-is now well-established, commonly taught, and frequently used in astronomy.
-Aside from toy problems and demonstrations, the majority of problems require
-efficient numerical tools, many of which require the same base code (e.g., for
-performing numerical orbit integration).
+Genome-wide association studies (GWAS) compute associations between each SNP and a trait of interest. The output of a GWAS is a matrix that contains the summary statistics for each SNP per line. For example the SNP identifier, chromosome, position, effect size, standard error, p-value effect allele, and sometimes the minor allele frequency (ref to gcta). 
 
-``Gala`` is an Astropy-affiliated Python package for galactic dynamics. Python
-enables wrapping low-level languages (e.g., C) for speed without losing
-flexibility or ease-of-use in the user-interface. The API for ``Gala`` was
-designed to provide a class-based and user-friendly interface to fast (C or
-Cython-optimized) implementations of common operations such as gravitational
-potential and force evaluation, orbit integration, dynamical transformations,
-and chaos indicators for nonlinear dynamics. ``Gala`` also relies heavily on and
-interfaces well with the implementations of physical units and astronomical
-coordinate systems in the ``Astropy`` package [@astropy] (``astropy.units`` and
-``astropy.coordinates``).
+A set of model validation steps are performed after the GWAS. One such step is to check the p-value distribution for inflation due to a mispecified GWAS model. This is done by calculating the genomic inflation factor (median...), looking at the Q-Q plot of the p-values and displaying the p-values along the chromosomal position (Manhattan plot). 
 
-``Gala`` was designed to be used by both astronomical researchers and by
-students in courses on gravitational dynamics or astronomy. It has already been
-used in a number of scientific publications [@Pearson:2017] and has also been
-used in graduate courses on Galactic dynamics to, e.g., provide interactive
-visualizations of textbook material [@Binney:2008]. The combination of speed,
-design, and support for Astropy functionality in ``Gala`` will enable exciting
-scientific explorations of forthcoming data releases from the *Gaia* mission
-[@gaia] by students and experts alike.
+While the GWAS computation itself is often done with command line tools (ref), the exploration and validation of the results is done in conventional statistical software, such as R (ref). 
 
+Some of the post-GWAS plots will only be looked at once (e.g. a QQplot), but others (e.g. the Manhattan plot) might become the primary figure of an article. 
+
+Therefore, fast plotting is important, but also versatile plotting (being able to add layers and annotation). 
+
+``ggplot2`` offers such a versatile plotting package. However, ``ggplot2`` is known for its low speed (ref). One reason for this is that a ggplot2 object contains the dataset itself plus adaptations of it. 
+
+With ``ggGWAS`` we propose a ``ggplot2`` extension for GWAS QQplots (`geom_qqplot`) and Manhattan plots (`geom_manhattan`). For  `geom_qqplot` there is additionally a hexagon version that reduces computing time by xx.
+
+## Review
 
 
 # Citations
+
+- heaxongs: freytag
 
 Citations to entries in paper.bib should be in
 [rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
