@@ -1,6 +1,6 @@
 ---
 title: ggGWAS reasoning
-author: Sina Rueger
+author: Sina Rüeger
 date: "`r Sys.Date()`"
 show_toc: true
 slug: gggwas-reasoning
