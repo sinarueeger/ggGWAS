@@ -1,5 +1,5 @@
 ---
-title: ggGWAS reasoning
+title: ggGWAS Reasoning
 author: Sina Rüeger
 date: "`r Sys.Date()`"
 show_toc: true
