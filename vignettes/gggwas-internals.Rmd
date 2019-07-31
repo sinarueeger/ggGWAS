@@ -1,6 +1,6 @@
 ---
 title: ggGWAS Internals
-author: Sina Rueger
+author: Sina Rüeger
 date: "`r Sys.Date()`"
 show_toc: true
 slug: gggwas-internals
@@ -152,7 +152,7 @@ set.seed(3)
 df <- data.frame(P = runif(n.sample), GWAS = sample(c("a","b"), n.sample, replace = TRUE))
 ```
 
-```{r base-metrics}
+```{r base-metrics, fig.keep="none"}
 
 ## Object size
 print_object_size(qqman::qq(df$P))
@@ -177,7 +177,7 @@ qp_points <- ggplot(df, aes(y = P)) +
 
 ```
 
-```{r ggplot2-metrics}
+```{r ggplot2-metrics, fig.keep="none"}
 
 ## Object size
 print_object_size(qp_points)
@@ -191,7 +191,7 @@ print_file_size(qp_points)
 ```
 
 
-### 1. Raster
+### Raster
 
 The R-package `ggrastr` does ???. (for the price of longer rendering time).
 
@@ -208,7 +208,7 @@ qp_raster <- ggplot(df, aes(y = P)) +
 
 ```
 
-```{r rastr-metrics}
+```{r rastr-metrics, fig.keep="none"}
 
 ## Object size
 print_object_size(qp_raster)
@@ -221,7 +221,7 @@ print_file_size(qp_raster)
 
 ```
 
-### 2. Hexagons
+### Hexagons
 
 ```{r hex-example}
 
@@ -231,7 +231,7 @@ qp_hex <- ggplot(df, aes(y = P)) +
 
 ```
 
-```{r hex-metrics}
+```{r hex-metrics, fig.keep="none"}
 
 ## Object size
 print_object_size(qp_hex)
@@ -248,14 +248,11 @@ Problem is, that the original dataset is still passed on. This is not a problem 
 
 Note, that the used `hex.function` called `hexBinSummarise_custom` does not have the usual properties, in that it will have the hexagon shape, but not any count legend. Also has a tweaked `hexbinheight`. If `hex.function = hexBinSummarise` is used, the plot will have the usual properties. 
 
-```{r, eval=TRUE, include=TRUE}
+```{r, eval=TRUE, include=TRUE, fig.height=6, fig.width=6, out.width = "50%"}
 ## old version
 ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P), hex.function = ggplot2:::hexBinSummarise) 
 
 ## new version
-#ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P))
-
-## same as
 ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P), hex.function = ggGWAS:::hexBinSummarise) 
 
 ```
@@ -263,7 +260,7 @@ ggplot(data = GWAS.utils::giant) + stat_gwas_qq_hex(aes(y = P), hex.function = g
 
 
 
-### 3. Subsetting data
+### Subsetting data
 
 Something very simple is to subset the data, since we are usually not interested in the very high P-values (although, we are at times, when it comes to model sanity checks).
 
@@ -275,7 +272,7 @@ qp_subset <- ggplot(df, aes(y = P)) +
 
 ```
 
-```{r subset-metrics}
+```{r subset-metrics, fig.keep="none"}
 
 ## Object size
 print_object_size(qp_subset)
@@ -292,10 +289,10 @@ print_file_size(qp_subset)
 
 What makes a ggplot2 object really heavy, is that the dataset is passed on several times into the object. 
 
-```{r}
+```{r, fig.keep="none"}
 
 ## data structure
-ggplot_build(qp_hex) %>% str()
+#ggplot_build(qp_hex) %>% str() %>% sapply(dim)
 object.size(ggplot_build(qp_hex))
 object.size(ggplot_build(qp_points))
 
