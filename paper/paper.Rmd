@@ -77,6 +77,7 @@ library(ggplot2)
 library(ggGWAS)
 library(dplyr)
 theme_set(theme_bw())
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 ```
 
@@ -124,7 +125,8 @@ data_height <- data %>% dplyr::filter(gwas == "Height-AA")
 ggplot(data = data_height) + 
   geom_gwas_qq(aes(y = Pvalue)) + 
   geom_abline(intercept = 0, slope = 1, linetype = 2) + 
-  theme(aspect.ratio = 1)
+  theme(aspect.ratio = 1) + 
+  labs(title = "geom_gwas_qq")
 ```
 
 ```{r qqplot-example-filter, fig.height=6, fig.width=6, out.width="40%"}
@@ -132,7 +134,8 @@ ggplot(data = data_height) +
   geom_gwas_qq(aes(y = Pvalue), y.thresh = 0.1) + 
   geom_abline(intercept = 0, slope = 1, linetype = 2) + 
   theme(aspect.ratio = 1) + 
-  xlim(0, NA) + ylim(0, NA)
+  xlim(0, NA) + ylim(0, NA) + 
+  labs(title = "geom_gwas_qq + FILTER")
 ```
 
 
@@ -140,39 +143,52 @@ ggplot(data = data_height) +
 ggplot(data = data_height) + 
   geom_gwas_qq_hex(aes(y = Pvalue)) + 
   geom_abline(intercept = 0, slope = 1, linetype = 2) + 
-  theme(aspect.ratio = 1)
+  theme(aspect.ratio = 1) + 
+  labs(title = "geom_gwas_qq + Hexagons")
 ```
 
 ``geom_gwas_qq_hex`` does not use the default hexagons, but a tweaked version. 
 
-```{r qqplot-example-hex-zoom, fig.height=6, fig.width=6, out.width="40%"}
-qp <- ggplot(data = data_height) + 
-  geom_gwas_qq_hex(aes(y = Pvalue), bins = 100, hex.function = ggplot2:::hexBinSummarise) + 
-  geom_abline(intercept = 0, slope = 1, linetype = 2)
+```{r qqplot-example-hex-zoom, fig.height=5, fig.width=10, out.width="80%"}
+plot_qq <- ggplot(data = data_height) + 
+  geom_gwas_qq(aes(y = Pvalue)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 2) + 
+  labs(title = "geom_gwas_qq")
 
-qp + coord_cartesian(ylim = c(0, -log10(0.05)), xlim = c(0, -log10(0.05)))
+plot_qq_hex <- ggplot(data = data_height) + 
+  geom_gwas_qq_hex(aes(y = Pvalue), bins = 100, hex.function = ggplot2:::hexBinSummarise) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 2) + 
+  labs(title = "geom_gwas_qq + Hexagons")
+
+zoom <- plot_qq + coord_cartesian(ylim = c(0, -log10(0.05)), xlim = c(0, -log10(0.05)))
+zoom_hex <- plot_qq_hex + coord_cartesian(ylim = c(0, -log10(0.05)), xlim = c(0, -log10(0.05)))
+
+library(cowplot)
+plot_grid(zoom, zoom_hex, ncol = 2)
 
 ```
 
-
-```{r qqplot-example-group, fig.height=6, fig.width=6}
-ggplot(data = data_height) + 
+Grouping^[Of course, plotting by Chromosome does not make much sense.]. Note, that the statistics will be computed within each facet or group
+```{r qqplot-example-group, fig.width=6, out.width="80%"}
+ggplot(data = data_height %>% filter(CHR %in% c(1, 5, 6))) + 
   geom_gwas_qq(aes(y = Pvalue)) + 
   facet_wrap(~CHR, scales = "free_y") + 
   geom_abline(intercept = 0, slope = 1, linetype = 2) + 
-  theme(aspect.ratio = 1)
+  theme(aspect.ratio = 1) + 
+  labs(title = "geom_gwas_qq + facet/grouping")
 ```
 
 
 Using a combination of ``ggplot2::stat_qq`` and ``ggGWAS::mlog10_trans``. 
 
-```{r qqplot-example-scale, fig.height=6, fig.width=6}
+```{r qqplot-example-scale, fig.height=6, fig.width=6, out.width="40%"}
 ggplot(data = data_height) + 
   stat_qq(aes(sample = Pvalue), distribution = stats::qunif) +
   scale_y_continuous(trans = "mlog10") +
   scale_x_continuous(trans = "mlog10") +
   geom_abline(intercept = 0, slope = 1) + 
-  theme(aspect.ratio = 1)
+  theme(aspect.ratio = 1) + 
+  labs(title = "-log10 transformation")
 
 ```
 
@@ -197,8 +213,7 @@ ggplot(data = data_height) +
 
 # Acknowledgements
 
-<!-------- We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.-------->
+<!-------- We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong ----->
 
 - Flavia Hodel contributed parts of the Manhattan plot
 - Fellay lab
