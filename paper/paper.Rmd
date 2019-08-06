@@ -32,45 +32,56 @@ output:
 
 # Summary
 
-Genome-wide association studies (GWAS) estimate the association between each SNP and a trait of interest. The output of a GWAS is a matrix that contains the information and summary statistic for each SNP per line: ``SNP identifier, chromosome, position, effect size, standard error, p-value effect allele``, and sometimes the ``minor allele frequency``. 
+Genome-wide association studies (GWAS) estimate the association between
+each genetic variant available (e.g. single nucleotide variant (SNV)) and a trait of interest. The output of a GWAS is
+a matrix that contains the information and summary statistic for each
+genetic variant per line. The columns are somewhat arbitrarily names, but often
+include
+`SNP identifier, chromosome, position, effect size, standard error, p-value effect allele, minor allele frequency`.
 
-GWAS summary statistics are often computed for 1M+ SNPs. To summarise such large amounts of data and visualise the P-value distribution, two plots are typically done: 
-- A Q-Q plot displays the theoretical against the observed p-value [@mccarthy]. A Q-Q plot helps to identify inflated P-values due to a mispecified GWAS model. Genomic inflation factors attempt the same. 
-- A Manhattan plot displays the p-values along the chromosomal position [@mccarthy]. 
+GWAS summary statistics are often computed for > 1 Mio genetic variants. To summarise such large amounts of data and verify model assumptions two plots are typically inspected:
 
-![Q-Q plot on the left, Manhattan plot on the right](illustration.png)
+- A Q-Q plot displays the theoretical against the observed p-values [@mccarthy]. This helps to identify inflated P-values due to a mispecified GWAS model. Genomic inflation factors attempt the same. 
+- A Manhattan plot displays the p-values along the chromosomal position [@mccarthy] and aims to show the location of potential hits in the genome. 
+
+![An illustration of a Q-Q plot (LHS) and Manhattan plot (RHS)](illustration.jpeg)
 
 
-While the GWAS computation itself is often done with command line tools (e.g. @plink or @gcta), the exploration and validation of the results is done in conventional statistical software, such as R [@rstats].
+While the GWAS computation itself is often done with command line tools (e.g. @plink2 or @gcta), the exploration and validation of the results is done in conventional statistical software, such as R [@rstats].
 
-Q-Q plots might only be looked at once during the analysis process, but a Manhattan plots become primary figure of an article. For example, a prominent GWAS on anorexia [@watson] has a Manhattanplot as Figure 1, but the Q-Q plot is in the Supplementary. 
+Q-Q plots are an important tool during the analysis process, but a Manhattan plot can become a primary figure of an article. For example, a recent GWAS in anorexia [@watson] has a Manhattanplot as Figure 1, but the Q-Q plot is in the Supplementary material. Therefore, fast plotting is key to quickly summarise results during the analysis process and take decisions. But equally important is versatile plotting - being able to add layers and annotation to a plot to make it easily understandable and visually appealing for the reader of a manuscript. 
 
-Therefore, fast plotting is key to quickly summarise results during the analysis process and take decisions. But equally important is versatile plotting - being able to add layers and annotation to a plot to make it easily understandable for a reader. 
+``ggplot2``[@ggplot2] offers such a versatile data visualisation package that is widely used. However, ``ggplot2`` is not optimised for plotting high dimensional data. 
 
-``ggplot2``[@ggplot2] offers such a versatile data visualisation package that is widely used. However, ``ggplot2`` is known for its low speed (ref). One reason for this is that a ``ggplot2`` object contains multiple versions of the data being plotted. 
-
-With ``ggGWAS`` we propose a ``ggplot2`` extension for GWAS Q-Q plots (`geom_gwas_qq`) and Manhattan plots (`geom_gwas_manhattan`). For `geom_qqplot` there is additionally a hexagon version that reduces computing time by xx (`geom_gwas_qq_hex`). For both functions there is a filtering argument where points can be omitted. 
+With ``ggGWAS`` we propose a ``ggplot2`` extension for GWAS Q-Q plots (`geom_gwas_qq`) and Manhattan plots (`geom_gwas_manhattan`). For `geom_qqplot` there is additionally a hexagon version that reduces computing time by xx (`geom_gwas_qq_hex`). For both functions there is a filtering argument where points can be excluded from plotting.  
 
 
 # Background
 
-Q-Q plots and Manhattan plots are implemented in R with various functions. The most widely used package is ``qqman`` [@qqman], that has a function for Q-Q plots `qq` and Manhattan plots `manhattan`, but which is based on base R ``graphics``. The `ramwas` bioconductor package [@ramwas] has two fast plotting functions too `manPlotFast` and `qqPlotFast`, also based on base R. There are many `ggplot2` wrapper, e.g. `mkanai/ggman` [@ggman:kanai], `drveera/ggman` [@ggman:drveera], `ggbio` [@ggbio]. But none  of these is an extension that inherits the ggplot2 functionalities. 
+Q-Q plots and Manhattan plots are implemented in R with various functions. The most widely used package is ``qqman`` [@qqman], that has functions based on base R ``graphics`` (`qq` and `manhattan`). Similarly, the `ramwas` bioconductor package [@ramwas] has two fast plotting functions based on baseR too (`manPlotFast` and `qqPlotFast`). There are many `ggplot2` wrapper, e.g. `mkanai/ggman` [@ggman:kanai], `drveera/ggman` [@ggman:drveera], `ggbio` [@ggbio], but none of these is an extension that inherits the ggplot2 functionalities. 
 
-How can we speed up plotting in R? Two approaches are to 1) only plot a subset of points (called _filtering_ later) or 2) use hexagons to represent clusters of points. There is a third option, to use rastering, but this will only affect the resulting image file size and not really the plotting speed in R. Hexagons are actually implemented in R and have been used to plot high dimensional data by others [@schex].
+How can we speed up plotting with ``ggplot2``? With one approach, we can plot a subset of points (called _filtering_ later). Another approach uses _hexagons_ to represent neighbouring points. Hexagons are implemented in R and ``ggplot2`` and have been used by others to plot high dimensional data [@schex]. _Filtering_ reduces the `ggplot2` object size and the rendering speed, while the use of _hexagons_ reduces the rendering speed. 
+
+
+
+<!---------
+There is a third option which we will call "rastering", but this will only affect the resulting image file size and not really the plotting speed in R.
 
 |           | Obj Size | Plotting speed | File size |
 |-----------|----------|----------------|-----------|
 | Filtering | x        | x              | x         |
 | hexagons    |          | x              | x         |
 | raster    |          |                | x         |
+-------->
 
 # The `ggGWAS` R package
 
-The `ggGWAS` package depends mainly on ``ggplot2``, ``hexbin``, ``scales``. Additionally ``dplyr`` and ``magrittr`` are used for ... 
+The `ggGWAS` package depends mainly on ``ggplot2``, ``hexbin``, ``scales``.
 
 
 # Brief example
 
+Below is a brief example with real exome based summary statistics from the [Genetic Investigation of ANthropometric Traits](https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files).
 ```{r settings, message=FALSE, warning=FALSE, include=FALSE}
 library(GWAS.utils)
 library(ggplot2)
@@ -114,12 +125,13 @@ data <- vroom::vroom(
 
 data %>% janitor::tabyl(gwas)
 data_height <- data %>% dplyr::filter(gwas == "Height-AA")
-
+data_height[1:3,]
 ```
 
 
 ## Q-Q plot
 
+For a basic Q-Q plot, we 
 
 ```{r qqplot-example, fig.height=6, fig.width=6, out.width="40%"}
 ggplot(data = data_height) + 
