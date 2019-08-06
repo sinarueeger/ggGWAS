@@ -1,0 +1,108 @@
+---
+title: "Get started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r setup}
+library(GWAS.utils)
+library(ggplot2)
+library(ggGWAS)
+library(dplyr)
+theme_set(theme_bw())
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
+```
+
+
+To create a Q-Q plot we can use the function `geom_gwas_qq`.
+
+```{r qqplot-example, fig.height=6, fig.width=6, out.width="40%", echo = FALSE}
+ggplot(data = data_height) + 
+  geom_gwas_qq(aes(y = Pvalue)) +
+  geom_abline(intercept = 0, slope = 1, linetype = 2) + 
+  theme(aspect.ratio = 1)
+
+```
+
+You can remove points below a certain p-value threshold with the argument `y.thresh`.
+
+```{r qqplot-example-filter, fig.height=6, fig.width=6, out.width="40%", echo = FALSE, warning = FALSE}
+ggplot(data = data_height) + 
+  geom_gwas_qq(aes(y = Pvalue), y.thresh = 0.1) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 2) + 
+  theme(aspect.ratio = 1) + 
+  xlim(0, NA) + ylim(0, NA)
+
+```
+
+
+To enable hexagons, we can simply add `_hex` to the function `geom_gwas_qq`.
+
+```{r qqplot-example-hex, fig.height=6, fig.width=6, out.width="40%", echo = FALSE}
+ggplot(data = data_height) + 
+  geom_gwas_qq_hex(aes(y = Pvalue)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 2) + 
+  theme(aspect.ratio = 1)
+ 
+```
+
+How does the plot look like among the very large P-values?
+
+```{r qqplot-example-hex-zoom, fig.height=5, fig.width=10, out.width="80%", echo = FALSE}
+
+plot_qq <- ggplot(data = data_height) + 
+  geom_gwas_qq(aes(y = Pvalue)) +
+  geom_abline(intercept = 0, slope = 1, linetype = 2)
+
+plot_qq_hex <- ggplot(data = data_height) + 
+  geom_gwas_qq_hex(aes(y = Pvalue), bins = 100,
+  hex.function = ggplot2:::hexBinSummarise) +
+  geom_abline(intercept = 0, slope = 1, linetype = 2)
+
+zoom <- plot_qq + 
+  coord_cartesian(ylim = c(0, -log10(0.05)), xlim = c(0, -log10(0.05))) 
+zoom_hex <- plot_qq_hex + 
+  coord_cartesian(ylim = c(0, -log10(0.05)), xlim = c(0, -log10(0.05)))
+
+cowplot::plot_grid(zoom, zoom_hex, ncol = 2)
+
+```
+
+Note that by default, ``geom_gwas_qq_hex`` does not use the default hexagons from `ggplot2`, but a tweaked version. 
+
+
+We can also apply facetting^[Of course, plotting by Chromosome does not make much sense.]. Note, that the statistics will be computed within each facet or group.
+
+```{r qqplot-example-group, fig.width=9, fig.height = 4, out.width="80%", echo = FALSE}
+ggplot(data = data_height %>% filter(CHR %in% c(1, 5, 6))) + 
+  geom_gwas_qq(aes(y = Pvalue)) + 
+  facet_wrap(~CHR) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 2)
+
+```
+
+
+Alternatively, we can achieve a Q-Q plot by using a combination of native `ggplot2` functions and ``ggGWAS::mlog10_trans``. 
+
+```{r qqplot-example-scale, fig.height=6, fig.width=6, out.width="40%", echo = FALSE}
+ggplot(data = data_height) + 
+  stat_qq(aes(sample = Pvalue), distribution = stats::qunif) +
+  scale_y_continuous(trans = "mlog10") + 
+  scale_x_continuous(trans = "mlog10") + 
+  geom_abline(intercept = 0, slope = 1) + 
+  theme(aspect.ratio = 1)
+
+
+```
