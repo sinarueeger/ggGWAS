@@ -31,31 +31,26 @@ You can install the development version from
 remotes::install_github("sinarueeger/ggGWAS")
 ```
 
-Install including [vignettes](https://sinarueeger.github.io/ggGWAS/articles/):
-
-``` r
-remotes::install_github("sinarueeger/ggGWAS", 
-build = TRUE, 
-build_opts = c("--no-resave-data", "--no-manual"))
-
-vignette("gggwas-reasoning")
-vignette("gggwas-internals")
-```
-
-Install the `dev` branch:
+Install the `dev`b ranch:
 
 ``` r
 remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
 ```
 
+Install including
+vignettes:
 
+``` r
+remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
+vignette("gggwas-reasoning")
+vignette("gggwas-internals")
+```
 
 ## Basic usage
 
 ``` r
 library(ggGWAS)
 library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 3.5.2
 
 theme_set(theme_bw())
 ## Generate some random data
@@ -108,11 +103,12 @@ ggplot(data = df) +
 ### Manhattan plot
 
 Currently working on `stat_gwas_manhattan()` that should at one point
-look like this:
+look like
+    this:
 
     ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
 
-Till then, use the `ggman::ggmanhattan` function from the [`ggman`](https://github.com/mkanai/ggman) package:
+Till then, use the `ggman::ggmanhattan` function:
 
 ``` r
 library(dplyr)
