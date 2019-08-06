@@ -31,7 +31,7 @@ You can install the development version from
 remotes::install_github("sinarueeger/ggGWAS")
 ```
 
-Install the `dev`b ranch:
+Install the `dev` branch:
 
 ``` r
 remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
