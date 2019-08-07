@@ -26,7 +26,8 @@ Suggests:
     pryr,
     ggman,
     GWAS.utils,
-    data.table
+    data.table,
+    R.utils
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Imports: 
