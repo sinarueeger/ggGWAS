@@ -37,8 +37,7 @@ Install the `dev` branch:
 remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
 ```
 
-Install including
-vignettes:
+Install including vignettes:
 
 ``` r
 remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
@@ -51,6 +50,7 @@ vignette("gggwas-internals")
 ``` r
 library(ggGWAS)
 library(ggplot2)
+#> Warning: package 'ggplot2' was built under R version 3.5.2
 
 theme_set(theme_bw())
 ## Generate some random data
@@ -103,8 +103,7 @@ ggplot(data = df) +
 ### Manhattan plot
 
 Currently working on `stat_gwas_manhattan()` that should at one point
-look like
-    this:
+look like this:
 
     ggplot(data = df) + stat_gwas_manhattan(aes(pos = POS, y = -log10(P), chr = CHR))
 
