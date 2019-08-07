@@ -50,7 +50,7 @@ data_whr[1:3,]
 
 To create a Q-Q plot we can use the function `geom_gwas_qq`.
 
-```{r qqplot-example, fig.height=6, fig.width=6, out.width="40%", echo = FALSE, cache = TRUE}
+```{r qqplot-example, fig.height=6, fig.width=6, out.width="40%", echo = FALSE}
 ggplot(data = data_whr) + 
   geom_gwas_qq(aes(y = P)) +
   geom_abline(intercept = 0, slope = 1, linetype = 2) + 
@@ -60,7 +60,7 @@ ggplot(data = data_whr) +
 
 You can remove points below a certain p-value threshold with the argument `y.thresh`.
 
-```{r qqplot-example-filter, fig.height=6, fig.width=6, out.width="40%", echo = FALSE, warning = FALSE, cache = TRUE}
+```{r qqplot-example-filter, fig.height=6, fig.width=6, out.width="40%", echo = FALSE, warning = FALSE}
 ggplot(data = data_whr) + 
   geom_gwas_qq(aes(y = P), y.thresh = 0.1) + 
   geom_abline(intercept = 0, slope = 1, linetype = 2) + 
@@ -72,7 +72,7 @@ ggplot(data = data_whr) +
 
 To enable hexagons, simply add `_hex` to the function `geom_gwas_qq`.
 
-```{r qqplot-example-hex, fig.height=6, fig.width=6, out.width="40%", echo = FALSE, cache = TRUE}
+```{r qqplot-example-hex, fig.height=6, fig.width=6, out.width="40%", echo = FALSE}
 ggplot(data = data_whr %>% sample_n(1e5)) + 
   geom_gwas_qq_hex(aes(y = P)) + 
   geom_abline(intercept = 0, slope = 1, linetype = 2) + 
@@ -82,7 +82,7 @@ ggplot(data = data_whr %>% sample_n(1e5)) +
 
 How does the plot look like among the very large P-values?
 
-```{r qqplot-example-hex-zoom, fig.height=5, fig.width=10, out.width="80%", echo = FALSE, cache = TRUE}
+```{r qqplot-example-hex-zoom, fig.height=5, fig.width=10, out.width="80%", echo = FALSE, fig.show='hold'}
 
 plot_qq <- ggplot(data = data_whr) + 
   geom_gwas_qq(aes(y = P)) +
@@ -98,7 +98,8 @@ zoom <- plot_qq +
 zoom_hex <- plot_qq_hex + 
   coord_cartesian(ylim = c(0, -log10(0.05)), xlim = c(0, -log10(0.05)))
 
-cowplot::plot_grid(zoom, zoom_hex, ncol = 2)
+print(zoom)
+print(zoom_hex)
 
 ```
 
@@ -107,7 +108,7 @@ Note, that by default, ``geom_gwas_qq_hex`` does not use the default hexagons fr
 
 We can also apply facetting, for example if you have summary statistics available from multiple GWASs. Note, that the statistics will be computed within each facet or group.
 
-```{r qqplot-example-group, fig.width=11, fig.height = 4, out.width="80%", echo = FALSE, cache = TRUE}
+```{r qqplot-example-group, fig.width=11, fig.height = 4, out.width="80%", echo = FALSE}
 ggplot(data = data_whr %>% filter(CHR %in% c(1, 5, 6))) + 
   geom_gwas_qq(aes(y = P)) + 
   facet_wrap(~CHR) + 
@@ -118,7 +119,7 @@ ggplot(data = data_whr %>% filter(CHR %in% c(1, 5, 6))) +
 
 Alternatively, we can achieve a Q-Q plot by using a combination of native `ggplot2` functions and ``ggGWAS::mlog10_trans``. 
 
-```{r qqplot-example-scale, fig.height=6, fig.width=6, out.width="40%", echo = FALSE, cache = TRUE}
+```{r qqplot-example-scale, fig.height=6, fig.width=6, out.width="40%", echo = FALSE}
 ggplot(data = data_whr) + 
   stat_qq(aes(sample = P), distribution = stats::qunif) +
   scale_y_continuous(trans = "mlog10") + 
