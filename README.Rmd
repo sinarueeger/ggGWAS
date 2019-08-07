@@ -21,11 +21,14 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
-An R-Package (*work-in-progress*) that contains ggplot2-extensions of data visualisations used with GWAS data. 
+An R-Package (*work-in-progress*) that contains `ggplot2` extensions of data visualisations used with GWAS data. 
 
 Mainly, these are Q-Q plot and Manhattan plot that both use P-values from GWASs as input. 
 
-An inspiration for ggGWAS has been the R-package [qqman](http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html), except that ggGWAS aims to have the look and functionality of `ggplot2`.
+To get started, please refer to [this vignette](https://sinarueeger.github.io/ggGWAS/articles/ggGWAS.html).
+
+An inspiration for `ggGWAS` has been the R-package [qqman](http://www.gettinggeneticsdone.com/2014/05/qqman-r-package-for-qq-and-manhattan-plots-for-gwas-results.html), except that `ggGWAS` aims to have the look and functionality of `ggplot2`.
+
 
 ## Installation
 
@@ -40,15 +43,6 @@ remotes::install_github("sinarueeger/ggGWAS")
 Install the `dev` branch:
 ```r
 remotes::install_github("sinarueeger/ggGWAS", ref = "dev")
-```
-
-
-Install including vignettes: 
-
-```r
-remotes::install_github("sinarueeger/ggGWAS", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"))
-vignette("gggwas-reasoning")
-vignette("gggwas-internals")
 ```
 
 
