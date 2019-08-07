@@ -9,7 +9,7 @@
   "name": "ggGWAS: ggplot2 Extensions for Plotting GWAS Summary Statistics",
   "issueTracker": "https://github.com/sinarueeger/ggGWAS/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.2",
+  "version": "0.0.2.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -55,12 +55,6 @@
       "name": "ggrastr",
       "version": ">= 0.1.7",
       "sameAs": "https://github.com/VPetukhov/ggrastr"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "GWAS.utils",
-      "name": "GWAS.utils",
-      "sameAs": "https://github.com/sinarueeger/GWAS.utils"
     },
     {
       "@type": "SoftwareApplication",
@@ -173,6 +167,30 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=pryr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggman",
+      "name": "ggman",
+      "sameAs": "https://github.com/mkanai/ggman"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "GWAS.utils",
+      "name": "GWAS.utils",
+      "sameAs": "https://github.com/sinarueeger/GWAS.utils"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "data.table",
+      "name": "data.table",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=data.table"
     }
   ],
   "softwareRequirements": [
@@ -245,7 +263,14 @@
   "readme": "https://github.com/sinarueeger/ggGWAS/blob/master/README.md",
   "keywords": [
     "ggplot2-geom",
-    "gwas-tools"
+    "gwas-tools",
+    "gwas",
+    "r",
+    "r-package",
+    "rstats"
   ],
-  "contIntegration": ["https://travis-ci.org/sinarueeger/ggGWAS", "https://codecov.io/gh/sinarueeger/ggGWAS?branch=master"]
+  "contIntegration": [
+    "https://travis-ci.org/sinarueeger/ggGWAS",
+    "https://codecov.io/gh/sinarueeger/ggGWAS?branch=master"
+  ]
 }
