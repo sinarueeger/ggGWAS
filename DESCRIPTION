@@ -25,7 +25,8 @@ Suggests:
     covr,
     pryr,
     ggman,
-    GWAS.utils
+    GWAS.utils,
+    data.table
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Imports: 
