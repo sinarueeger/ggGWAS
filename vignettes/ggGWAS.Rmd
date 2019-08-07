@@ -22,6 +22,7 @@ library(ggGWAS)
 library(dplyr)
 theme_set(theme_bw())
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+requireNamespace("data.table", quietly = TRUE)
 
 ```
 
