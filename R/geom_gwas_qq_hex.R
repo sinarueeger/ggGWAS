@@ -93,6 +93,9 @@ StatGwasQqplotHex <- ggproto(
     N <- length(observed)
 
 
+    check_range_pvalues(observed)
+
+
     ## calculate the expected axis
     expected <-
       sort(-log10((1:N) / N - 1 / (2 * N)))

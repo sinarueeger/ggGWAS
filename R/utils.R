@@ -75,3 +75,26 @@ try_require <- function(package, fun) {
 #' @inheritParams ggplot2::ggproto
 #' @name ggGWAS-ggproto
 NULL
+
+#' Check P-value range
+#'
+#'
+#' @param x numeric vector
+#' @export
+#' @keywords internal
+#' @example
+#' check_range_pvalues(x = runif(10))
+#' check_range_pvalues(x = runif(10, max = 2))
+check_range_pvalues <- function(x) {
+  min_ <- min(x, na.rm = TRUE)
+  max_ <- max(x, na.rm = TRUE)
+
+  if (min_ < 0 | max_ > 1)
+  {
+    stop(
+      "P-value vector contains entries outside the range of [0,1] (0 <= p <= 1).",
+         call. = FALSE)
+  }
+
+}
+

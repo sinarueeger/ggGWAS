@@ -6,9 +6,9 @@
 \alias{ggGWAS-package}
 \title{ggGWAS: ggplot2 Extensions for Plotting GWAS Summary Statistics}
 \description{
-Provides Manhattan plot and QQplot as a ggplot2
+Provides Manhattan plot and Q-Q plot as a ggplot2
     extension. For high-dimensional GWAS data there is a hex version of
-    the QQplot (which is more of a diagnostics tool).
+    the Q-Q plot.
 }
 \author{
 \strong{Maintainer}: Sina Rüeger \email{sina.rueeger@gmail.com}

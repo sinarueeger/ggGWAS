@@ -40,7 +40,7 @@ WHRadjBMI (WHR adjusted for BMI) GWAS summary statistics from Pulit _et al._ (20
 
 
 ```{r cache = TRUE, echo=TRUE, warning=FALSE, cache = TRUE}
-data_whr <- data.table::fread("https://portals.broadinstitute.org/collaboration/giant/images/6/6e/Whradjbmi.giant-ukbb.meta-analysis.combined.23May2018.HapMap2_only.txt.gz")
+data_whr <- data.table::fread("https://portals.broadinstitute.org/collaboration/giant/images/6/6e/Whradjbmi.giant-ukbb.meta-analysis.combined.23May2018.HapMap2_only.txt.gz") %>% as.data.frame()
 data_whr[1:3,]
 ```
 
@@ -117,6 +117,18 @@ ggplot(data = data_whr %>% filter(CHR %in% c(1, 5, 6))) +
 
 ```
 
+Any other ggplot functionality can be applied: 
+
+```{r qqplot-example-aes, echo=, fig.height=4, fig.width=11, out.width="80%"}
+ggplot(data = data_whr %>% filter(CHR %in% c(1, 5, 6)) %>% mutate(CHR = as.factor(CHR))) + 
+  stat_gwas_qq(aes(y = P, color = CHR, group = CHR)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 2)
+
+ggplot(data = data_whr %>% filter(CHR %in% c(1, 5, 6)) %>% mutate(CHR = as.factor(CHR))) + 
+  stat_gwas_qq(aes(y = P, color = CHR)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = 2)
+
+```
 
 Alternatively, we can achieve a Q-Q plot by using a combination of native `ggplot2` functions and ``ggGWAS::mlog10_trans``. 
 

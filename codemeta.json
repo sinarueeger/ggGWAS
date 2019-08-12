@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "ggGWAS",
-  "description": "Provides Manhattan plot and QQplot as a ggplot2\n    extension. For high-dimensional GWAS data there is a hex version of\n    the QQplot (which is more of a diagnostics tool).",
+  "description": "Provides Manhattan plot and Q-Q plot as a ggplot2\n    extension. For high-dimensional GWAS data there is a hex version of\n    the Q-Q plot.",
   "name": "ggGWAS: ggplot2 Extensions for Plotting GWAS Summary Statistics",
   "issueTracker": "https://github.com/sinarueeger/ggGWAS/issues",
   "license": "https://spdx.org/licenses/MIT",
@@ -41,6 +41,7 @@
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 2.1.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",

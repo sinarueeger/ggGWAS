@@ -136,17 +136,22 @@ StatGwasQqplot <- ggproto(
   "StatGwasQqplot",
   Stat,
   required_aes = c("y"),
-#  default_aes = aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),
+  #  default_aes = aes(y = stat(`observed_log10`), x = stat(`expected_log10`)),
   default_aes = aes(y = stat(y), x = stat(`expected`)),
 
   compute_group = function(data,
-                             scales,
-                             dparams,
-                             na.rm,
-                             y.thresh) {
+                           scales,
+                           dparams,
+                           na.rm,
+                           y.thresh) {
+
+
     observed <-
       data$y # [!is.na(data$x)]
     N <- length(observed)
+
+
+    check_range_pvalues(observed)
 
 
     ## calculate the expected axis
