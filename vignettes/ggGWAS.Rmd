@@ -121,7 +121,8 @@ ggplot(data = data_whr  %>% filter(CHR %in% c(1, 5, 6))) +
 
 Any other ggplot functionality can be applied: 
 
-```{r qqplot-example-aes, echo=, fig.height=4, fig.width=11, out.width="80%"}
+```{r qqplot-example-aes, echo=FALSE, fig.height=4, fig.width=11, out.width="80%"}
+
 ggplot(data = data_whr %>% filter(CHR %in% c(1, 5, 6)) %>% mutate(CHR = as.factor(CHR))) + 
   stat_gwas_qq(aes(y = P, color = CHR, group = CHR)) + 
   geom_abline(intercept = 0, slope = 1, linetype = 2)
